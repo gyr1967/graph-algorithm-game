@@ -20,3 +20,7 @@
 * *0.5 hour* | Created GitHub repository for project
 * *0.5 hour* | Set up ClickUp for project management/tracking 
 * *1 hour* | Brainstorm ideas for graph algorithm games on draw.io
+
+### 20 Sep 2023
+
+* *1 hour* | Brush up on BFS and DFS
