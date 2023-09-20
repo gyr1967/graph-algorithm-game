@@ -24,3 +24,5 @@
 ### 20 Sep 2023
 
 * *1 hour* | Brush up on BFS and DFS
+* *0.5 hour* | Skim through graph algorithms and games
+* *0.5 hour* | Review marking scheme
