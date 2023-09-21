@@ -31,3 +31,5 @@
 
 * *1 hour* | More brainstorming on how it'll all look and behave
 * *0.5 hour* | Look into GitHub actions for CI/CD
+* *0.5 hour* | Initial meeting with Sofiat
+* *1 hour* | Synthesise and write up minutes properly
