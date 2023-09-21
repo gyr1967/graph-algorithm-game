@@ -26,3 +26,8 @@
 * *1 hour* | Brush up on BFS and DFS
 * *0.5 hour* | Skim through graph algorithms and games
 * *0.5 hour* | Review marking scheme
+
+### 21 Sep 2023
+
+* *1 hour* | More brainstorming on how it'll all look and behave
+* *0.5 hour* | Look into GitHub actions for CI/CD
