@@ -40,3 +40,15 @@ lots of text before getting to the actual visualisation
 
 * Clear visualisation with graphs in the format that is used in lectures in universities which is good for students revision
 
+### Workshape.io
+[Workshape.io](https://workshape.github.io/visual-graph-algorithms/)
+
+* Very simple visualisation of BFS and DFS
+
+* Steps through the algorithm with an indication of the current step
+
+* More of an explanation article with visualisations
+
+* Shows the pseudocode separately
+
+* Shows lots of information on the DFS and BFS algorithms such as potential uses and what operations/products rely on them
