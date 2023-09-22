@@ -18,7 +18,7 @@
 
 * *2 hours* | Read the project guidance notes
 * *0.5 hour* | Created GitHub repository for project
-* *0.5 hour* | Set up ClickUp for project management/tracking 
+* *0.5 hour* | Set up ClickUp for project management/tracking
 * *1 hour* | Brainstorm ideas for graph algorithm games on draw.io
 
 ### 20 Sep 2023
@@ -29,7 +29,12 @@
 
 ### 21 Sep 2023
 
-* *1 hour* | More brainstorming on how it'll all look and behave
+* *1 hour* | More brainstorming on how the game will work
 * *0.5 hour* | Look into GitHub actions for CI/CD
 * *0.5 hour* | Initial meeting with Sofiat
 * *1 hour* | Synthesise and write up minutes properly
+* *2 hours* | Attend introductory lecture
+
+### 22 Sep 2023
+
+* *2.5 hours* | Research existing products - Visualgo.net, Red Blob Games and Workshape.io
