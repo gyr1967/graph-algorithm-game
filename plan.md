@@ -10,7 +10,18 @@ Week-by-week plan for the whole project. Update this as you go along.
 ## Winter semester
 
 * **Week 1**
+  * Look at current products
+  * Initial supervisor meeting
+  * Familiarise with marking scheme and what is expected of me
+  * Research visualisation technologies
+  * Research thin or fat client
+  * Set up GitHub repo
 * **Week 2**
+  * Stretch - Get a VueJS project with a graph visualised
+  * Scope out requirements with Moscow method
+  * Look at previous projects to scrutinise and learn from
+  * Solidify main goal/aim of project (current is to have algorithms being carried out by the user and validated by computer)
+  * Figure out what sets this project apart from the existing solutions/products
 * **Week 3**
 * **Week 4**
 * **Week 5**
