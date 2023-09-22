@@ -38,3 +38,4 @@
 ### 22 Sep 2023
 
 * *2.5 hours* | Research existing products - Visualgo.net, Red Blob Games and Workshape.io
+* *2 hours* | Set up VueJS project with TypeScript and lint-staged pre-commit hook
