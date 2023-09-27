@@ -45,3 +45,7 @@
 ### 26 Sep 2023
 
 * *1 hour* | Synthesise requirements and update wiki & wiki sidebar
+
+### 27 Sep 2023
+
+* *2 hours* | Look at previous projects, get pros and cons, ideas of how to (and how not to) do things
