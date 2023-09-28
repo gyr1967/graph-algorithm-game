@@ -54,4 +54,7 @@
 
 * *1 hour* | Look at previous projects' dissertations to get a feel for the structure and content
 * *0.5 hours* | Set up initial goals for project
+* *0.5 hours* | Supervisor meeting
+* *0.5 hours* | Synthesise and write up minutes properly
+* *0.5 hours* | Update pre-development wiki section with plans, goals, previous project critiques
 
