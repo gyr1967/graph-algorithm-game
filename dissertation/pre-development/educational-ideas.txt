@@ -1,0 +1,35 @@
+* Theory section w/ breif explanation of algorithm/concept and example(s)
+* Practice mode where users can practice on generated graphs
+* Stretch goal - timed with leaderboards?
+
+* Graph traversal section
+* Path finding section
+* Maximum cardinality matching section
+
+* Landing page with explanations about the site and graph theory
+* Dashboard for choosing the section (could be the same as the landing page)
+* Game Screen which displays the graph, controls (need to decide controls) and instructions/objectives 
+* Stretch goal - tutorial section
+
+* Docker image on GC run?
+
+- Architecture
+* Frontend in VueJS due to experience
+* Graph visualisation - want it in JS - D3.js or maybe p5.js? 
+* Backend - nodeJS due to experience 
+* Algorithms - frontend if possible, backend if too intensive
+
+- Controls
+* Clickable vertices and edges is a bit tricky
+* Console at bottom of screen
+* Console contains actions based on a currently selected vertex?
+* Aiming to step through an algorithm correctly.
+
+- DevOps
+* Deploy from the beginning
+* GitHub action to push to GCP
+* lint-staged for QoL
+* TESTS!
+
+- Responsiveness
+* Desktop only, due to use case from students
