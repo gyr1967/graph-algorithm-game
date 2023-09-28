@@ -13,3 +13,6 @@
 * The game should be regularly deployed, ideally using a docker image and a cloud service.
 * GitHub actions should be used to run tests on push to develop
 * GitHub actions should be used to deploy the game on push to master
+
+##### 4. To develop a game that uses pedagogical techniques to teach graph algorithms.
+* The game should be able to be effective in teaching graph algorithms.
