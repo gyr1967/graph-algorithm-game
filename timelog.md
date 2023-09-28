@@ -48,4 +48,10 @@
 
 ### 27 Sep 2023
 
-* *2 hours* | Look at previous projects, get pros and cons, ideas of how to (and how not to) do things
+* *2 hours* | Look at previous projects clients/code, get pros and cons, ideas of how to (and how not to) do things
+
+### 28 Sep 2023
+
+* *1 hour* | Look at previous projects' dissertations to get a feel for the structure and content
+* *0.5 hours* | Set up initial goals for project
+
