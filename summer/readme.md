@@ -1,17 +1,10 @@
 # Summer work
 
-* PROJECT NAME
-* YOUR NAME
-* STUDENT_ID
-* SUPERVISOR NAME
+* WEB-BASED GAME WITH GRAPH ALGORITHMS
+* GEORGE YARR
+* 2553638y
+* SOFIAT OLAOSEBIKAN
 
-Use this file to keep a report stating what you completed over the summer. The following is an *template* that you can use as a basis. 
-
-## Research completed
-
-## Ideas developed
-
-## Concerns or risks identified
-
-
-
+## Internship
+* **None in direct relation to the project, however the experience I gained will prove useful. I don't expect this to affect my marks, I'm only noting it for sake of clarity**
+* 3 months as a full-stack developer intern working with VueJS, Express, AWS (Step Functions and Batch)
