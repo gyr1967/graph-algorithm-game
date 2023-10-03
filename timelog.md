@@ -71,3 +71,4 @@
 * *0.5 hour* | Write up pedagogical approaches in wiki, general research
 * *3 hours* | Set up CI/CD with GitHub Actions. Tried GCR and Docker initially hence the time spent, but seemed like too much gun, so switched to GitHub Actions
 * *0.5 hour* | Set up Vitest
+* *0.5 hour* | README.md and general project setup
