@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import HelloWorld from "./components/HelloWorld.vue";
+import Graph from "./components/Graph.vue";
 </script>
 
 <template>
-    <HelloWorld msg="Hello!" />
+    <Graph />
     <p>Checking the workflows run as they should</p>
 </template>
