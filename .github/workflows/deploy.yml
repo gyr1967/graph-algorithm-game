@@ -1,4 +1,4 @@
-name: Build and Deploy to GitHub Pages
+name: Build, Test and Deploy to GitHub Pages
 
 on:
   push:
@@ -21,6 +21,10 @@ jobs:
 
       - name: Install Dependencies
         run: npm ci
+        working-directory: game/frontend
+
+      - name: Test with Vitest
+        run: npm run test
         working-directory: game/frontend
 
       - name: Build
