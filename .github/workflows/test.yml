@@ -4,9 +4,13 @@ on:
   push:
     branches:
       - develop
+    paths:
+      - game/frontend/**
   pull_request:
     branches:
       - develop
+    paths:
+    - game/frontend/**
   workflow_dispatch:
 
 jobs:
