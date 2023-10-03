@@ -8,6 +8,8 @@ module.exports = {
   },
   plugins: ['@typescript-eslint'],
   rules: {
+    "@typescript-eslint/no-explicit-any": "warn",
     "vue/html-indent": "off",
+    "vue/multi-word-component-names": "off",
   },
 };
