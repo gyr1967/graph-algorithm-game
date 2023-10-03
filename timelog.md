@@ -69,3 +69,4 @@
 
 * *1.5 hour* | Investigate pedagogical approaches to teaching graph algorithms
 * *0.5 hour* | Write up pedagogical approaches in wiki, general research
+* *3 hours* | Set up CI/CD with GitHub Actions. Tried GCS initially hence the time spent, but it didn't work out so switched to GitHub Actions
