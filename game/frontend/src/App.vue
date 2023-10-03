@@ -4,5 +4,5 @@ import HelloWorld from "./components/HelloWorld.vue";
 
 <template>
     <HelloWorld msg="Hello!" />
-    <p>Dummy push to master</p>
+    <p>Checking the workflows run as they should</p>
 </template>
