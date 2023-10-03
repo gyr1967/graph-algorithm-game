@@ -4,5 +4,5 @@ import HelloWorld from "./components/HelloWorld.vue";
 
 <template>
     <HelloWorld msg="Hello!" />
-    <p>test</p>
+    <p>Dummy push to master</p>
 </template>
