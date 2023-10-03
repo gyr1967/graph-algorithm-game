@@ -58,3 +58,14 @@
 * *0.5 hours* | Synthesise and write up minutes properly
 * *0.5 hours* | Update pre-development wiki section with plans, goals, previous project critiques
 
+### 29 Sep 2023
+
+* *1 hour* | Pen and paper DFS/BFS to get a feel for how they will work in-game
+* *1 hour* | Pen and paper Dijkstra's to get a feel for how it will work in-game
+
+## Week 3
+
+### 03 Oct 2023
+
+* *1.5 hour* | Investigate pedagogical approaches to teaching graph algorithms
+* *0.5 hour* | Write up pedagogical approaches in wiki, general research
