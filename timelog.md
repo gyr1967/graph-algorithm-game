@@ -68,3 +68,4 @@
 ### 03 Oct 2023
 
 * *1.5 hour* | Investigate pedagogical approaches to teaching graph algorithms
+* *0.5 hour* | Write up pedagogical approaches in wiki, general research
