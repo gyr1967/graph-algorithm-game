@@ -10,7 +10,7 @@
     "prepare": "husky install"
   },
   "lint-staged": {
-    "**/*.{js,ts}": [
+    "**/*.{js,ts,vue}": [
       "eslint --fix",
       "prettier --write",
       "echo 'Linted: '"
