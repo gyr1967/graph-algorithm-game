@@ -1,5 +1,0 @@
-* BFS
-* DFS
-* Dijkstra's
-* A star
-
