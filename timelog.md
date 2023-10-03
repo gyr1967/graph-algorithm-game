@@ -62,3 +62,9 @@
 
 * *1 hour* | Pen and paper DFS/BFS to get a feel for how they will work in-game
 * *1 hour* | Pen and paper Dijkstra's to get a feel for how it will work in-game
+
+## Week 3
+
+### 03 Oct 2023
+
+* *1.5 hour* | Investigate pedagogical approaches to teaching graph algorithms
