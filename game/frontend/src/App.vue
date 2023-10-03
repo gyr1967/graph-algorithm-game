@@ -3,5 +3,6 @@ import HelloWorld from "./components/HelloWorld.vue";
 </script>
 
 <template>
-  <HelloWorld msg="Hello!" />
+    <HelloWorld msg="Hello!" />
+    <p>test</p>
 </template>
