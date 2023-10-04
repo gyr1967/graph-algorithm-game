@@ -1,9 +1,11 @@
-name: Build and Deploy to GitHub Pages
+name: Build, Test and Deploy to GitHub Pages
 
 on:
   push:
     branches:
       - master
+    paths:
+      - 'game/frontend/**'
   workflow_dispatch:
 
 jobs:
@@ -21,6 +23,10 @@ jobs:
 
       - name: Install Dependencies
         run: npm ci
+        working-directory: game/frontend
+
+      - name: Test with Vitest
+        run: npm run test
         working-directory: game/frontend
 
       - name: Build

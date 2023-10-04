@@ -1,8 +1,14 @@
 <script setup lang="ts">
-import HelloWorld from "./components/HelloWorld.vue";
+import Graph from "./components/Graph.vue";
+import GraphSizeSelector from "./components/GraphSizeSelector.vue";
+import { ref } from "vue";
+
+const graphSize = ref(4);
 </script>
 
 <template>
-    <HelloWorld msg="Hello!" />
-    <p>Dummy push to master</p>
+    <div class="flex flex-col items-center justify-center h-screen">
+        <Graph :key="graphSize" :graph-size="graphSize" />
+        <GraphSizeSelector v-model="graphSize" />
+    </div>
 </template>

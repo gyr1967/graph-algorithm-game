@@ -23,6 +23,8 @@ Week-by-week plan for the whole project. Update this as you go along.
   * Solidify main goal/aim of project (current is to have algorithms being carried out by the user and validated by computer)
   * Figure out what sets this project apart from the existing solutions/products
 * **Week 3**
+  * Set up GitHub actions, testing, deployment
+  * Start coding!
 * **Week 4**
 * **Week 5**
 * **Week 6**
