@@ -1,3 +1,4 @@
+/// <reference types="vitest" />
 import { defineConfig } from "vite";
 import vue from "@vitejs/plugin-vue";
 
@@ -8,4 +9,8 @@ export default defineConfig({
     },
     base: "/graph-algorithm-game/",
     plugins: [vue()],
+    test: {
+        globals: true,
+        environment: "jsdom",
+    },
 });

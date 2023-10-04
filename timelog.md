@@ -72,3 +72,4 @@
 * *3 hours* | Set up CI/CD with GitHub Actions. Tried GCR and Docker initially hence the time spent, but seemed like too much gun, so switched to GitHub Actions
 * *0.5 hour* | Set up Vitest
 * *0.5 hour* | README.md and general project setup
+* *1.5 hour* | Initial d3 graph setup - very simple, just to get a feel for how it works
