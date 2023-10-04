@@ -6,17 +6,19 @@
 import { ref, onMounted } from "vue";
 import * as d3 from "d3";
 import type Graph from "../types/Graph";
+import type { Node, Edge } from "../types/Graph";
+import type { SimulationNodeDatum } from "d3";
 
 const props = defineProps<{
     graphSize: number;
 }>();
 
 const generateGraphData = (nodeCount: number) => {
-    const nodes = Array.from({ length: nodeCount }, (_, i) => ({
+    const nodes: Node[] = Array.from({ length: nodeCount }, (_, i) => ({
         id: `${i + 1}`,
         name: i + 1,
     }));
-    const edges = nodes.map(() => ({
+    const edges: Edge[] = nodes.map(() => ({
         id: `${Math.floor(Math.random() * nodeCount) + 1}-${
             Math.floor(Math.random() * nodeCount) + 1
         }`,
@@ -42,7 +44,9 @@ onMounted(() => {
             .forceSimulation(graphData.nodes)
             .force(
                 "link",
-                d3.forceLink(graphData.edges).id((d: { id: any }) => d.id),
+                d3
+                    .forceLink(graphData.edges)
+                    .id((d: SimulationNodeDatum) => (d as Node).id),
             )
             .force("charge", d3.forceManyBody())
             .force("center", d3.forceCenter(300, 300));
