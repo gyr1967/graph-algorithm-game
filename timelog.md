@@ -73,3 +73,7 @@
 * *0.5 hour* | Set up Vitest
 * *0.5 hour* | README.md and general project setup
 * *1.5 hour* | Initial d3 graph setup - very simple, just to get a feel for how it works
+
+### 04 Oct 2023
+
+* *6 hours* | Coding - initial graph setup, randomly generated. deployed to GitHub Pages
