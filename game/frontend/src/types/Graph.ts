@@ -1,14 +1,16 @@
-export default interface Graph {
-    nodes: Node[];
-    edges: Edge[];
+import { SimulationLinkDatum, SimulationNodeDatum } from "d3";
+
+export default interface GraphData {
+    nodesData: NodeData[];
+    edgesData: EdgeData[];
 }
 
-export interface Node {
+export interface NodeData extends SimulationNodeDatum {
     id: string;
     name: number;
 }
 
-export interface Edge {
+export interface EdgeData extends SimulationLinkDatum<NodeData> {
     id: string;
     source: string;
     target: string;

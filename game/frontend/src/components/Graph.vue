@@ -5,25 +5,28 @@
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
 import * as d3 from "d3";
-import type Graph from "../types/Graph";
+import type GraphData from "../types/Graph";
+import type { NodeData, EdgeData } from "../types/Graph";
 
 const props = defineProps<{
     graphSize: number;
 }>();
 
 const generateGraphData = (nodeCount: number) => {
-    const nodes = Array.from({ length: nodeCount }, (_, i) => ({
+    const nodesData: NodeData[] = Array.from({ length: nodeCount }, (_, i) => ({
         id: `${i + 1}`,
         name: i + 1,
     }));
-    const edges = nodes.map(() => ({
-        id: `${Math.floor(Math.random() * nodeCount) + 1}-${
-            Math.floor(Math.random() * nodeCount) + 1
-        }`,
-        source: `${Math.floor(Math.random() * nodeCount) + 1}`,
-        target: `${Math.floor(Math.random() * nodeCount) + 1}`,
-    }));
-    const graphData: Graph = { nodes, edges };
+    const edgesData: EdgeData[] = nodesData.map(() => {
+        const source = Math.floor(Math.random() * nodeCount) + 1;
+        const target = Math.floor(Math.random() * nodeCount) + 1;
+        return {
+            id: `${source}-${target}`,
+            source: `${source}`,
+            target: `${target}`,
+        };
+    });
+    const graphData: GraphData = { nodesData, edgesData };
     return graphData;
 };
 const graphData = generateGraphData(props.graphSize);
@@ -39,10 +42,10 @@ onMounted(() => {
             .attr("height", 600);
 
         const simulation = d3
-            .forceSimulation(graphData.nodes)
+            .forceSimulation(graphData.nodesData)
             .force(
                 "link",
-                d3.forceLink(graphData.edges).id((d: { id: any }) => d.id),
+                d3.forceLink(graphData.edgesData).id((d: any) => d.id),
             )
             .force("charge", d3.forceManyBody())
             .force("center", d3.forceCenter(300, 300));
@@ -52,7 +55,7 @@ onMounted(() => {
             .attr("stroke", "#999")
             .attr("stroke-opacity", 0.6)
             .selectAll("line")
-            .data(graphData.edges)
+            .data(graphData.edgesData)
             .join("line")
             .attr("stroke-width", 2);
 
@@ -61,7 +64,7 @@ onMounted(() => {
             .attr("stroke", "#fff")
             .attr("stroke-width", 1.5)
             .selectAll("circle")
-            .data(graphData.nodes)
+            .data(graphData.nodesData)
             .join("circle")
             .attr("r", 10)
             .attr("fill", "#69b3a2");
@@ -69,7 +72,7 @@ onMounted(() => {
         const labels = svg
             .append("g")
             .selectAll("text")
-            .data(graphData.nodes)
+            .data(graphData.nodesData)
             .join("text")
             .attr("x", (d: any) => d.x)
             .attr("y", (d: any) => d.y)
