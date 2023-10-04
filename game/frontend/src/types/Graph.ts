@@ -12,6 +12,4 @@ export interface NodeData extends SimulationNodeDatum {
 
 export interface EdgeData extends SimulationLinkDatum<NodeData> {
     id: string;
-    source: string;
-    target: string;
 }
