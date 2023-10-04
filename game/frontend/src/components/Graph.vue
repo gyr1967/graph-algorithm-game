@@ -5,16 +5,28 @@
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
 import * as d3 from "d3";
+import type Graph from "../types/Graph";
 
-const graphData = {
-    nodes: [{ id: "1" }, { id: "2" }, { id: "3" }, { id: "4" }],
-    links: [
-        { source: "1", target: "2" },
-        { source: "2", target: "3" },
-        { source: "3", target: "4" },
-        { source: "4", target: "1" },
-    ],
+const props = defineProps<{
+    graphSize: number;
+}>();
+
+const generateGraphData = (nodeCount: number) => {
+    const nodes = Array.from({ length: nodeCount }, (_, i) => ({
+        id: `${i + 1}`,
+        name: i + 1,
+    }));
+    const edges = nodes.map(() => ({
+        id: `${Math.floor(Math.random() * nodeCount) + 1}-${
+            Math.floor(Math.random() * nodeCount) + 1
+        }`,
+        source: `${Math.floor(Math.random() * nodeCount) + 1}`,
+        target: `${Math.floor(Math.random() * nodeCount) + 1}`,
+    }));
+    const graphData: Graph = { nodes, edges };
+    return graphData;
 };
+const graphData = generateGraphData(props.graphSize);
 
 const d3Container = ref<HTMLElement | null>(null);
 
@@ -30,7 +42,7 @@ onMounted(() => {
             .forceSimulation(graphData.nodes)
             .force(
                 "link",
-                d3.forceLink(graphData.links).id((d: { id: any }) => d.id),
+                d3.forceLink(graphData.edges).id((d: { id: any }) => d.id),
             )
             .force("charge", d3.forceManyBody())
             .force("center", d3.forceCenter(300, 300));
@@ -40,7 +52,7 @@ onMounted(() => {
             .attr("stroke", "#999")
             .attr("stroke-opacity", 0.6)
             .selectAll("line")
-            .data(graphData.links)
+            .data(graphData.edges)
             .join("line")
             .attr("stroke-width", 2);
 
@@ -54,6 +66,20 @@ onMounted(() => {
             .attr("r", 10)
             .attr("fill", "#69b3a2");
 
+        const labels = svg
+            .append("g")
+            .selectAll("text")
+            .data(graphData.nodes)
+            .join("text")
+            .attr("x", (d: any) => d.x)
+            .attr("y", (d: any) => d.y)
+            .text((d: any) => d.name)
+            .attr("font-family", "sans-serif")
+            .attr("font-size", "15px")
+            .attr("fill", "black")
+            .attr("text-anchor", "middle")
+            .attr("dy", "0.35em");
+
         simulation.on("tick", () => {
             link.attr("x1", (d: any) => d.source.x)
                 .attr("y1", (d: any) => d.source.y)
@@ -61,6 +87,7 @@ onMounted(() => {
                 .attr("y2", (d: any) => d.target.y);
 
             node.attr("cx", (d: any) => d.x).attr("cy", (d: any) => d.y);
+            labels.attr("x", (d: any) => d.x).attr("y", (d: any) => d.y);
         });
     }
 });
