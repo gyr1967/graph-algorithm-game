@@ -77,3 +77,8 @@
 ### 04 Oct 2023
 
 * *6 hours* | Coding - initial graph setup, randomly generated. deployed to GitHub Pages
+
+### 05 Oct 2023
+
+* *0.5 hour* | Supervisor meeting
+* *0.5 hour* | Synthesise and write up minutes properly
