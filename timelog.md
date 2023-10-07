@@ -82,3 +82,7 @@
 
 * *0.5 hour* | Supervisor meeting
 * *0.5 hour* | Synthesise and write up minutes properly
+
+### 08 Oct 2023
+
+* *1.5 hour* | Focus group with family - taught parents breadth-first search to see what the learning process looks like on paper and how the website should work
