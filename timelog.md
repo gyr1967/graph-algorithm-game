@@ -86,3 +86,9 @@
 ### 08 Oct 2023
 
 * *1.5 hour* | Focus group with family - taught parents breadth-first search to see what the learning process looks like on paper and how the website should work
+
+## Week 4
+
+### 10 Oct 2023
+
+* *0.5 hour* | Run through BFS with flatmate R
