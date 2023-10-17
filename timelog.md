@@ -92,3 +92,10 @@
 ### 10 Oct 2023
 
 * *0.5 hour* | Run through BFS with flatmate R
+
+## Week 5
+
+### 17 Oct 2023
+
+* *1.5 hours* | Read over notes from supervisor meetings and flatmate focus group, get project velocity/awareness back up
+* *2 hours* | Start wireframing 
