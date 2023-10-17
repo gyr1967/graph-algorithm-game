@@ -27,7 +27,10 @@ Week-by-week plan for the whole project. Update this as you go along.
   * Start coding - initial D3 familiarisation
   * Get some data on what people struggle with when learning graph algorithms - using non-compsci students as guineapigs
 * **Week 4**
+  * Run flatmate study
 * **Week 5**
+  * Update requirements
+  * Wireframing
 * **Week 6**
 * **Week 7**
 * **Week 8**
