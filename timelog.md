@@ -100,3 +100,7 @@
 * *1 hour* | Read over notes from supervisor meetings and flatmate focus group, get project velocity/awareness back up
 * *0.5 hour* | Update MoSCoW requirements
 * *2 hours* | Start wireframing 
+
+### 18 Oct 2023
+
+* *2 hours* | Wireframing
