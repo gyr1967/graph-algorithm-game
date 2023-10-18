@@ -104,3 +104,4 @@
 ### 18 Oct 2023
 
 * *2 hours* | Wireframing
+* *3 hours* | Persevere with D3, going to abandon and use SVGs instead
