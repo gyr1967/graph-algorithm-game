@@ -1,10 +1,11 @@
 import type GraphData from "../types/Graph";
 import type { NodeData, EdgeData } from "../types/Graph";
+import { numToLetter } from "./num-to-letter";
 
 export const generateGraphData = (nodeCount: number) => {
     const nodesData: NodeData[] = Array.from({ length: nodeCount }, (_, i) => ({
         id: `${i + 1}`,
-        name: i + 1,
+        name: numToLetter[i + 1],
     }));
 
     const edgesData: EdgeData[] = [];

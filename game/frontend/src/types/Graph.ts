@@ -7,7 +7,7 @@ export default interface GraphData {
 
 export interface NodeData extends SimulationNodeDatum {
     id: string;
-    name: number;
+    name: string;
 }
 
 export interface EdgeData extends SimulationLinkDatum<NodeData> {
