@@ -20,17 +20,20 @@ onMounted(() => {
         const svg = d3
             .select(d3Container.value)
             .append("svg")
-            .attr("width", 600)
-            .attr("height", 600);
+            .attr("width", 700)
+            .attr("height", 700);
 
         const simulation = d3
             .forceSimulation(graphData.nodesData)
             .force(
                 "link",
-                d3.forceLink(graphData.edgesData).id((d: any) => d.id),
+                d3
+                    .forceLink(graphData.edgesData)
+                    .id((d: any) => d.id)
+                    .distance(100),
             )
             .force("charge", d3.forceManyBody())
-            .force("center", d3.forceCenter(300, 300));
+            .force("center", d3.forceCenter(350, 350));
 
         const link = svg
             .append("g")
@@ -39,7 +42,7 @@ onMounted(() => {
             .selectAll("line")
             .data(graphData.edgesData)
             .join("line")
-            .attr("stroke-width", 2);
+            .attr("stroke-width", 3);
 
         const node = svg
             .append("g")
@@ -48,7 +51,7 @@ onMounted(() => {
             .selectAll("circle")
             .data(graphData.nodesData)
             .join("circle")
-            .attr("r", 10)
+            .attr("r", 15)
             .attr("fill", "#69b3a2");
 
         const labels = svg
