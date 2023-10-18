@@ -5,30 +5,12 @@
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
 import * as d3 from "d3";
-import type GraphData from "../types/Graph";
-import type { NodeData, EdgeData } from "../types/Graph";
+import { generateGraphData } from "../utils/generate-graph";
 
 const props = defineProps<{
     graphSize: number;
 }>();
 
-const generateGraphData = (nodeCount: number) => {
-    const nodesData: NodeData[] = Array.from({ length: nodeCount }, (_, i) => ({
-        id: `${i + 1}`,
-        name: i + 1,
-    }));
-    const edgesData: EdgeData[] = nodesData.map(() => {
-        const source = Math.floor(Math.random() * nodeCount) + 1;
-        const target = Math.floor(Math.random() * nodeCount) + 1;
-        return {
-            id: `${source}-${target}`,
-            source: `${source}`,
-            target: `${target}`,
-        };
-    });
-    const graphData: GraphData = { nodesData, edgesData };
-    return graphData;
-};
 const graphData = generateGraphData(props.graphSize);
 
 const d3Container = ref<HTMLElement | null>(null);
