@@ -14,3 +14,12 @@ test("generateGraphData has at least n-1 number edges", () => {
     const { edgesData: edgesData2 } = generateGraphData(10);
     expect(edgesData2.length).toBeGreaterThanOrEqual(9);
 });
+
+test("generateGraphData assigns proper names to vertices", () => {
+    const { nodesData } = generateGraphData(5);
+    expect(nodesData[0].name).toBe("A");
+    expect(nodesData[1].name).toBe("B");
+    expect(nodesData[2].name).toBe("C");
+    expect(nodesData[3].name).toBe("D");
+    expect(nodesData[4].name).toBe("E");
+});
