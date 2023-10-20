@@ -5,7 +5,7 @@ import GraphSizeSelector from "../src/components/GraphSizeSelector.vue";
 test("text appears as expected", () => {
     const wrapper = mount(GraphSizeSelector);
 
-    expect(wrapper.text()).toContain("Number of Vertices");
+    expect(wrapper.text()).toContain("Zoom");
 });
 
 test("changing slider changes value", async () => {
