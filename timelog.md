@@ -105,3 +105,7 @@
 
 * *2 hours* | Wireframing
 * *3 hours* | Persevere with D3, going to abandon and use SVGs instead
+
+### 20 Oct 2023
+
+* *3 hours* | Coding - remove D3, add SVG
