@@ -1,0 +1,27 @@
+* want ot be able to generalise - don't learn the word 'the' learn how to read! teach a man to fish etc
+
+* come up with some wireframe examples and present it to an education lecturer 
+
+* practice is really important in commiting it to long term
+
+* leaning on the side of teach one thing and teach it really well
+
+* could start basic - teaching the concept of finding the shortest path and then explaining dijkstra's algorithm that tells the computer how to do it.
+
+* best to start simple and increase the complexity to a certain point.
+
+* for dijkstras could maybe explain why we use dijkstra's instead of brute-forcing all possibilities - time complexity
+
+* went through the bfs demo with mum, came t oconclusion that hte next step would be 'now try it yourself!' - explain how it works then consolidate with the person actually doing it.
+
+* make sure pre-requisite knowledge is taught or at least acknowledged is needed. for dijkstras you need ot know what a graph DS is, what a weighted graph is, what a queue is. 
+
+* will be easiest to assume a base level of knowledge
+
+* personal thought -- baby them for bfs/dfs by explaining what a graph DS is, what a queue is etc. The nfor dijktras, say that a base-level of knowledge is required?
+
+* HIGHLIGHT THE PSEUDOCODE STEP AND THEN GET HTE PERSON TO DO IT!! THE COMPUTER GIVES INSTRUCTIONS 
+
+* was helpful to make it clear that the computer isnt some guy walkign to each vertex
+
+* the best way to understand code/pseudocode is to execute it yourself.  

@@ -3,7 +3,7 @@ import { ref, watch } from "vue";
 
 const emit = defineEmits(["update:modelValue"]);
 
-const graphSize = ref(4);
+const graphSize = ref(1);
 
 watch(graphSize, (newGraphSize) => {
     emit("update:modelValue", newGraphSize);
@@ -12,14 +12,14 @@ watch(graphSize, (newGraphSize) => {
 
 <template>
     <div class="flex items-center">
-        <label class="mr-2">Number of Vertices</label>
+        <label class="mr-2">Zoom</label>
         <div class="flex">
             <input
                 v-model="graphSize"
                 type="range"
-                min="4"
-                max="12"
-                step="1"
+                min="1"
+                max="2"
+                step="0.1"
                 class="mr-2"
             />
             <p>{{ graphSize }}</p>

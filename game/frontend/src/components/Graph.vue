@@ -1,97 +1,40 @@
-<template>
-    <div ref="d3Container" />
-</template>
-
 <script setup lang="ts">
-import { ref, onMounted } from "vue";
-import * as d3 from "d3";
-import type GraphData from "../types/Graph";
-import type { NodeData, EdgeData } from "../types/Graph";
-
-const props = defineProps<{
-    graphSize: number;
+import Node from "./Node.vue";
+import Link from "./Link.vue";
+import { linkData, nodeData } from "../utils/graph-data";
+defineProps<{
+    scalingFactor: number;
 }>();
-
-const generateGraphData = (nodeCount: number) => {
-    const nodesData: NodeData[] = Array.from({ length: nodeCount }, (_, i) => ({
-        id: `${i + 1}`,
-        name: i + 1,
-    }));
-    const edgesData: EdgeData[] = nodesData.map(() => {
-        const source = Math.floor(Math.random() * nodeCount) + 1;
-        const target = Math.floor(Math.random() * nodeCount) + 1;
-        return {
-            id: `${source}-${target}`,
-            source: `${source}`,
-            target: `${target}`,
-        };
-    });
-    const graphData: GraphData = { nodesData, edgesData };
-    return graphData;
-};
-const graphData = generateGraphData(props.graphSize);
-
-const d3Container = ref<HTMLElement | null>(null);
-
-onMounted(() => {
-    if (d3Container.value) {
-        const svg = d3
-            .select(d3Container.value)
-            .append("svg")
-            .attr("width", 600)
-            .attr("height", 600);
-
-        const simulation = d3
-            .forceSimulation(graphData.nodesData)
-            .force(
-                "link",
-                d3.forceLink(graphData.edgesData).id((d: any) => d.id),
-            )
-            .force("charge", d3.forceManyBody())
-            .force("center", d3.forceCenter(300, 300));
-
-        const link = svg
-            .append("g")
-            .attr("stroke", "#999")
-            .attr("stroke-opacity", 0.6)
-            .selectAll("line")
-            .data(graphData.edgesData)
-            .join("line")
-            .attr("stroke-width", 2);
-
-        const node = svg
-            .append("g")
-            .attr("stroke", "#fff")
-            .attr("stroke-width", 1.5)
-            .selectAll("circle")
-            .data(graphData.nodesData)
-            .join("circle")
-            .attr("r", 10)
-            .attr("fill", "#69b3a2");
-
-        const labels = svg
-            .append("g")
-            .selectAll("text")
-            .data(graphData.nodesData)
-            .join("text")
-            .attr("x", (d: any) => d.x)
-            .attr("y", (d: any) => d.y)
-            .text((d: any) => d.name)
-            .attr("font-family", "sans-serif")
-            .attr("font-size", "15px")
-            .attr("fill", "black")
-            .attr("text-anchor", "middle")
-            .attr("dy", "0.35em");
-
-        simulation.on("tick", () => {
-            link.attr("x1", (d: any) => d.source.x)
-                .attr("y1", (d: any) => d.source.y)
-                .attr("x2", (d: any) => d.target.x)
-                .attr("y2", (d: any) => d.target.y);
-
-            node.attr("cx", (d: any) => d.x).attr("cy", (d: any) => d.y);
-            labels.attr("x", (d: any) => d.x).attr("y", (d: any) => d.y);
-        });
-    }
-});
+const nodeFill = "#3498db";
 </script>
+<template>
+    <svg
+        class="graph-svg"
+        :width="350 * scalingFactor"
+        :height="300 * scalingFactor"
+    >
+        <g
+            v-for="link in linkData"
+            :key="link.x1 + link.y1 + link.x2 + link.y2"
+        >
+            <Link
+                :x1="link.x1 * scalingFactor"
+                :y1="link.y1 * scalingFactor"
+                :x2="link.x2 * scalingFactor"
+                :y2="link.y2 * scalingFactor"
+                :stroke="link.stroke"
+                :stroke-width="link.strokeWidth"
+                :text="link.text"
+            />
+        </g>
+        <g v-for="node in nodeData" :key="node.id">
+            <Node
+                :cx="node.x * scalingFactor"
+                :cy="node.y * scalingFactor"
+                :r="20 * scalingFactor"
+                :fill="nodeFill"
+                :text="node.id"
+            />
+        </g>
+    </svg>
+</template>

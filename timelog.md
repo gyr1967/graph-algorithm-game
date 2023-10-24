@@ -73,3 +73,39 @@
 * *0.5 hour* | Set up Vitest
 * *0.5 hour* | README.md and general project setup
 * *1.5 hour* | Initial d3 graph setup - very simple, just to get a feel for how it works
+
+### 04 Oct 2023
+
+* *6 hours* | Coding - initial graph setup, randomly generated. deployed to GitHub Pages
+
+### 05 Oct 2023
+
+* *0.5 hour* | Supervisor meeting
+* *0.5 hour* | Synthesise and write up minutes properly
+
+### 08 Oct 2023
+
+* *1.5 hour* | Focus group with family - taught parents breadth-first search to see what the learning process looks like on paper and how the website should work
+
+## Week 4
+
+### 10 Oct 2023
+
+* *0.5 hour* | Run through BFS with flatmate R
+
+## Week 5
+
+### 17 Oct 2023
+
+* *1 hour* | Read over notes from supervisor meetings and flatmate focus group, get project velocity/awareness back up
+* *0.5 hour* | Update MoSCoW requirements
+* *2 hours* | Start wireframing 
+
+### 18 Oct 2023
+
+* *2 hours* | Wireframing
+* *3 hours* | Persevere with D3, going to abandon and use SVGs instead
+
+### 20 Oct 2023
+
+* *3 hours* | Coding - remove D3, add SVG

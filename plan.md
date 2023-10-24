@@ -24,9 +24,13 @@ Week-by-week plan for the whole project. Update this as you go along.
   * Figure out what sets this project apart from the existing solutions/products
 * **Week 3**
   * Set up GitHub actions, testing, deployment
-  * Start coding!
+  * Start coding - initial D3 familiarisation
+  * Get some data on what people struggle with when learning graph algorithms - using non-compsci students as guineapigs
 * **Week 4**
+  * Run flatmate study
 * **Week 5**
+  * Update requirements
+  * Wireframing
 * **Week 6**
 * **Week 7**
 * **Week 8**
