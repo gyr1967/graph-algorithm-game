@@ -2,10 +2,17 @@
 import Node from "./Node.vue";
 import Link from "./Link.vue";
 import { linkData, nodeData } from "../utils/graph-data";
+import { onMounted, ref } from "vue";
 defineProps<{
     scalingFactor: number;
 }>();
 const nodeFill = "#3498db";
+const nodeColours = ref<Record<string, string>>({});
+onMounted(() => {
+    nodeData.forEach((node) => {
+        nodeColours.value[node.id] = nodeFill;
+    });
+});
 </script>
 <template>
     <svg
@@ -32,7 +39,7 @@ const nodeFill = "#3498db";
                 :cx="node.x * scalingFactor"
                 :cy="node.y * scalingFactor"
                 :r="20 * scalingFactor"
-                :fill="nodeFill"
+                :fill="nodeColours[node.id]"
                 :text="node.id"
             />
         </g>
