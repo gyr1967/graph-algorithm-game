@@ -1,13 +1,14 @@
 <script setup lang="ts">
-import Graph from "../components/Graph.vue";
-import GraphSizeSelector from "../components/GraphSizeSelector.vue";
-import { ref } from "vue";
-const graphSize = ref(1);
+const root = "/graph-algorithm-game";
 </script>
 
 <template>
     <div class="flex flex-col items-center justify-center h-screen">
-        <Graph :scaling-factor="graphSize" />
-        <GraphSizeSelector v-model="graphSize" />
+        <RouterLink
+            class="bg-white rounded-sm text-black p-2 text-xl hover:bg-gray-400"
+            :to="`${root}/game/bfs`"
+        >
+            BFS
+        </RouterLink>
     </div>
 </template>

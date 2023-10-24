@@ -8,6 +8,11 @@ defineProps<{
 }>();
 const nodeFill = "#3498db";
 const nodeColours = ref<Record<string, string>>({});
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const changeNodeColour = (nodeId: string, colour: string) => {
+    nodeColours.value[nodeId] = colour;
+};
+
 onMounted(() => {
     nodeData.forEach((node) => {
         nodeColours.value[node.id] = nodeFill;
