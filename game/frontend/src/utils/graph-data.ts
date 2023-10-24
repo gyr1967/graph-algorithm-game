@@ -1,4 +1,6 @@
-export const nodeData = [
+import { NodeData, EdgeData } from "../types/Graph";
+
+export const nodeData: NodeData[] = [
     {
         id: "A",
         x: 50,
@@ -36,7 +38,7 @@ export const nodeData = [
     },
 ];
 
-export const nodeDataObj = {
+const nodeDataObj = {
     A: {
         id: "A",
         x: 50,
@@ -74,7 +76,7 @@ export const nodeDataObj = {
     },
 };
 
-export const linkData = [
+export const linkData: EdgeData[] = [
     {
         x1: nodeDataObj["B"].x,
         y1: nodeDataObj["B"].y,
