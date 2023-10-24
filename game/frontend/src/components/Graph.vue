@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import Node from "./Node.vue";
 import Link from "./Link.vue";
-import { nodeData, linkData } from "../utils/graph-data";
+import { linkData, nodeData } from "../utils/graph-data";
 defineProps<{
     scalingFactor: number;
 }>();
