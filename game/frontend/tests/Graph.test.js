@@ -6,6 +6,7 @@ test("component renders with the correct width and height", () => {
     const scalingFactor = 2;
     const wrapper = mount(Graph, {
         props: {
+            whichGraphData: 1,
             scalingFactor,
         },
     });
@@ -22,6 +23,7 @@ test("component renders the correct number of nodes and links", () => {
     const scalingFactor = 1;
     const wrapper = mount(Graph, {
         props: {
+            whichGraphData: 1,
             scalingFactor,
         },
     });
