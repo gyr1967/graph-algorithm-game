@@ -109,3 +109,14 @@
 ### 20 Oct 2023
 
 * *3 hours* | Coding - remove D3, add SVG
+
+## Week 6
+
+### 24 Oct 2023
+
+* *6.5 hours* | Coding - landing page, navigation, SVG and beginnings of dynamic SVG styling
+
+### 26 Oct 2023
+
+* *0.5 hours* | Supervisor meeting
+* *0.5 hours* | Synthesise and write up minutes properly
