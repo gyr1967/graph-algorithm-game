@@ -1,11 +1,14 @@
 <script setup lang="ts">
 import Node from "./Node.vue";
 import Link from "./Link.vue";
-import { linkData, nodeData } from "../utils/graph-data";
+import { linkDatas, nodeDatas } from "../utils/graph-data";
 import { onMounted, ref } from "vue";
-defineProps<{
+const props = defineProps<{
+    whichGraphData: number;
     scalingFactor: number;
 }>();
+const nodeData = nodeDatas[props.whichGraphData];
+const linkData = linkDatas[props.whichGraphData];
 const nodeFill = "#3498db";
 const nodeColours = ref<Record<string, string>>({});
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -14,8 +17,8 @@ const changeNodeColour = (nodeId: string, colour: string) => {
 };
 
 onMounted(() => {
-    nodeData.forEach((node) => {
-        nodeColours.value[node.id] = nodeFill;
+    Object.keys(nodeData).forEach((key) => {
+        nodeColours.value[nodeData[key].id] = nodeFill;
     });
 });
 </script>
@@ -39,13 +42,13 @@ onMounted(() => {
                 :text="link.text"
             />
         </g>
-        <g v-for="node in nodeData" :key="node.id">
+        <g v-for="mykey in Object.keys(nodeData)" :key="mykey">
             <Node
-                :cx="node.x * scalingFactor"
-                :cy="node.y * scalingFactor"
+                :cx="nodeData[mykey].x * scalingFactor"
+                :cy="nodeData[mykey].y * scalingFactor"
                 :r="20 * scalingFactor"
-                :fill="nodeColours[node.id]"
-                :text="node.id"
+                :fill="nodeColours[nodeData[mykey].id]"
+                :text="nodeData[mykey].id"
             />
         </g>
     </svg>

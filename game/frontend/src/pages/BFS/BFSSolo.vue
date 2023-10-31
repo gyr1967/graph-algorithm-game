@@ -13,7 +13,7 @@ const graphSize = ref(1);
             <BFSPseudo />
         </div>
         <div class="text-center">
-            <Graph :scaling-factor="graphSize" />
+            <Graph :which-graph-data="1" :scaling-factor="graphSize" />
             <GraphSizeSelector v-model="graphSize" />
         </div>
     </div>
