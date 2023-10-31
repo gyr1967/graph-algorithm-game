@@ -2,7 +2,7 @@
 import Node from "./Node.vue";
 import Link from "./Link.vue";
 import { linkDatas, nodeDatas } from "../utils/graph-data";
-import { onMounted, ref } from "vue";
+import { ref } from "vue";
 const props = defineProps<{
     whichGraphData: number;
     scalingFactor: number;
@@ -11,16 +11,13 @@ const nodeData = nodeDatas[props.whichGraphData];
 const linkData = linkDatas[props.whichGraphData];
 const nodeFill = "#3498db";
 const nodeColours = ref<Record<string, string>>({});
+Object.keys(nodeData).forEach((key) => {
+    nodeColours.value[nodeData[key].id] = nodeFill;
+});
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const changeNodeColour = (nodeId: string, colour: string) => {
     nodeColours.value[nodeId] = colour;
 };
-
-onMounted(() => {
-    Object.keys(nodeData).forEach((key) => {
-        nodeColours.value[nodeData[key].id] = nodeFill;
-    });
-});
 </script>
 <template>
     <svg
