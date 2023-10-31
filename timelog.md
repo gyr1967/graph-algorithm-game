@@ -120,3 +120,9 @@
 
 * *0.5 hours* | Supervisor meeting
 * *0.5 hours* | Synthesise and write up minutes properly
+
+## Week 7
+
+### 31 Oct 2023
+
+* *5 hours* | Coding (not particularly productive)
