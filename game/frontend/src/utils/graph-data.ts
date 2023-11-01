@@ -1,4 +1,4 @@
-import { NodeDatas, EdgeDatas } from "../types/Graph";
+import { NodeDatas, EdgeDatas } from "../types/GraphData";
 
 export const nodeDatas: NodeDatas = {
     1: {
