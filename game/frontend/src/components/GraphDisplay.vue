@@ -2,7 +2,8 @@
 import Node from "./Node.vue";
 import Link from "./Link.vue";
 import { linkDatas, nodeDatas } from "../utils/graph-data";
-import { ref } from "vue";
+import { ref, watch } from "vue";
+import Graph from "../graph/Graph";
 const props = defineProps<{
     whichGraphData: number;
     scalingFactor: number;
@@ -18,6 +19,15 @@ Object.keys(nodeData).forEach((key) => {
 const changeNodeColour = (nodeId: string, colour: string) => {
     nodeColours.value[nodeId] = colour;
 };
+const graph = new Graph(4);
+const visited = ref(graph.visited);
+graph.bfs(graph.getVertex(0));
+// watch graph.visited
+watch(visited, (visited) => {
+    visited.forEach(() => {
+        changeNodeColour("A", "#2ecc71");
+    });
+});
 </script>
 <template>
     <svg
