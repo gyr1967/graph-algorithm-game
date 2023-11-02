@@ -126,3 +126,12 @@
 ### 31 Oct 2023
 
 * *5 hours* | Coding (not particularly productive)
+
+### 01 Nov 2023
+
+* *4 hours* | Coding - making SVG style reactive
+
+### 02 Nov 2023
+
+* *0.5 hours* | Paper wireframing for how user interacts (figma too time consuming for just a rough idea)
+* *0.5 hours* | Prep for supervisor meeting
