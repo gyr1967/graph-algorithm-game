@@ -135,3 +135,5 @@
 
 * *0.5 hours* | Paper wireframing for how user interacts (figma too time consuming for just a rough idea)
 * *0.5 hours* | Prep for supervisor meeting
+* *0.5 hours* | Supervisor meeting
+* *0.5 hours* | Synthesise and write up minutes properly
