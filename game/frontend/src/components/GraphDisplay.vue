@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import Node from "./Node.vue";
 import Link from "./Link.vue";
+import BFSMediaControlsVue from "./BFSMediaControls.vue";
+import AdjListVertex from "../graph/AdjListVertex.ts";
+import Vertex from "../graph/Vertex.ts";
 import { linkDatas, nodeDatas } from "../utils/graph-data";
 import { letterToNum, numToLetter } from "../utils/num-to-letter";
 import { ref } from "vue";
@@ -8,9 +11,6 @@ const props = defineProps<{
     whichGraphData: number;
     scalingFactor: number;
 }>();
-//
-import AdjListVertex from "../graph/AdjListVertex.ts";
-import Vertex from "../graph/Vertex.ts";
 
 class Graph {
     numVertices: number;
@@ -40,7 +40,7 @@ class Graph {
         nodeColours.value[nodeId] = colour;
     };
 
-    bfs(startVertex: Vertex) {
+    *bfsGenerator(startVertex: Vertex) {
         this.vertices.map((v) => {
             v.setVisited(false);
         });
@@ -60,7 +60,6 @@ class Graph {
             // mark v as visited
             currentVertex.setVisited(true);
             this.visited.add(currentVertex.getIndex());
-            console.log("changing the colour", queue);
             this.changeNodeColour(
                 numToLetter[currentVertex.getIndex() + 1],
                 "#e74c3c",
@@ -70,21 +69,24 @@ class Graph {
                 .filter((alv: AdjListVertex) => {
                     return !this.visited.has(alv.getVertexIndex());
                 });
-            console.log(currentVertex.getAdjList());
+            console.log(
+                currentVertex.getAdjList(),
+                "current vertex adj list and then the current vertex: ",
+                currentVertex,
+            );
             console.log("unvisitedAdjacents", unvisitedAdjacents);
+            console.log("visited", this.visited);
             // add all of v's unvisited neighbours to the queue
             for (const vertex of unvisitedAdjacents) {
                 const i = vertex.getVertexIndex();
                 const nextVertex = this.vertices[i];
-                this.visited.add(nextVertex.getIndex());
                 queue.push(nextVertex);
             }
+            yield this.visited;
         }
-        return this.visited;
     }
 }
 
-//
 const nodeData = nodeDatas[props.whichGraphData];
 const linkData = linkDatas[props.whichGraphData];
 const nodeFill = "#3498db";
@@ -106,19 +108,29 @@ const setUpGraph = (n: number) => {
     return graph;
 };
 const graph = setUpGraph(Object.entries(nodeData).length);
+const currentStep = ref<number>(-1); // Initialize to -1 to indicate not started
+const bfsGenerator = ref<Generator<Set<number>, void, unknown> | null>(null);
 
-console.log(graph);
+const startBFS = () => {
+    const generator = graph.bfsGenerator(graph.getVertex(0));
+    bfsGenerator.value = generator;
+    currentStep.value = 0;
+    performBFSStep();
+};
+
+const performBFSStep = () => {
+    if (bfsGenerator.value) {
+        const result = bfsGenerator.value.next();
+        if (result.done) {
+            bfsGenerator.value = null;
+            currentStep.value = -1;
+        } else {
+            currentStep.value++;
+        }
+    }
+};
 </script>
 <template>
-    <button
-        @click="
-            () => {
-                graph.bfs(graph.getVertex(0));
-            }
-        "
-    >
-        BFS
-    </button>
     <svg
         class="graph-svg"
         :width="350 * scalingFactor"
@@ -148,4 +160,10 @@ console.log(graph);
             />
         </g>
     </svg>
+    <BFSMediaControlsVue
+        :started="currentStep !== -1"
+        @start-b-f-s="startBFS()"
+        @next-step-b-f-s="performBFSStep()"
+        @prev-step-b-f-s="console.log('previous step init')"
+    />
 </template>
