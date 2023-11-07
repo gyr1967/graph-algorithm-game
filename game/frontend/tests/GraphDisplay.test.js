@@ -1,5 +1,6 @@
 import { mount } from "@vue/test-utils";
 import { expect, test } from "vitest";
+import AdjListVertex from "../src/graph/AdjListVertex";
 import GraphDisplay from "../src/components/GraphDisplay.vue";
 
 test("component renders with the correct width and height", () => {
@@ -34,4 +35,66 @@ test("component renders the correct number of nodes and links", () => {
     expect(svgHtml).toContain(`circle cx="250" cy="50"`);
     expect(svgHtml).toContain(`line x1="150" y1="50" x2="250" y2="50"`);
     expect(svgHtml).toContain(`line x1="50" y1="50" x2="150" y2="50"`);
+});
+
+test("graph data structure has the correct number of vertices", () => {
+    const scalingFactor = 1;
+    const wrapper = mount(GraphDisplay, {
+        props: {
+            whichGraphData: 1,
+            scalingFactor,
+        },
+    });
+    const graph = wrapper.vm.graph;
+    expect(graph.getVertices().length).toBe(7);
+});
+
+test("vertices are correctly connected", () => {
+    const scalingFactor = 1;
+    const wrapper = mount(GraphDisplay, {
+        props: {
+            whichGraphData: 1,
+            scalingFactor,
+        },
+    });
+    const graph = wrapper.vm.graph;
+    const vertices = graph.getVertices();
+    expect(vertices[0].getAdjList()).toEqual([new AdjListVertex(1)]);
+    expect(vertices[1].getAdjList()).toEqual([
+        new AdjListVertex(2),
+        new AdjListVertex(0),
+        new AdjListVertex(3),
+    ]);
+    expect(vertices[2].getAdjList()).toEqual([
+        new AdjListVertex(1),
+        new AdjListVertex(4),
+    ]);
+    expect(vertices[3].getAdjList()).toEqual([
+        new AdjListVertex(1),
+        new AdjListVertex(6),
+        new AdjListVertex(4),
+    ]);
+    expect(vertices[4].getAdjList()).toEqual([
+        new AdjListVertex(2),
+        new AdjListVertex(3),
+    ]);
+    expect(vertices[5].getAdjList()).toEqual([new AdjListVertex(6)]);
+    expect(vertices[6].getAdjList()).toEqual([
+        new AdjListVertex(3),
+        new AdjListVertex(5),
+    ]);
+});
+
+test("breadth first search works", () => {
+    const scalingFactor = 1;
+    const wrapper = mount(GraphDisplay, {
+        props: {
+            whichGraphData: 1,
+            scalingFactor,
+        },
+    });
+    const graph = wrapper.vm.graph;
+    const vertices = graph.getVertices();
+    const bfs = graph.bfs(vertices[0]);
+    expect(bfs).toEqual(new Set([0, 1, 2, 3, 4, 6, 5]));
 });

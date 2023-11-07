@@ -80,6 +80,8 @@ export const nodeDatas: NodeDatas = {
 export const linkDatas: EdgeDatas = {
     1: {
         B_C: {
+            v1: "B",
+            v2: "C",
             x1: nodeDatas[1]["B"].x,
             y1: nodeDatas[1]["B"].y,
             x2: nodeDatas[1]["C"].x,
@@ -88,6 +90,8 @@ export const linkDatas: EdgeDatas = {
             strokeWidth: "2",
         },
         C_E: {
+            v1: "C",
+            v2: "E",
             x1: nodeDatas[1]["C"].x,
             y1: nodeDatas[1]["C"].y,
             x2: nodeDatas[1]["E"].x,
@@ -96,6 +100,8 @@ export const linkDatas: EdgeDatas = {
             strokeWidth: "2",
         },
         A_B: {
+            v1: "A",
+            v2: "B",
             x1: nodeDatas[1]["A"].x,
             y1: nodeDatas[1]["A"].y,
             x2: nodeDatas[1]["B"].x,
@@ -104,6 +110,8 @@ export const linkDatas: EdgeDatas = {
             strokeWidth: "2",
         },
         B_D: {
+            v1: "B",
+            v2: "D",
             x1: nodeDatas[1]["B"].x,
             y1: nodeDatas[1]["B"].y,
             x2: nodeDatas[1]["D"].x,
@@ -112,6 +120,8 @@ export const linkDatas: EdgeDatas = {
             strokeWidth: "2",
         },
         D_G: {
+            v1: "D",
+            v2: "G",
             x1: nodeDatas[1]["D"].x,
             y1: nodeDatas[1]["D"].y,
             x2: nodeDatas[1]["G"].x,
@@ -120,6 +130,8 @@ export const linkDatas: EdgeDatas = {
             strokeWidth: "2",
         },
         D_E: {
+            v1: "D",
+            v2: "E",
             x1: nodeDatas[1]["D"].x,
             y1: nodeDatas[1]["D"].y,
             x2: nodeDatas[1]["E"].x,
@@ -128,6 +140,8 @@ export const linkDatas: EdgeDatas = {
             strokeWidth: "2",
         },
         G_F: {
+            v1: "G",
+            v2: "F",
             x1: nodeDatas[1]["G"].x,
             y1: nodeDatas[1]["G"].y,
             x2: nodeDatas[1]["F"].x,
@@ -138,6 +152,8 @@ export const linkDatas: EdgeDatas = {
     },
     2: {
         A_B: {
+            v1: "A",
+            v2: "B",
             x1: nodeDatas[2]["A"].x,
             y1: nodeDatas[2]["A"].y,
             x2: nodeDatas[2]["B"].x,
