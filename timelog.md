@@ -137,3 +137,9 @@
 * *0.5 hours* | Prep for supervisor meeting
 * *0.5 hours* | Supervisor meeting
 * *0.5 hours* | Synthesise and write up minutes properly
+
+## Week 8
+
+### 07 Nov 2023
+
+* *5 hours* | Making BFS visualised and step-by-step
