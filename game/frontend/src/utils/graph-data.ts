@@ -1,136 +1,165 @@
-import { NodeData, EdgeData } from "../types/Graph";
+import { NodeDatas, EdgeDatas } from "../types/GraphData";
 
-export const nodeData: NodeData[] = [
-    {
-        id: "A",
-        x: 50,
-        y: 50,
+export const nodeDatas: NodeDatas = {
+    1: {
+        A: {
+            id: "A",
+            x: 50,
+            y: 50,
+        },
+        B: {
+            id: "B",
+            x: 150,
+            y: 50,
+        },
+        C: {
+            id: "C",
+            x: 250,
+            y: 50,
+        },
+        D: {
+            id: "D",
+            x: 200,
+            y: 125,
+        },
+        E: {
+            id: "E",
+            x: 300,
+            y: 125,
+        },
+        F: {
+            id: "F",
+            x: 250,
+            y: 200,
+        },
+        G: {
+            id: "G",
+            x: 150,
+            y: 200,
+        },
     },
-    {
-        id: "B",
-        x: 150,
-        y: 50,
-    },
-    {
-        id: "C",
-        x: 250,
-        y: 50,
-    },
-    {
-        id: "D",
-        x: 200,
-        y: 125,
-    },
-    {
-        id: "E",
-        x: 300,
-        y: 125,
-    },
-    {
-        id: "F",
-        x: 250,
-        y: 200,
-    },
-    {
-        id: "G",
-        x: 150,
-        y: 200,
-    },
-];
-
-const nodeDataObj = {
-    A: {
-        id: "A",
-        x: 50,
-        y: 50,
-    },
-    B: {
-        id: "B",
-        x: 150,
-        y: 50,
-    },
-    C: {
-        id: "C",
-        x: 250,
-        y: 50,
-    },
-    D: {
-        id: "D",
-        x: 200,
-        y: 125,
-    },
-    E: {
-        id: "E",
-        x: 300,
-        y: 125,
-    },
-    F: {
-        id: "F",
-        x: 250,
-        y: 200,
-    },
-    G: {
-        id: "G",
-        x: 150,
-        y: 200,
+    2: {
+        A: {
+            id: "A",
+            x: 50,
+            y: 50,
+        },
+        B: {
+            id: "B",
+            x: 150,
+            y: 50,
+        },
+        C: {
+            id: "C",
+            x: 250,
+            y: 50,
+        },
+        D: {
+            id: "D",
+            x: 200,
+            y: 125,
+        },
+        E: {
+            id: "E",
+            x: 300,
+            y: 125,
+        },
+        F: {
+            id: "F",
+            x: 250,
+            y: 200,
+        },
+        G: {
+            id: "G",
+            x: 150,
+            y: 200,
+        },
     },
 };
 
-export const linkData: EdgeData[] = [
-    {
-        x1: nodeDataObj["B"].x,
-        y1: nodeDataObj["B"].y,
-        x2: nodeDataObj["C"].x,
-        y2: nodeDataObj["C"].y,
-        stroke: "#ccc",
-        strokeWidth: "2",
+export const linkDatas: EdgeDatas = {
+    1: {
+        B_C: {
+            v1: "B",
+            v2: "C",
+            x1: nodeDatas[1]["B"].x,
+            y1: nodeDatas[1]["B"].y,
+            x2: nodeDatas[1]["C"].x,
+            y2: nodeDatas[1]["C"].y,
+            stroke: "#ccc",
+            strokeWidth: "2",
+        },
+        C_E: {
+            v1: "C",
+            v2: "E",
+            x1: nodeDatas[1]["C"].x,
+            y1: nodeDatas[1]["C"].y,
+            x2: nodeDatas[1]["E"].x,
+            y2: nodeDatas[1]["E"].y,
+            stroke: "#ccc",
+            strokeWidth: "2",
+        },
+        A_B: {
+            v1: "A",
+            v2: "B",
+            x1: nodeDatas[1]["A"].x,
+            y1: nodeDatas[1]["A"].y,
+            x2: nodeDatas[1]["B"].x,
+            y2: nodeDatas[1]["B"].y,
+            stroke: "#ccc",
+            strokeWidth: "2",
+        },
+        B_D: {
+            v1: "B",
+            v2: "D",
+            x1: nodeDatas[1]["B"].x,
+            y1: nodeDatas[1]["B"].y,
+            x2: nodeDatas[1]["D"].x,
+            y2: nodeDatas[1]["D"].y,
+            stroke: "#ccc",
+            strokeWidth: "2",
+        },
+        D_G: {
+            v1: "D",
+            v2: "G",
+            x1: nodeDatas[1]["D"].x,
+            y1: nodeDatas[1]["D"].y,
+            x2: nodeDatas[1]["G"].x,
+            y2: nodeDatas[1]["G"].y,
+            stroke: "#ccc",
+            strokeWidth: "2",
+        },
+        D_E: {
+            v1: "D",
+            v2: "E",
+            x1: nodeDatas[1]["D"].x,
+            y1: nodeDatas[1]["D"].y,
+            x2: nodeDatas[1]["E"].x,
+            y2: nodeDatas[1]["E"].y,
+            stroke: "#ccc",
+            strokeWidth: "2",
+        },
+        G_F: {
+            v1: "G",
+            v2: "F",
+            x1: nodeDatas[1]["G"].x,
+            y1: nodeDatas[1]["G"].y,
+            x2: nodeDatas[1]["F"].x,
+            y2: nodeDatas[1]["F"].y,
+            stroke: "#ccc",
+            strokeWidth: "2",
+        },
     },
-    {
-        x1: nodeDataObj["C"].x,
-        y1: nodeDataObj["C"].y,
-        x2: nodeDataObj["E"].x,
-        y2: nodeDataObj["E"].y,
-        stroke: "#ccc",
-        strokeWidth: "2",
+    2: {
+        A_B: {
+            v1: "A",
+            v2: "B",
+            x1: nodeDatas[2]["A"].x,
+            y1: nodeDatas[2]["A"].y,
+            x2: nodeDatas[2]["B"].x,
+            y2: nodeDatas[2]["B"].y,
+            stroke: "#ccc",
+            strokeWidth: "2",
+        },
     },
-    {
-        x1: nodeDataObj["A"].x,
-        y1: nodeDataObj["A"].y,
-        x2: nodeDataObj["B"].x,
-        y2: nodeDataObj["B"].y,
-        stroke: "#ccc",
-        strokeWidth: "2",
-    },
-    {
-        x1: nodeDataObj["B"].x,
-        y1: nodeDataObj["B"].y,
-        x2: nodeDataObj["D"].x,
-        y2: nodeDataObj["D"].y,
-        stroke: "#ccc",
-        strokeWidth: "2",
-    },
-    {
-        x1: nodeDataObj["D"].x,
-        y1: nodeDataObj["D"].y,
-        x2: nodeDataObj["G"].x,
-        y2: nodeDataObj["G"].y,
-        stroke: "#ccc",
-        strokeWidth: "2",
-    },
-    {
-        x1: nodeDataObj["D"].x,
-        y1: nodeDataObj["D"].y,
-        x2: nodeDataObj["E"].x,
-        y2: nodeDataObj["E"].y,
-        stroke: "#ccc",
-        strokeWidth: "2",
-    },
-    {
-        x1: nodeDataObj["G"].x,
-        y1: nodeDataObj["G"].y,
-        x2: nodeDataObj["F"].x,
-        y2: nodeDataObj["F"].y,
-        stroke: "#ccc",
-        strokeWidth: "2",
-    },
-];
+};
