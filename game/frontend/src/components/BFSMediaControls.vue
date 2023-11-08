@@ -4,7 +4,8 @@ defineEmits(["startBFS", "nextStepBFS", "prevStepBFS"]);
 </script>
 <template>
     <button
-        class="bg-white text-black rounded-sm p-1 mr-1"
+        :disabled="started"
+        class="bg-white text-black rounded-sm p-1 mr-1 disabled:bg-gray-600"
         @click="$emit('startBFS')"
     >
         Start
