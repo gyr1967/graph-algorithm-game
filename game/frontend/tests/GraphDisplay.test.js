@@ -9,6 +9,7 @@ test("component renders with the correct width and height", () => {
         props: {
             whichGraphData: 1,
             scalingFactor,
+            stage: "vis",
         },
     });
 
@@ -26,6 +27,7 @@ test("component renders the correct number of nodes and links", () => {
         props: {
             whichGraphData: 1,
             scalingFactor,
+            stage: "vis",
         },
     });
     const svgHtml = wrapper.html();
@@ -43,6 +45,7 @@ test("graph data structure has the correct number of vertices", () => {
         props: {
             whichGraphData: 1,
             scalingFactor,
+            stage: "vis",
         },
     });
     const graph = wrapper.vm.graph;
@@ -55,6 +58,7 @@ test("vertices are correctly connected", () => {
         props: {
             whichGraphData: 1,
             scalingFactor,
+            stage: "vis",
         },
     });
     const graph = wrapper.vm.graph;
@@ -91,10 +95,16 @@ test("breadth first search works", () => {
         props: {
             whichGraphData: 1,
             scalingFactor,
+            stage: "vis",
         },
     });
     const graph = wrapper.vm.graph;
     const vertices = graph.getVertices();
-    const bfs = graph.bfs(vertices[0]);
-    expect(bfs).toEqual(new Set([0, 1, 2, 3, 4, 6, 5]));
+    const bfs = graph.bfsGenerator(vertices[0]);
+    let result = bfs.next();
+    while (result.done === false) {
+        result = bfs.next();
+    }
+    const visited = graph.visited;
+    expect(visited).toEqual(new Set([0, 1, 2, 3, 4, 6, 5]));
 });
