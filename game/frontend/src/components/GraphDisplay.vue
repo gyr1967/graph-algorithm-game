@@ -11,7 +11,7 @@ const props = defineProps<{
     whichGraphData: number;
     scalingFactor: number;
 }>();
-const emit = defineEmits(["update:currentVertexName"]);
+const emit = defineEmits(["update:currentVertexName", "update:currentQueue"]);
 
 class Graph {
     numVertices: number;
@@ -80,7 +80,13 @@ class Graph {
                 const nextVertex = this.vertices[i];
                 queue.push(nextVertex);
             }
-            yield this.visited;
+            emit(
+                "update:currentQueue",
+                queue.map((v) => {
+                    return numToLetter[v.getIndex() + 1];
+                }),
+            ),
+                yield this.visited;
         }
     }
 }

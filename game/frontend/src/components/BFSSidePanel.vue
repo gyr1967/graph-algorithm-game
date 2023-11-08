@@ -1,10 +1,10 @@
 <script setup lang="ts">
 defineProps<{
     currentVertexName: string;
+    currentQueue: string[];
 }>();
 </script>
 <template>
-    <div>
-        {{ currentVertexName }}
-    </div>
+    <div>Current vertex: {{ currentVertexName }}</div>
+    <div>Current queue: {{ currentQueue }}</div>
 </template>

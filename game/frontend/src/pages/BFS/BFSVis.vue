@@ -5,6 +5,7 @@ import BFSSidePanel from "../../components/BFSSidePanel.vue";
 import { ref } from "vue";
 const graphSize = ref<number>(1);
 const currentVertexName = ref<string>("");
+const currentQueue = ref<string[]>([]);
 </script>
 
 <template>
@@ -21,10 +22,18 @@ const currentVertexName = ref<string>("");
                         currentVertexName = newValue;
                     }
                 "
+                @update:current-queue="
+                    (newValue) => {
+                        currentQueue = newValue;
+                    }
+                "
             />
         </div>
         <div class="text-center">
-            <BFSSidePanel :current-vertex-name="currentVertexName" />
+            <BFSSidePanel
+                :current-vertex-name="currentVertexName"
+                :current-queue="currentQueue"
+            />
         </div>
     </div>
 </template>
