@@ -6,12 +6,13 @@ import { ref } from "vue";
 const graphSize = ref<number>(1);
 const currentVertexName = ref<string>("");
 const currentQueue = ref<string[]>([]);
+const pseudoStep = ref<number>(0);
 </script>
 
 <template>
     <div class="grid grid-cols-3">
         <div class="">
-            <BFSPseudo />
+            <BFSPseudo :current-step="pseudoStep" />
         </div>
         <div class="text-center">
             <GraphDisplay
@@ -25,6 +26,11 @@ const currentQueue = ref<string[]>([]);
                 @update:current-queue="
                     (newValue) => {
                         currentQueue = newValue;
+                    }
+                "
+                @update:pseudo-step="
+                    (newValue) => {
+                        pseudoStep = newValue;
                     }
                 "
             />

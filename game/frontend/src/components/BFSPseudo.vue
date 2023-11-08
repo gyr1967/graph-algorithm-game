@@ -1,3 +1,8 @@
+<script setup lang="ts">
+defineProps<{
+    currentStep: number;
+}>();
+</script>
 <template>
     <div>Create a queue q</div>
     <div>Mark start as visited and add to q</div>
