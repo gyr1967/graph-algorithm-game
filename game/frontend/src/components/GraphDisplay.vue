@@ -11,7 +11,11 @@ const props = defineProps<{
     whichGraphData: number;
     scalingFactor: number;
 }>();
-const emit = defineEmits(["update:currentVertexName", "update:currentQueue"]);
+const emit = defineEmits([
+    "update:currentVertexName",
+    "update:currentQueue",
+    "update:pseudoStep",
+]);
 
 class Graph {
     numVertices: number;
@@ -47,11 +51,13 @@ class Graph {
         });
         // create a queue q
         const queue: Vertex[] = [];
+        yield this.visited;
         // mark v as visited and put v into q
         queue.push(startVertex);
         startVertex.setVisited(true);
         this.visited.add(startVertex.getIndex());
         // while there is something in the queue do
+        yield this.visited;
         while (queue.length !== 0) {
             // remove the first vertex in the queue and call it v
             const currentVertex: Vertex | undefined = queue.shift();
@@ -62,6 +68,7 @@ class Graph {
                 "update:currentVertexName",
                 numToLetter[currentVertex.getIndex() + 1],
             );
+            yield this.visited;
             // mark v as visited
             currentVertex.setVisited(true);
             this.visited.add(currentVertex.getIndex());
@@ -69,6 +76,7 @@ class Graph {
                 numToLetter[currentVertex.getIndex() + 1],
                 "#e74c3c",
             );
+            yield this.visited;
             const unvisitedAdjacents = currentVertex
                 .getAdjList()
                 .filter((alv: AdjListVertex) => {
@@ -88,8 +96,8 @@ class Graph {
                 queue.map((v) => {
                     return numToLetter[v.getIndex() + 1];
                 }),
-            ),
-                yield this.visited;
+            );
+            yield this.visited;
         }
     }
 }
@@ -98,9 +106,12 @@ const nodeData = nodeDatas[props.whichGraphData];
 const linkData = linkDatas[props.whichGraphData];
 const nodeFill = "#3498db";
 const nodeColours = ref<Record<string, string>>({});
-Object.keys(nodeData).forEach((key) => {
-    nodeColours.value[nodeData[key].id] = nodeFill;
-});
+const setColoursDefault = () => {
+    Object.keys(nodeData).forEach((key) => {
+        nodeColours.value[nodeData[key].id] = nodeFill;
+    });
+};
+setColoursDefault();
 const setUpGraph = (n: number) => {
     const graph = new Graph(n);
     Object.keys(linkData).forEach((key) => {
@@ -114,15 +125,16 @@ const setUpGraph = (n: number) => {
     });
     return graph;
 };
-const graph = setUpGraph(Object.entries(nodeData).length);
+let graph = setUpGraph(Object.entries(nodeData).length);
 const currentStep = ref<number>(-1);
 const bfsGenerator = ref<Generator<Set<number>, void, unknown> | null>(null);
 
 const startBFS = () => {
+    setColoursDefault();
+    graph = setUpGraph(Object.entries(nodeData).length);
     const generator = graph.bfsGenerator(graph.getVertex(0));
     bfsGenerator.value = generator;
     currentStep.value = 0;
-    performBFSStep();
 };
 
 const performBFSStep = () => {
@@ -131,8 +143,12 @@ const performBFSStep = () => {
         if (result.done) {
             bfsGenerator.value = null;
             currentStep.value = -1;
+            emit("update:currentVertexName", "");
+            emit("update:currentQueue", []);
+            emit("update:pseudoStep", -1);
         } else {
             currentStep.value++;
+            emit("update:pseudoStep", currentStep.value);
         }
     }
 };
