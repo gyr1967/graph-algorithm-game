@@ -10,6 +10,7 @@ import { ref } from "vue";
 const props = defineProps<{
     whichGraphData: number;
     scalingFactor: number;
+    stage: "vis" | "guided" | "diy";
 }>();
 const emit = defineEmits([
     "update:currentVertexName",
@@ -184,6 +185,7 @@ const performBFSStep = () => {
         </g>
     </svg>
     <BFSMediaControlsVue
+        v-if="stage === 'vis'"
         :started="currentStep !== -1"
         @start-b-f-s="startBFS()"
         @next-step-b-f-s="performBFSStep()"
