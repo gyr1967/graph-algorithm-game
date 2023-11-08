@@ -109,3 +109,37 @@
 ### 20 Oct 2023
 
 * *3 hours* | Coding - remove D3, add SVG
+
+## Week 6
+
+### 24 Oct 2023
+
+* *6.5 hours* | Coding - landing page, navigation, SVG and beginnings of dynamic SVG styling
+
+### 26 Oct 2023
+
+* *0.5 hours* | Supervisor meeting
+* *0.5 hours* | Synthesise and write up minutes properly
+
+## Week 7
+
+### 31 Oct 2023
+
+* *5 hours* | Coding (not particularly productive)
+
+### 01 Nov 2023
+
+* *4 hours* | Coding - making SVG style reactive
+
+### 02 Nov 2023
+
+* *0.5 hours* | Paper wireframing for how user interacts (figma too time consuming for just a rough idea)
+* *0.5 hours* | Prep for supervisor meeting
+* *0.5 hours* | Supervisor meeting
+* *0.5 hours* | Synthesise and write up minutes properly
+
+## Week 8
+
+### 07 Nov 2023
+
+* *5 hours* | Making BFS visualised and step-by-step

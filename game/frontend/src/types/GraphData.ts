@@ -3,13 +3,23 @@ export default interface GraphData {
     edgesData: EdgeData[];
 }
 
+export interface NodeDatas {
+    [key: number]: Record<string, NodeData>;
+}
+
 export interface NodeData {
     id: string;
     x: number;
     y: number;
 }
 
+export interface EdgeDatas {
+    [key: number]: Record<string, EdgeData>;
+}
+
 export interface EdgeData {
+    v1: string;
+    v2: string;
     x1: number;
     y1: number;
     x2: number;
