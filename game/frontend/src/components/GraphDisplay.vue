@@ -72,7 +72,10 @@ class Graph {
             const unvisitedAdjacents = currentVertex
                 .getAdjList()
                 .filter((alv: AdjListVertex) => {
-                    return !this.visited.has(alv.getVertexIndex());
+                    return (
+                        !this.visited.has(alv.getVertexIndex()) &&
+                        !queue.includes(this.vertices[alv.getVertexIndex()])
+                    );
                 });
             // add all of v's unvisited neighbours to the queue
             for (const vertex of unvisitedAdjacents) {
