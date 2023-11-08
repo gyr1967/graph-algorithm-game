@@ -42,7 +42,7 @@ class Graph {
     getVertices() {
         return this.vertices;
     }
-    changeNodeColour = (nodeId: string, colour: string) => {
+    changeVertexColour = (nodeId: string, colour: string) => {
         nodeColours.value[nodeId] = colour;
     };
 
@@ -57,6 +57,10 @@ class Graph {
         queue.push(startVertex);
         startVertex.setVisited(true);
         this.visited.add(startVertex.getIndex());
+        this.changeVertexColour(
+            numToLetter[startVertex.getIndex() + 1],
+            "#e74c3c",
+        );
         // while there is something in the queue do
         yield this.visited;
         while (queue.length !== 0) {
@@ -73,7 +77,7 @@ class Graph {
             // mark v as visited
             currentVertex.setVisited(true);
             this.visited.add(currentVertex.getIndex());
-            this.changeNodeColour(
+            this.changeVertexColour(
                 numToLetter[currentVertex.getIndex() + 1],
                 "#e74c3c",
             );
