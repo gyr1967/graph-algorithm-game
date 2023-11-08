@@ -4,8 +4,12 @@ defineProps<{
 }>();
 </script>
 <template>
-    <div>Create a queue q</div>
-    <div>Mark start as visited and add to q</div>
+    <div :class="currentStep == 0 ? 'bg-white text-black' : ''">
+        Create a queue q
+    </div>
+    <div :class="currentStep == 1 ? 'bg-white text-black' : ''">
+        Mark start as visited and add to q
+    </div>
     <div>While there is something in the queue do:</div>
     <ul>
         <li>Remove the next vertex in the queue</li>
