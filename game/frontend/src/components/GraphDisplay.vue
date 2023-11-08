@@ -11,6 +11,7 @@ const props = defineProps<{
     whichGraphData: number;
     scalingFactor: number;
 }>();
+const emit = defineEmits(["update:currentVertexName"]);
 
 class Graph {
     numVertices: number;
@@ -57,6 +58,10 @@ class Graph {
             if (currentVertex === undefined) {
                 throw new Error("currentVertex is undefined");
             }
+            emit(
+                "update:currentVertexName",
+                numToLetter[currentVertex.getIndex() + 1],
+            );
             // mark v as visited
             currentVertex.setVisited(true);
             this.visited.add(currentVertex.getIndex());
@@ -69,13 +74,6 @@ class Graph {
                 .filter((alv: AdjListVertex) => {
                     return !this.visited.has(alv.getVertexIndex());
                 });
-            console.log(
-                currentVertex.getAdjList(),
-                "current vertex adj list and then the current vertex: ",
-                currentVertex,
-            );
-            console.log("unvisitedAdjacents", unvisitedAdjacents);
-            console.log("visited", this.visited);
             // add all of v's unvisited neighbours to the queue
             for (const vertex of unvisitedAdjacents) {
                 const i = vertex.getVertexIndex();
@@ -108,7 +106,7 @@ const setUpGraph = (n: number) => {
     return graph;
 };
 const graph = setUpGraph(Object.entries(nodeData).length);
-const currentStep = ref<number>(-1); // Initialize to -1 to indicate not started
+const currentStep = ref<number>(-1);
 const bfsGenerator = ref<Generator<Set<number>, void, unknown> | null>(null);
 
 const startBFS = () => {
