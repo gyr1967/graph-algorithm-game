@@ -143,3 +143,12 @@
 ### 07 Nov 2023
 
 * *5 hours* | Making BFS visualised and step-by-step
+
+### 08 Nov 2023
+
+* *6 hours* | Making BFS visualised and step-by-step
+
+### 09 Nov 2023
+
+* *0.5 hours* | Supervisor meeting
+* *0.5 hours* | Synthesise and write up minutes properly
