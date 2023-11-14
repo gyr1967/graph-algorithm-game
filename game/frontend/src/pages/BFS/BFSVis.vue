@@ -12,7 +12,7 @@ const pseudoStep = ref<BFSData | null>(null);
 
 <template>
     <div class="grid grid-cols-3">
-        <div class="">
+        <div class="ml-2">
             <BFSPseudo :current-step="pseudoStep" />
         </div>
         <div class="text-center">
