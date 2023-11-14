@@ -15,27 +15,29 @@ const pseudoStep = ref<BFSData | null>(null);
         <div class="ml-2">
             <BFSPseudo :current-step="pseudoStep" />
         </div>
-        <div class="text-center">
-            <GraphDisplay
-                :which-graph-data="1"
-                :scaling-factor="graphSize"
-                stage="vis"
-                @update:current-vertex-name="
-                    (newValue) => {
-                        currentVertexName = newValue;
-                    }
-                "
-                @update:current-queue="
-                    (newValue) => {
-                        currentQueue = newValue;
-                    }
-                "
-                @update:pseudo-step="
-                    (newValue) => {
-                        pseudoStep = newValue;
-                    }
-                "
-            />
+        <div class="flex justify-center items-center">
+            <div class="inline-block justify-self-center self-center">
+                <GraphDisplay
+                    :which-graph-data="1"
+                    :scaling-factor="graphSize"
+                    stage="vis"
+                    @update:current-vertex-name="
+                        (newValue) => {
+                            currentVertexName = newValue;
+                        }
+                    "
+                    @update:current-queue="
+                        (newValue) => {
+                            currentQueue = newValue;
+                        }
+                    "
+                    @update:pseudo-step="
+                        (newValue) => {
+                            pseudoStep = newValue;
+                        }
+                    "
+                />
+            </div>
         </div>
         <div class="text-center">
             <BFSSidePanel

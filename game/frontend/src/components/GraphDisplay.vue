@@ -167,40 +167,44 @@ const performBFSStep = () => {
 };
 </script>
 <template>
-    <svg
-        class="graph-svg"
-        :width="350 * scalingFactor"
-        :height="300 * scalingFactor"
-    >
-        <g
-            v-for="link in linkData"
-            :key="link.x1 + link.y1 + link.x2 + link.y2"
+    <div>
+        <svg
+            class="graph-svg"
+            :width="350 * scalingFactor"
+            :height="300 * scalingFactor"
         >
-            <Link
-                :x1="link.x1 * scalingFactor"
-                :y1="link.y1 * scalingFactor"
-                :x2="link.x2 * scalingFactor"
-                :y2="link.y2 * scalingFactor"
-                :stroke="link.stroke"
-                :stroke-width="link.strokeWidth"
-                :text="link.text"
-            />
-        </g>
-        <g v-for="mykey in Object.keys(nodeData)" :key="mykey">
-            <Node
-                :cx="nodeData[mykey].x * scalingFactor"
-                :cy="nodeData[mykey].y * scalingFactor"
-                :r="20 * scalingFactor"
-                :fill="nodeColours[nodeData[mykey].id]"
-                :text="nodeData[mykey].id"
-            />
-        </g>
-    </svg>
-    <BFSMediaControlsVue
-        v-if="stage === 'vis'"
-        :started="started"
-        @start-b-f-s="startBFS()"
-        @next-step-b-f-s="performBFSStep()"
-        @prev-step-b-f-s="console.log('previous step init')"
-    />
+            <g
+                v-for="link in linkData"
+                :key="link.x1 + link.y1 + link.x2 + link.y2"
+            >
+                <Link
+                    :x1="link.x1 * scalingFactor"
+                    :y1="link.y1 * scalingFactor"
+                    :x2="link.x2 * scalingFactor"
+                    :y2="link.y2 * scalingFactor"
+                    :stroke="link.stroke"
+                    :stroke-width="link.strokeWidth"
+                    :text="link.text"
+                />
+            </g>
+            <g v-for="mykey in Object.keys(nodeData)" :key="mykey">
+                <Node
+                    :cx="nodeData[mykey].x * scalingFactor"
+                    :cy="nodeData[mykey].y * scalingFactor"
+                    :r="20 * scalingFactor"
+                    :fill="nodeColours[nodeData[mykey].id]"
+                    :text="nodeData[mykey].id"
+                />
+            </g>
+        </svg>
+    </div>
+    <div class="bottom-0 left-0 w-full flex justify-center">
+        <BFSMediaControlsVue
+            v-if="stage === 'vis'"
+            :started="started"
+            @start-b-f-s="startBFS()"
+            @next-step-b-f-s="performBFSStep()"
+            @prev-step-b-f-s="console.log('previous step init')"
+        />
+    </div>
 </template>

@@ -8,6 +8,7 @@ export type BFSData =
     | "callItV"
     | "markVAsVisited"
     | "addVNeighboursToQueue";
+
 export type BFSYieldData = {
     visited: Set<number>;
     queue: Vertex[];
