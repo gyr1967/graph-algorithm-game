@@ -3,10 +3,11 @@ import GraphDisplay from "../../components/GraphDisplay.vue";
 import BFSPseudo from "../../components/BFSPseudo.vue";
 import BFSSidePanel from "../../components/BFSSidePanel.vue";
 import { ref } from "vue";
+import { BFSData } from "../../types/BFS";
 const graphSize = ref<number>(1);
 const currentVertexName = ref<string>("");
 const currentQueue = ref<string[]>([]);
-const pseudoStep = ref<number>(0);
+const pseudoStep = ref<BFSData | null>(null);
 </script>
 
 <template>

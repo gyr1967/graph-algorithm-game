@@ -7,6 +7,7 @@ import Vertex from "../graph/Vertex.ts";
 import { linkDatas, nodeDatas } from "../utils/graph-data";
 import { letterToNum, numToLetter } from "../utils/num-to-letter";
 import { ref } from "vue";
+import type { BFSYieldData } from "../types/BFS.ts";
 const props = defineProps<{
     whichGraphData: number;
     scalingFactor: number;
@@ -46,13 +47,13 @@ class Graph {
         nodeColours.value[nodeId] = colour;
     };
 
-    *bfsGenerator(startVertex: Vertex) {
+    *bfsGenerator(startVertex: Vertex): Generator<BFSYieldData, void, unknown> {
         this.vertices.map((v) => {
             v.setVisited(false);
         });
         // create a queue q
         const queue: Vertex[] = [];
-        yield this.visited;
+        yield { visited: this.visited, queue, step: "createQueue" };
         // mark v as visited and put v into q
         queue.push(startVertex);
         startVertex.setVisited(true);
@@ -61,19 +62,23 @@ class Graph {
             numToLetter[startVertex.getIndex() + 1],
             "#e74c3c",
         );
+        yield { visited: this.visited, queue, step: "markFirstAsVisited" };
         // while there is something in the queue do
-        yield this.visited;
+        yield { visited: this.visited, queue, step: "while" };
         while (queue.length !== 0) {
-            // remove the first vertex in the queue and call it v
-            const currentVertex: Vertex | undefined = queue.shift();
-            if (currentVertex === undefined) {
+            // remove the first vertex in the queue
+            const temporary = queue.shift();
+            if (temporary === undefined) {
                 throw new Error("currentVertex is undefined");
             }
+            yield { visited: this.visited, queue, step: "removeFirst" };
+            // call it v
+            const currentVertex: Vertex | undefined = temporary;
             emit(
                 "update:currentVertexName",
                 numToLetter[currentVertex.getIndex() + 1],
             );
-            yield this.visited;
+            yield { visited: this.visited, queue, step: "callItV" };
             // mark v as visited
             currentVertex.setVisited(true);
             this.visited.add(currentVertex.getIndex());
@@ -81,7 +86,7 @@ class Graph {
                 numToLetter[currentVertex.getIndex() + 1],
                 "#e74c3c",
             );
-            yield this.visited;
+            yield { visited: this.visited, queue, step: "markVAsVisited" };
             const unvisitedAdjacents = currentVertex
                 .getAdjList()
                 .filter((alv: AdjListVertex) => {
@@ -96,13 +101,11 @@ class Graph {
                 const nextVertex = this.vertices[i];
                 queue.push(nextVertex);
             }
-            emit(
-                "update:currentQueue",
-                queue.map((v) => {
-                    return numToLetter[v.getIndex() + 1];
-                }),
-            );
-            yield this.visited;
+            yield {
+                visited: this.visited,
+                queue,
+                step: "addVNeighboursToQueue",
+            };
         }
     }
 }
@@ -131,15 +134,15 @@ const setUpGraph = (n: number) => {
     return graph;
 };
 let graph = setUpGraph(Object.entries(nodeData).length);
-const currentStep = ref<number>(-1);
-const bfsGenerator = ref<Generator<Set<number>, void, unknown> | null>(null);
+const started = ref<boolean>(false);
+const bfsGenerator = ref<Generator<BFSYieldData, void, unknown> | null>(null);
 
 const startBFS = () => {
     setColoursDefault();
     graph = setUpGraph(Object.entries(nodeData).length);
     const generator = graph.bfsGenerator(graph.getVertex(0));
     bfsGenerator.value = generator;
-    currentStep.value = 0;
+    started.value = true;
 };
 
 const performBFSStep = () => {
@@ -147,13 +150,18 @@ const performBFSStep = () => {
         const result = bfsGenerator.value.next();
         if (result.done) {
             bfsGenerator.value = null;
-            currentStep.value = -1;
+            started.value = false;
             emit("update:currentVertexName", "");
             emit("update:currentQueue", []);
             emit("update:pseudoStep", -1);
         } else {
-            currentStep.value++;
-            emit("update:pseudoStep", currentStep.value);
+            emit("update:pseudoStep", result.value.step);
+            emit(
+                "update:currentQueue",
+                result.value.queue.map((v) => {
+                    return numToLetter[v.getIndex() + 1];
+                }),
+            );
         }
     }
 };
@@ -190,7 +198,7 @@ const performBFSStep = () => {
     </svg>
     <BFSMediaControlsVue
         v-if="stage === 'vis'"
-        :started="currentStep !== -1"
+        :started="started"
         @start-b-f-s="startBFS()"
         @next-step-b-f-s="performBFSStep()"
         @prev-step-b-f-s="console.log('previous step init')"
