@@ -152,3 +152,13 @@
 
 * *0.5 hours* | Supervisor meeting
 * *0.5 hours* | Synthesise and write up minutes properly
+
+## Week 9
+
+### 14 Nov 2023
+
+* *5 hours* | Finishing BFS Visualisation off
+
+### 15 Nov 2023
+
+* *6 hours* | Starting BFS Guided
