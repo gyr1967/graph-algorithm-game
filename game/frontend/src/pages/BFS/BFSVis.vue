@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import GraphDisplay from "../../components/GraphDisplay.vue";
+import TEMPBFSGraphDisplay from "../../components/TEMPBFSGraphDisplay.vue";
 import BFSPseudo from "../../components/BFSPseudo.vue";
 import BFSSidePanel from "../../components/BFSSidePanel.vue";
 import { ref } from "vue";
@@ -17,7 +17,7 @@ const pseudoStep = ref<BFSData | null>(null);
         </div>
         <div class="flex justify-center items-center">
             <div class="inline-block justify-self-center self-center">
-                <GraphDisplay
+                <TEMPBFSGraphDisplay
                     :which-graph-data="1"
                     :scaling-factor="graphSize"
                     stage="vis"

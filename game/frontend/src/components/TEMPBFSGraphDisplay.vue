@@ -27,7 +27,7 @@ class Graph {
         this.numVertices = n;
         this.vertices = [];
         for (let i = 0; i < n; i++) {
-            this.vertices.push(new Vertex(i));
+            this.vertices.push(new Vertex(i, numToLetter[i + 1]));
         }
         this.visited = new Set<number>();
     }
@@ -37,7 +37,7 @@ class Graph {
     }
 
     setVertex(i: number) {
-        this.vertices[i] = new Vertex(i);
+        this.vertices[i] = new Vertex(i, numToLetter[i + 1]);
     }
 
     getVertices() {
@@ -51,9 +51,7 @@ class Graph {
         this.vertices.map((v) => {
             v.setVisited(false);
         });
-        // create a queue q
         const queue: Vertex[] = [];
-        yield { visited: this.visited, queue, step: "createQueue" };
         // mark v as visited and put v into q
         queue.push(startVertex);
         startVertex.setVisited(true);
@@ -62,23 +60,36 @@ class Graph {
             numToLetter[startVertex.getIndex() + 1],
             "#e74c3c",
         );
-        yield { visited: this.visited, queue, step: "markFirstAsVisited" };
+        yield {
+            visited: this.visited,
+            queue,
+            step: "markFirstAsVisited",
+            currentVertex: startVertex,
+        };
         // while there is something in the queue do
-        yield { visited: this.visited, queue, step: "while" };
+        yield {
+            visited: this.visited,
+            queue,
+            step: "while",
+            currentVertex: startVertex,
+        };
         while (queue.length !== 0) {
-            // remove the first vertex in the queue
+            // remove the first vertex in the queue, and make it the current vertex
             const temporary = queue.shift();
             if (temporary === undefined) {
                 throw new Error("currentVertex is undefined");
             }
-            yield { visited: this.visited, queue, step: "removeFirst" };
-            // call it v
             const currentVertex: Vertex | undefined = temporary;
             emit(
                 "update:currentVertexName",
                 numToLetter[currentVertex.getIndex() + 1],
             );
-            yield { visited: this.visited, queue, step: "callItV" };
+            yield {
+                visited: this.visited,
+                queue,
+                step: "removeFirstAndMakeItCurrent",
+                currentVertex,
+            };
             // mark v as visited
             currentVertex.setVisited(true);
             this.visited.add(currentVertex.getIndex());
@@ -86,7 +97,26 @@ class Graph {
                 numToLetter[currentVertex.getIndex() + 1],
                 "#e74c3c",
             );
-            yield { visited: this.visited, queue, step: "markVAsVisited" };
+            yield {
+                visited: this.visited,
+                queue,
+                step: "markVAsVisited",
+                currentVertex,
+            };
+            // uncomment this to demonstrate how it looks - it might be a little too confusing - and i don't think it's something
+            // i'd include in the manual process, and I want the visualisation to be same as the guided and diy ones so I'll leave it out for now
+            // const allAdjacents = currentVertex.getAdjList();
+            // allAdjacents.map((alv) => {
+            //     // change the colour of all of v's neighbours to yellow
+            //     this.changeVertexColour(numToLetter[alv.getVertexIndex() + 1], "#f1c40f");
+            // })
+            // yield { visited: this.visited, queue, step: "changeVNeighboursToYellow", currentVertex };
+            // // change all the visited ones back to their old colour
+            // allAdjacents.map((alv) => {
+            //     if (this.visited.has(alv.getVertexIndex())) {
+            //         this.changeVertexColour(numToLetter[alv.getVertexIndex() + 1], "#e74c3c");
+            //     }
+            // })
             const unvisitedAdjacents = currentVertex
                 .getAdjList()
                 .filter((alv: AdjListVertex) => {
@@ -105,6 +135,7 @@ class Graph {
                 visited: this.visited,
                 queue,
                 step: "addVNeighboursToQueue",
+                currentVertex,
             };
         }
     }
@@ -136,7 +167,7 @@ const setUpGraph = (n: number) => {
 let graph = setUpGraph(Object.entries(nodeData).length);
 const started = ref<boolean>(false);
 const bfsGenerator = ref<Generator<BFSYieldData, void, unknown> | null>(null);
-
+const currentVertex = ref<Vertex | null>(null);
 const startBFS = () => {
     setColoursDefault();
     graph = setUpGraph(Object.entries(nodeData).length);
@@ -153,7 +184,7 @@ const performBFSStep = () => {
             started.value = false;
             emit("update:currentVertexName", "");
             emit("update:currentQueue", []);
-            emit("update:pseudoStep", -1);
+            emit("update:pseudoStep", null);
         } else {
             emit("update:pseudoStep", result.value.step);
             emit(
@@ -162,49 +193,55 @@ const performBFSStep = () => {
                     return numToLetter[v.getIndex() + 1];
                 }),
             );
+            currentVertex.value = result.value.currentVertex;
         }
     }
 };
 </script>
 <template>
-    <div>
-        <svg
-            class="graph-svg"
-            :width="350 * scalingFactor"
-            :height="300 * scalingFactor"
-        >
-            <g
-                v-for="link in linkData"
-                :key="link.x1 + link.y1 + link.x2 + link.y2"
+    <div class="border border-white p-2 rounded-md shadow-md">
+        <div>
+            <svg
+                class="graph-svg"
+                :width="350 * scalingFactor"
+                :height="300 * scalingFactor"
             >
-                <Link
-                    :x1="link.x1 * scalingFactor"
-                    :y1="link.y1 * scalingFactor"
-                    :x2="link.x2 * scalingFactor"
-                    :y2="link.y2 * scalingFactor"
-                    :stroke="link.stroke"
-                    :stroke-width="link.strokeWidth"
-                    :text="link.text"
-                />
-            </g>
-            <g v-for="mykey in Object.keys(nodeData)" :key="mykey">
-                <Node
-                    :cx="nodeData[mykey].x * scalingFactor"
-                    :cy="nodeData[mykey].y * scalingFactor"
-                    :r="20 * scalingFactor"
-                    :fill="nodeColours[nodeData[mykey].id]"
-                    :text="nodeData[mykey].id"
-                />
-            </g>
-        </svg>
-    </div>
-    <div class="bottom-0 left-0 w-full flex justify-center">
-        <BFSMediaControlsVue
-            v-if="stage === 'vis'"
-            :started="started"
-            @start-b-f-s="startBFS()"
-            @next-step-b-f-s="performBFSStep()"
-            @prev-step-b-f-s="console.log('previous step init')"
-        />
+                <g
+                    v-for="link in linkData"
+                    :key="link.x1 + link.y1 + link.x2 + link.y2"
+                >
+                    <Link
+                        :x1="link.x1 * scalingFactor"
+                        :y1="link.y1 * scalingFactor"
+                        :x2="link.x2 * scalingFactor"
+                        :y2="link.y2 * scalingFactor"
+                        :stroke="link.stroke"
+                        :stroke-width="link.strokeWidth"
+                        :text="link.text"
+                    />
+                </g>
+                <g v-for="mykey in Object.keys(nodeData)" :key="mykey">
+                    <Node
+                        :cx="nodeData[mykey].x * scalingFactor"
+                        :cy="nodeData[mykey].y * scalingFactor"
+                        :r="20 * scalingFactor"
+                        :fill="nodeColours[nodeData[mykey].id]"
+                        :text="nodeData[mykey].id"
+                        :current-vertex="
+                            currentVertex?.getTextName() === nodeData[mykey].id
+                        "
+                    />
+                </g>
+            </svg>
+        </div>
+        <div class="bottom-0 left-0 w-full flex justify-center">
+            <BFSMediaControlsVue
+                v-if="stage === 'vis'"
+                :started="started"
+                @start-b-f-s="startBFS()"
+                @next-step-b-f-s="performBFSStep()"
+                @prev-step-b-f-s="console.log('previous step init')"
+            />
+        </div>
     </div>
 </template>
