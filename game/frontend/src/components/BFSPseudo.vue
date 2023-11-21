@@ -9,21 +9,12 @@ defineProps<{
         <ul class="ml-4 list-disc">
             <li
                 :class="
-                    currentStep == 'createQueue'
-                        ? 'bg-white text-black rounded-sm'
-                        : ''
-                "
-            >
-                Create a queue q
-            </li>
-            <li
-                :class="
                     currentStep == 'markFirstAsVisited'
                         ? 'bg-white text-black rounded-sm'
                         : ''
                 "
             >
-                Mark start as visited and add to q
+                Mark start as visited and add to the queue
             </li>
             <li
                 :class="
@@ -38,21 +29,13 @@ defineProps<{
         <ul class="ml-8 list-disc">
             <li
                 :class="
-                    currentStep == 'removeFirst'
+                    currentStep == 'removeFirstAndMakeItCurrent'
                         ? 'bg-white text-black rounded-sm'
                         : ''
                 "
             >
-                Remove the next vertex in the queue
-            </li>
-            <li
-                :class="
-                    currentStep == 'callItV'
-                        ? 'bg-white text-black rounded-sm'
-                        : ''
-                "
-            >
-                We will call this 'v'
+                Remove the first vertex in the queue, and make it the current
+                vertex
             </li>
             <li
                 :class="
@@ -61,7 +44,7 @@ defineProps<{
                         : ''
                 "
             >
-                Mark v as visited
+                Mark the current vertex as visited
             </li>
             <li
                 :class="
@@ -70,8 +53,8 @@ defineProps<{
                         : ''
                 "
             >
-                Add all of v's neighbors (that aren't already visited, or in the
-                queue) to the queue
+                Add all of the current vertex's neighbors (that aren't already
+                visited, or in the queue) to the queue
             </li>
         </ul>
     </div>
