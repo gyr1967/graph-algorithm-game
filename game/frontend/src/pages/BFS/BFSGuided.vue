@@ -2,6 +2,7 @@
 import TEMPGUIDEDBFSGraphDisplay from "../../components/TEMPGUIDEDBFSGraphDisplay.vue";
 import BFSPseudo from "../../components/BFSPseudo.vue";
 import TEMPGUIDEDBFSSidePanel from "../../components/TEMPGUIDEDBFSSidePanel.vue";
+import HintBox from "../../components/HintBox.vue";
 import { ref } from "vue";
 import { BFSData } from "../../types/BFS";
 const graphSize = ref<number>(1);
@@ -15,6 +16,7 @@ const vertexNames = ref<string[]>([]);
     <div class="grid grid-cols-3">
         <div class="ml-2">
             <BFSPseudo :current-step="pseudoStep" />
+            <HintBox class="mt-2" :text="pseudoStep" />
         </div>
         <div class="flex justify-center items-center">
             <div class="inline-block justify-self-center self-center">
@@ -25,6 +27,21 @@ const vertexNames = ref<string[]>([]);
                     @update:vertex-names="
                         (newValue) => {
                             vertexNames = newValue;
+                        }
+                    "
+                    @update:current-vertex-name="
+                        (newValue) => {
+                            currentVertexName = newValue;
+                        }
+                    "
+                    @update:current-queue="
+                        (newValue) => {
+                            currentQueue = newValue;
+                        }
+                    "
+                    @update:pseudo-step="
+                        (newValue) => {
+                            pseudoStep = newValue;
                         }
                     "
                 />
