@@ -162,3 +162,14 @@
 ### 15 Nov 2023
 
 * *6 hours* | Starting BFS Guided
+* *0.5 hours* | Prepare video/email for supervisor, schedule to send
+
+### 16 Nov 2023
+
+* *0.5 hours* | Write up meeting minutes documenting Sofiat's feedback
+
+## Week 10
+
+### 21 Nov 2023
+
+* *6 hours* | Polishing BFS Vis, made a solid start on BFS Guided
