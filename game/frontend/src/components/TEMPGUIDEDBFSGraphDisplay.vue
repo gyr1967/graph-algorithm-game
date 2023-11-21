@@ -1,31 +1,44 @@
 <script setup lang="ts">
 import Node from "./Node.vue";
 import Link from "./Link.vue";
-import AdjListVertex from "../graph/AdjListVertex.ts";
 import Vertex from "../graph/Vertex.ts";
 import VertexOptionMenu from "./VertexOptionMenu.vue";
 import { linkDatas, nodeDatas } from "../utils/graph-data";
 import { letterToNum, numToLetter } from "../utils/num-to-letter";
 import { ref } from "vue";
-import type { BFSYieldData } from "../types/BFS.ts";
 const props = defineProps<{
     whichGraphData: number;
     scalingFactor: number;
     stage: "vis" | "guided" | "diy";
 }>();
-const emit = defineEmits(["update:vertexNames"]);
+const emit = defineEmits([
+    "update:vertexNames",
+    "update:current-queue",
+    "update:pseudo-step",
+]);
+
+type GuidedSteps =
+    | "markFirstAsVisited"
+    | "while"
+    | "removeFirstAndMakeItCurrent"
+    | "markVAsVisited"
+    | "addVNeighboursToQueue"
+    | "visit"
+    | "add-to-queue"
+    | "set-to-current";
 
 class Graph {
     numVertices: number;
     vertices: Vertex[];
-    visited: Set<number>;
+    visited: Set<number> = new Set<number>();
+    queue: Vertex[] = [];
+    currentVertex: Vertex | null = null;
     constructor(n: number) {
         this.numVertices = n;
         this.vertices = [];
         for (let i = 0; i < n; i++) {
-            this.vertices.push(new Vertex(i));
+            this.vertices.push(new Vertex(i, numToLetter[i + 1]));
         }
-        this.visited = new Set<number>();
     }
 
     getVertex(i: number) {
@@ -33,7 +46,7 @@ class Graph {
     }
 
     setVertex(i: number) {
-        this.vertices[i] = new Vertex(i);
+        this.vertices[i] = new Vertex(i, numToLetter[i + 1]);
     }
 
     getVertices() {
@@ -43,63 +56,40 @@ class Graph {
         nodeColours.value[nodeId] = colour;
     };
 
-    *bfsGenerator(startVertex: Vertex): Generator<BFSYieldData, void, unknown> {
-        this.vertices.map((v) => {
-            v.setVisited(false);
-        });
-        const queue: Vertex[] = [];
-        // mark v as visited and put v into q
-        queue.push(startVertex);
-        startVertex.setVisited(true);
-        this.visited.add(startVertex.getIndex());
-        this.changeVertexColour(
-            numToLetter[startVertex.getIndex() + 1],
-            "#e74c3c",
+    addToQueue(nodeId: string) {
+        this.queue.push(this.getVertex(letterToNum[nodeId] - 1));
+        emit(
+            "update:current-queue",
+            this.queue.map((v) => v.getTextName()),
         );
-        yield { visited: this.visited, queue, step: "markFirstAsVisited" };
-        // while there is something in the queue do
-        yield { visited: this.visited, queue, step: "while" };
-        while (queue.length !== 0) {
-            // remove the first vertex in the queue
-            const temporary = queue.shift();
-            if (temporary === undefined) {
-                throw new Error("currentVertex is undefined");
-            }
-            yield { visited: this.visited, queue, step: "removeFirst" };
-            // call it v
-            const currentVertex: Vertex | undefined = temporary;
-            yield { visited: this.visited, queue, step: "callItV" };
-            // mark v as visited
-            currentVertex.setVisited(true);
-            this.visited.add(currentVertex.getIndex());
-            this.changeVertexColour(
-                numToLetter[currentVertex.getIndex() + 1],
-                "#e74c3c",
-            );
-            yield { visited: this.visited, queue, step: "markVAsVisited" };
-            const unvisitedAdjacents = currentVertex
-                .getAdjList()
-                .filter((alv: AdjListVertex) => {
-                    return (
-                        !this.visited.has(alv.getVertexIndex()) &&
-                        !queue.includes(this.vertices[alv.getVertexIndex()])
-                    );
-                });
-            // add all of v's unvisited neighbours to the queue
-            for (const vertex of unvisitedAdjacents) {
-                const i = vertex.getVertexIndex();
-                const nextVertex = this.vertices[i];
-                queue.push(nextVertex);
-            }
-            yield {
-                visited: this.visited,
-                queue,
-                step: "addVNeighboursToQueue",
-            };
-        }
+        setStep("visit");
+    }
+
+    visit(nodeId: string) {
+        this.changeVertexColour(nodeId, "#e74c3c");
+        setStep("add-to-queue");
+    }
+
+    setCurrentVertex(nodeId: string) {
+        this.currentVertex = this.getVertex(letterToNum[nodeId] - 1);
+        setStep("set-to-current");
     }
 }
 
+const validateStep = (step: GuidedSteps) => {
+    if (currentStep.value == step) {
+        return true;
+    }
+    return false;
+};
+
+const setStep = (step: GuidedSteps) => {
+    currentStep.value = step;
+    emit("update:pseudo-step", step);
+};
+
+const currentStep = ref<GuidedSteps | null>("visit");
+emit("update:pseudo-step", currentStep.value);
 const nodeData = nodeDatas[props.whichGraphData];
 emit("update:vertexNames", Object.keys(nodeData));
 const nodeMenuOpen = ref<string>("");
@@ -126,16 +116,7 @@ const setUpGraph = (n: number) => {
     return graph;
 };
 let graph = setUpGraph(Object.entries(nodeData).length);
-const started = ref<boolean>(false);
-const bfsGenerator = ref<Generator<BFSYieldData, void, unknown> | null>(null);
 
-const startBFS = () => {
-    setColoursDefault();
-    graph = setUpGraph(Object.entries(nodeData).length);
-    const generator = graph.bfsGenerator(graph.getVertex(0));
-    bfsGenerator.value = generator;
-    started.value = true;
-};
 const handleVertexClicked = (nodeId: string) => {
     if (nodeMenuOpen.value == nodeId) {
         nodeMenuOpen.value = "";
@@ -173,6 +154,10 @@ const handleVertexClicked = (nodeId: string) => {
                         :r="20 * scalingFactor"
                         :fill="nodeColours[nodeData[mykey].id]"
                         :text="nodeData[mykey].id"
+                        :current-vertex="
+                            graph.currentVertex?.getTextName() ===
+                            nodeData[mykey].id
+                        "
                         @vertex-clicked="
                             handleVertexClicked(nodeData[mykey].id)
                         "
@@ -182,12 +167,36 @@ const handleVertexClicked = (nodeId: string) => {
         </div>
         <div>
             <VertexOptionMenu
-                v-if="nodeMenuOpen !== ''"
+                :text="nodeMenuOpen !== '' ? nodeMenuOpen : 'Click a vertex'"
                 :node-id="nodeMenuOpen"
+                @add-to-queue="
+                    (nodeId: string) => {
+                        if (validateStep('add-to-queue')) {
+                            graph.addToQueue(nodeId);
+                        } else {
+                            console.log('Incorrect step');
+                        }
+                    }
+                "
+                @visit="
+                    (nodeId: string) => {
+                        if (validateStep('visit')) {
+                            graph.visit(nodeId);
+                        } else {
+                            ('Incorrect step');
+                        }
+                    }
+                "
+                @set-to-current="
+                    (nodeId: string) => {
+                        if (validateStep('set-to-current')) {
+                            graph.setCurrentVertex(nodeId);
+                        } else {
+                            console.log('Incorrect step');
+                        }
+                    }
+                "
             />
-        </div>
-        <div>
-            <button class="btn btn-primary" @click="startBFS">Start BFS</button>
         </div>
     </div>
 </template>
