@@ -7,8 +7,7 @@ defineProps<{
 <template>
     <div class="border border-white p-3 rounded-md shadow-md grid grid-cols-2">
         <div class="mb-2">
-            <div class="font-bold">Variables</div>
-            <span class="font-bold">V:</span>
+            <span class="font-bold">Current Vertex:</span>
             <span class="ml-2">{{ currentVertexName }}</span>
         </div>
         <div>
