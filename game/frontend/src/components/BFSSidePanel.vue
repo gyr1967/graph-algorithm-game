@@ -14,11 +14,14 @@ defineProps<{
             <span class="font-bold mr-2">Queue</span>
             <div>
                 <div
-                    v-for="(item, index) in currentQueue"
+                    v-for="(item, index) in [...currentQueue].reverse()"
                     :key="index"
                     class="border border-gray-300 rounded-sm px-2 py-1 mr-1"
                 >
-                    {{ item }}
+                    <span>{{ item }}</span>
+                    <span v-if="index === currentQueue.length - 1">
+                        (Front)
+                    </span>
                 </div>
             </div>
         </div>

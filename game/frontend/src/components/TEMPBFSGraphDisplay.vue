@@ -52,18 +52,12 @@ class Graph {
             v.setVisited(false);
         });
         const queue: Vertex[] = [];
-        // mark v as visited and put v into q
+        // put v into q
         queue.push(startVertex);
-        startVertex.setVisited(true);
-        this.visited.add(startVertex.getIndex());
-        this.changeVertexColour(
-            numToLetter[startVertex.getIndex() + 1],
-            "#e74c3c",
-        );
         yield {
             visited: this.visited,
             queue,
-            step: "markFirstAsVisited",
+            step: "addFirstToQueue",
             currentVertex: startVertex,
         };
         // while there is something in the queue do

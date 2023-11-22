@@ -6,6 +6,7 @@ import VertexOptionMenu from "./VertexOptionMenu.vue";
 import { linkDatas, nodeDatas } from "../utils/graph-data";
 import { letterToNum, numToLetter } from "../utils/num-to-letter";
 import { ref } from "vue";
+import AdjListVertex from "../graph/AdjListVertex";
 const props = defineProps<{
     whichGraphData: number;
     scalingFactor: number;
@@ -13,26 +14,23 @@ const props = defineProps<{
 }>();
 const emit = defineEmits([
     "update:vertexNames",
-    "update:current-queue",
-    "update:pseudo-step",
+    "update:currentQueue",
+    "update:pseudoStep",
+    "update:currentVertexName",
 ]);
 
 type GuidedSteps =
-    | "markFirstAsVisited"
-    | "while"
-    | "removeFirstAndMakeItCurrent"
-    | "markVAsVisited"
-    | "addVNeighboursToQueue"
     | "visit"
     | "add-to-queue"
-    | "set-to-current";
+    | "remove-and-set-to-current"
+    | "done";
 
 class Graph {
     numVertices: number;
     vertices: Vertex[];
     visited: Set<number> = new Set<number>();
     queue: Vertex[] = [];
-    currentVertex: Vertex | null = null;
+    currentVertex = ref<Vertex | null>(null);
     constructor(n: number) {
         this.numVertices = n;
         this.vertices = [];
@@ -59,37 +57,61 @@ class Graph {
     addToQueue(nodeId: string) {
         this.queue.push(this.getVertex(letterToNum[nodeId] - 1));
         emit(
-            "update:current-queue",
+            "update:currentQueue",
             this.queue.map((v) => v.getTextName()),
         );
-        setStep("visit");
+        const adjVertices = this.currentVertex.value
+            ?.getAdjList()
+            .map((alv) => this.getVertex(alv.getVertexIndex()));
+        if (
+            adjVertices?.every(
+                (v) => this.queue.includes(v) || this.visited.has(v.getIndex()),
+            ) ||
+            this.visited.size == 0
+        ) {
+            setStep("remove-and-set-to-current");
+        }
     }
 
     visit(nodeId: string) {
         this.changeVertexColour(nodeId, "#e74c3c");
+        this.visited.add(letterToNum[nodeId] - 1);
+        this.currentVertex.value?.setVisited(true);
+        const adjVertices = this.currentVertex.value
+            ?.getAdjList()
+            .map((alv) => this.getVertex(alv.getVertexIndex()));
+        if (this.visited.size == this.numVertices) {
+            setStep("done");
+            return;
+        }
+        if (
+            adjVertices?.every(
+                (v) => this.queue.includes(v) || this.visited.has(v.getIndex()),
+            ) ||
+            this.visited.size == 0
+        ) {
+            setStep("remove-and-set-to-current");
+            return;
+        }
         setStep("add-to-queue");
     }
 
-    setCurrentVertex(nodeId: string) {
-        this.currentVertex = this.getVertex(letterToNum[nodeId] - 1);
-        setStep("set-to-current");
+    removeAndSetCurrentVertex() {
+        this.currentVertex.value = this.queue.shift() ?? null;
+        emit(
+            "update:currentVertexName",
+            this.currentVertex.value?.getTextName() ?? "",
+        );
+        emit(
+            "update:currentQueue",
+            this.queue.map((v) => v.getTextName()),
+        );
+        setStep("visit");
     }
 }
-
-const validateStep = (step: GuidedSteps) => {
-    if (currentStep.value == step) {
-        return true;
-    }
-    return false;
-};
-
-const setStep = (step: GuidedSteps) => {
-    currentStep.value = step;
-    emit("update:pseudo-step", step);
-};
-
-const currentStep = ref<GuidedSteps | null>("visit");
-emit("update:pseudo-step", currentStep.value);
+const started = ref<boolean>(false);
+const currentStep = ref<GuidedSteps | null>("add-to-queue");
+emit("update:pseudoStep", currentStep.value);
 const nodeData = nodeDatas[props.whichGraphData];
 emit("update:vertexNames", Object.keys(nodeData));
 const nodeMenuOpen = ref<string>("");
@@ -124,7 +146,87 @@ const handleVertexClicked = (nodeId: string) => {
     }
     nodeMenuOpen.value = nodeId;
 };
+
+const validateStep = (step: GuidedSteps, nodeId: string) => {
+    if (currentStep.value == step) {
+        if (step == "visit") {
+            if (validateVisit(nodeId)) {
+                return true;
+            }
+        } else if (step == "add-to-queue") {
+            if (validateAddToQueue(nodeId)) {
+                return true;
+            }
+        } else if (step == "remove-and-set-to-current") {
+            if (validateRemoveAndSetToCurrent(nodeId)) {
+                return true;
+            }
+        }
+    }
+    return false;
+};
+
+const validateVisit = (nodeId: string) => {
+    if (graph.currentVertex) {
+        if (graph.currentVertex.value?.getTextName() == nodeId) {
+            return true;
+        }
+    }
+    return false;
+};
+
+const validateAddToQueue = (nodeId: string) => {
+    if (
+        graph.queue.includes(graph.getVertex(letterToNum[nodeId] - 1)) ||
+        graph.visited.has(letterToNum[nodeId] - 1)
+    ) {
+        return false;
+    }
+    if (
+        !checkIndexInAdjList(nodeId, graph.currentVertex.value?.getAdjList()) &&
+        graph.visited.size > 0
+    ) {
+        return false;
+    }
+    return true;
+};
+
+const validateRemoveAndSetToCurrent = (nodeId: string) => {
+    if (graph.queue.length > 0) {
+        if (graph.queue[0].getTextName() == nodeId) {
+            return true;
+        }
+    }
+    return false;
+};
+
+const checkIndexInAdjList = (
+    nodeId: string,
+    adjList: AdjListVertex[] | undefined,
+) => {
+    if (!adjList) {
+        return false;
+    }
+    let result = false;
+    adjList.map((alv: AdjListVertex) => {
+        if (alv.getVertexIndex() == letterToNum[nodeId] - 1) {
+            result = true;
+        }
+    });
+    return result;
+};
+
+const setStep = (step: GuidedSteps) => {
+    currentStep.value = step;
+    emit("update:pseudoStep", step);
+};
+
+const startTheAlgorithm = () => {
+    started.value = true;
+    graph.currentVertex.value = graph.getVertex(0);
+};
 </script>
+
 <template>
     <div class="border border-white p-2 rounded-md shadow-md">
         <div>
@@ -155,7 +257,7 @@ const handleVertexClicked = (nodeId: string) => {
                         :fill="nodeColours[nodeData[mykey].id]"
                         :text="nodeData[mykey].id"
                         :current-vertex="
-                            graph.currentVertex?.getTextName() ===
+                            graph.currentVertex.value?.getTextName() ===
                             nodeData[mykey].id
                         "
                         @vertex-clicked="
@@ -166,33 +268,44 @@ const handleVertexClicked = (nodeId: string) => {
             </svg>
         </div>
         <div>
+            <div class="flex justify-center">
+                <button
+                    v-if="!started"
+                    class="border border-white p-1 rounded-sm ml-1"
+                    @click="startTheAlgorithm"
+                >
+                    Start
+                </button>
+            </div>
             <VertexOptionMenu
+                v-if="started"
                 :text="nodeMenuOpen !== '' ? nodeMenuOpen : 'Click a vertex'"
+                :disabled="nodeMenuOpen === ''"
                 :node-id="nodeMenuOpen"
                 @add-to-queue="
                     (nodeId: string) => {
-                        if (validateStep('add-to-queue')) {
+                        if (validateStep('add-to-queue', nodeId)) {
                             graph.addToQueue(nodeId);
                         } else {
-                            console.log('Incorrect step');
+                            console.log('failed validation');
                         }
                     }
                 "
                 @visit="
                     (nodeId: string) => {
-                        if (validateStep('visit')) {
+                        if (validateStep('visit', nodeId)) {
                             graph.visit(nodeId);
                         } else {
-                            ('Incorrect step');
+                            ('failed validation');
                         }
                     }
                 "
-                @set-to-current="
+                @remove-and-set-to-current="
                     (nodeId: string) => {
-                        if (validateStep('set-to-current')) {
-                            graph.setCurrentVertex(nodeId);
+                        if (validateStep('remove-and-set-to-current', nodeId)) {
+                            graph.removeAndSetCurrentVertex();
                         } else {
-                            console.log('Incorrect step');
+                            console.log('failed validation');
                         }
                     }
                 "

@@ -1,7 +1,7 @@
 import Vertex from "../graph/Vertex.ts";
 
 export type BFSData =
-    | "markFirstAsVisited"
+    | "addFirstToQueue"
     | "while"
     | "removeFirstAndMakeItCurrent"
     | "markVAsVisited"

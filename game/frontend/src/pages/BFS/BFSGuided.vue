@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import TEMPGUIDEDBFSGraphDisplay from "../../components/TEMPGUIDEDBFSGraphDisplay.vue";
 import BFSPseudo from "../../components/BFSPseudo.vue";
-import TEMPGUIDEDBFSSidePanel from "../../components/TEMPGUIDEDBFSSidePanel.vue";
+import BFSSidePanel from "../../components/BFSSidePanel.vue";
 import HintBox from "../../components/HintBox.vue";
 import { ref } from "vue";
 import { BFSData } from "../../types/BFS";
@@ -48,7 +48,7 @@ const vertexNames = ref<string[]>([]);
             </div>
         </div>
         <div class="text-center">
-            <TEMPGUIDEDBFSSidePanel
+            <BFSSidePanel
                 :vertex-names="vertexNames"
                 :current-vertex-name="currentVertexName"
                 :current-queue="currentQueue"

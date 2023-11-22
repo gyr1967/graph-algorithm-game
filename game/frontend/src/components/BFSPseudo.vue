@@ -9,12 +9,12 @@ defineProps<{
         <ul class="ml-4 list-disc">
             <li
                 :class="
-                    currentStep == 'markFirstAsVisited'
+                    currentStep == 'addFirstToQueue'
                         ? 'bg-white text-black rounded-sm'
                         : ''
                 "
             >
-                Mark start as visited and add to the queue
+                Add the start vertex to the queue
             </li>
             <li
                 :class="
