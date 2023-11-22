@@ -4,6 +4,7 @@ import Link from "./Link.vue";
 import BFSMediaControlsVue from "./BFSMediaControls.vue";
 import AdjListVertex from "../graph/AdjListVertex.ts";
 import Vertex from "../graph/Vertex.ts";
+import Graph from "../graph/Graph.ts";
 import { linkDatas, nodeDatas } from "../utils/graph-data";
 import { letterToNum, numToLetter } from "../utils/num-to-letter";
 import { ref } from "vue";
@@ -19,30 +20,12 @@ const emit = defineEmits([
     "update:pseudoStep",
 ]);
 
-class Graph {
-    numVertices: number;
-    vertices: Vertex[];
-    visited: Set<number>;
+class VisBFSGraph extends Graph {
+    currentVertex = ref<Vertex | null>(null);
     constructor(n: number) {
-        this.numVertices = n;
-        this.vertices = [];
-        for (let i = 0; i < n; i++) {
-            this.vertices.push(new Vertex(i, numToLetter[i + 1]));
-        }
-        this.visited = new Set<number>();
+        super(n);
     }
 
-    getVertex(i: number) {
-        return this.vertices[i];
-    }
-
-    setVertex(i: number) {
-        this.vertices[i] = new Vertex(i, numToLetter[i + 1]);
-    }
-
-    getVertices() {
-        return this.vertices;
-    }
     changeVertexColour = (nodeId: string, colour: string) => {
         nodeColours.value[nodeId] = colour;
     };
@@ -51,25 +34,24 @@ class Graph {
         this.vertices.map((v) => {
             v.setVisited(false);
         });
-        const queue: Vertex[] = [];
         // put v into q
-        queue.push(startVertex);
+        this.queue.push(startVertex);
         yield {
             visited: this.visited,
-            queue,
+            queue: this.queue,
             step: "addFirstToQueue",
             currentVertex: startVertex,
         };
         // while there is something in the queue do
         yield {
             visited: this.visited,
-            queue,
+            queue: this.queue,
             step: "while",
             currentVertex: startVertex,
         };
-        while (queue.length !== 0) {
+        while (this.queue.length !== 0) {
             // remove the first vertex in the queue, and make it the current vertex
-            const temporary = queue.shift();
+            const temporary = this.queue.shift();
             if (temporary === undefined) {
                 throw new Error("currentVertex is undefined");
             }
@@ -80,7 +62,7 @@ class Graph {
             );
             yield {
                 visited: this.visited,
-                queue,
+                queue: this.queue,
                 step: "removeFirstAndMakeItCurrent",
                 currentVertex,
             };
@@ -93,7 +75,7 @@ class Graph {
             );
             yield {
                 visited: this.visited,
-                queue,
+                queue: this.queue,
                 step: "markVAsVisited",
                 currentVertex,
             };
@@ -116,18 +98,20 @@ class Graph {
                 .filter((alv: AdjListVertex) => {
                     return (
                         !this.visited.has(alv.getVertexIndex()) &&
-                        !queue.includes(this.vertices[alv.getVertexIndex()])
+                        !this.queue.includes(
+                            this.vertices[alv.getVertexIndex()],
+                        )
                     );
                 });
             // add all of v's unvisited neighbours to the queue
             for (const vertex of unvisitedAdjacents) {
                 const i = vertex.getVertexIndex();
                 const nextVertex = this.vertices[i];
-                queue.push(nextVertex);
+                this.queue.push(nextVertex);
             }
             yield {
                 visited: this.visited,
-                queue,
+                queue: this.queue,
                 step: "addVNeighboursToQueue",
                 currentVertex,
             };
@@ -146,7 +130,7 @@ const setColoursDefault = () => {
 };
 setColoursDefault();
 const setUpGraph = (n: number) => {
-    const graph = new Graph(n);
+    const graph = new VisBFSGraph(n);
     Object.keys(linkData).forEach((key) => {
         const link = linkData[key];
         const v1id = letterToNum[link.v1] - 1;
@@ -161,7 +145,6 @@ const setUpGraph = (n: number) => {
 let graph = setUpGraph(Object.entries(nodeData).length);
 const started = ref<boolean>(false);
 const bfsGenerator = ref<Generator<BFSYieldData, void, unknown> | null>(null);
-const currentVertex = ref<Vertex | null>(null);
 const startBFS = () => {
     setColoursDefault();
     graph = setUpGraph(Object.entries(nodeData).length);
@@ -187,7 +170,7 @@ const performBFSStep = () => {
                     return numToLetter[v.getIndex() + 1];
                 }),
             );
-            currentVertex.value = result.value.currentVertex;
+            graph.currentVertex.value = result.value.currentVertex;
         }
     }
 };
@@ -222,7 +205,8 @@ const performBFSStep = () => {
                         :fill="nodeColours[nodeData[mykey].id]"
                         :text="nodeData[mykey].id"
                         :current-vertex="
-                            currentVertex?.getTextName() === nodeData[mykey].id
+                            graph.currentVertex.value?.getTextName() ===
+                            nodeData[mykey].id
                         "
                     />
                 </g>

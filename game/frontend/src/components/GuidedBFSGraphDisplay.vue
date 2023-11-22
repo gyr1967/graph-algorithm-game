@@ -2,9 +2,10 @@
 import Node from "./Node.vue";
 import Link from "./Link.vue";
 import Vertex from "../graph/Vertex.ts";
+import Graph from "../graph/Graph.ts";
 import VertexOptionMenu from "./VertexOptionMenu.vue";
 import { linkDatas, nodeDatas } from "../utils/graph-data";
-import { letterToNum, numToLetter } from "../utils/num-to-letter";
+import { letterToNum } from "../utils/num-to-letter";
 import { ref } from "vue";
 import AdjListVertex from "../graph/AdjListVertex";
 const props = defineProps<{
@@ -25,31 +26,12 @@ type GuidedSteps =
     | "remove-and-set-to-current"
     | "done";
 
-class Graph {
-    numVertices: number;
-    vertices: Vertex[];
-    visited: Set<number> = new Set<number>();
-    queue: Vertex[] = [];
+class GuidedBFSGraph extends Graph {
     currentVertex = ref<Vertex | null>(null);
     constructor(n: number) {
-        this.numVertices = n;
-        this.vertices = [];
-        for (let i = 0; i < n; i++) {
-            this.vertices.push(new Vertex(i, numToLetter[i + 1]));
-        }
+        super(n);
     }
 
-    getVertex(i: number) {
-        return this.vertices[i];
-    }
-
-    setVertex(i: number) {
-        this.vertices[i] = new Vertex(i, numToLetter[i + 1]);
-    }
-
-    getVertices() {
-        return this.vertices;
-    }
     changeVertexColour = (nodeId: string, colour: string) => {
         nodeColours.value[nodeId] = colour;
     };
@@ -125,7 +107,7 @@ const setColoursDefault = () => {
 };
 setColoursDefault();
 const setUpGraph = (n: number) => {
-    const graph = new Graph(n);
+    const graph = new GuidedBFSGraph(n);
     Object.keys(linkData).forEach((key) => {
         const link = linkData[key];
         const v1id = letterToNum[link.v1] - 1;
