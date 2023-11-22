@@ -1,0 +1,15 @@
+import Vertex from "../graph/Vertex.ts";
+
+export type BFSData =
+    | "addFirstToQueue"
+    | "while"
+    | "removeFirstAndMakeItCurrent"
+    | "markVAsVisited"
+    | "addVNeighboursToQueue";
+
+export type BFSYieldData = {
+    visited: Set<number>;
+    queue: Vertex[];
+    step: BFSData;
+    currentVertex: Vertex | null;
+};

@@ -1,24 +1,58 @@
 <script setup lang="ts">
-import GraphDisplay from "../../components/GraphDisplay.vue";
-import GraphSizeSelector from "../../components/GraphSizeSelector.vue";
+import TEMPGUIDEDBFSGraphDisplay from "../../components/TEMPGUIDEDBFSGraphDisplay.vue";
 import BFSPseudo from "../../components/BFSPseudo.vue";
+import BFSSidePanel from "../../components/BFSSidePanel.vue";
+import HintBox from "../../components/HintBox.vue";
 import { ref } from "vue";
-const graphSize = ref(1);
-const pseudoStep = ref<number>(0);
+import { BFSData } from "../../types/BFS";
+const graphSize = ref<number>(1);
+const currentVertexName = ref<string>("");
+const currentQueue = ref<string[]>([]);
+const pseudoStep = ref<BFSData | null>(null);
+const vertexNames = ref<string[]>([]);
 </script>
 
 <template>
     <div class="grid grid-cols-3">
-        <div class="">
+        <div class="ml-2">
             <BFSPseudo :current-step="pseudoStep" />
+            <HintBox class="mt-2" :text="pseudoStep" />
+        </div>
+        <div class="flex justify-center items-center">
+            <div class="inline-block justify-self-center self-center">
+                <TEMPGUIDEDBFSGraphDisplay
+                    :which-graph-data="1"
+                    :scaling-factor="graphSize"
+                    stage="guided"
+                    @update:vertex-names="
+                        (newValue) => {
+                            vertexNames = newValue;
+                        }
+                    "
+                    @update:current-vertex-name="
+                        (newValue) => {
+                            currentVertexName = newValue;
+                        }
+                    "
+                    @update:current-queue="
+                        (newValue) => {
+                            currentQueue = newValue;
+                        }
+                    "
+                    @update:pseudo-step="
+                        (newValue) => {
+                            pseudoStep = newValue;
+                        }
+                    "
+                />
+            </div>
         </div>
         <div class="text-center">
-            <GraphDisplay
-                stage="guided"
-                :which-graph-data="1"
-                :scaling-factor="graphSize"
+            <BFSSidePanel
+                :vertex-names="vertexNames"
+                :current-vertex-name="currentVertexName"
+                :current-queue="currentQueue"
             />
-            <GraphSizeSelector v-model="graphSize" />
         </div>
     </div>
 </template>
