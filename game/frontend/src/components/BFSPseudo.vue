@@ -1,23 +1,63 @@
 <script setup lang="ts">
+import type { BFSStep, GuidedSteps } from "../types/BFS.ts";
 defineProps<{
-    currentStep: number;
+    currentStep: BFSStep | GuidedSteps | null;
 }>();
 </script>
 <template>
-    <div :class="currentStep == 0 ? 'bg-white text-black' : ''">
-        Create a queue q
+    <div class="border border-white p-4 rounded-md shadow-md">
+        <ul class="ml-4 list-disc">
+            <li
+                :class="
+                    currentStep === 'addFirstToQueue'
+                        ? 'bg-white text-black rounded-sm'
+                        : ''
+                "
+            >
+                Add the start vertex to the queue
+            </li>
+            <li
+                :class="
+                    currentStep === 'while'
+                        ? 'bg-white text-black rounded-sm'
+                        : ''
+                "
+            >
+                While there is something in the queue do:
+            </li>
+        </ul>
+        <ul class="ml-8 list-disc">
+            <li
+                :class="
+                    currentStep === 'removeFirstAndMakeItCurrent' ||
+                    currentStep === 'remove-and-set-to-current'
+                        ? 'bg-white text-black rounded-sm'
+                        : ''
+                "
+            >
+                Remove the first vertex in the queue, and make it the current
+                vertex
+            </li>
+            <li
+                :class="
+                    currentStep === 'markVAsVisited' || currentStep === 'visit'
+                        ? 'bg-white text-black rounded-sm'
+                        : ''
+                "
+            >
+                Mark the current vertex as visited
+            </li>
+            <li
+                :class="
+                    currentStep === 'addVNeighboursToQueue' ||
+                    currentStep === 'add-to-queue'
+                        ? 'bg-white text-black rounded-sm'
+                        : ''
+                "
+            >
+                Add all of the current vertex's neighbors (that aren't already
+                visited, or in the queue) to the queue
+            </li>
+        </ul>
     </div>
-    <div :class="currentStep == 1 ? 'bg-white text-black' : ''">
-        Mark start as visited and add to q
-    </div>
-    <div>While there is something in the queue do:</div>
-    <ul>
-        <li>Remove the next vertex in the queue</li>
-        <li>We will call this 'v'</li>
-        <li>Mark v as visited</li>
-        <li>
-            Add all of v's neighbors (that aren't already visited, or in the
-            queue) to the queue
-        </li>
-    </ul>
 </template>

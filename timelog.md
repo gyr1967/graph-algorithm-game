@@ -143,3 +143,33 @@
 ### 07 Nov 2023
 
 * *5 hours* | Making BFS visualised and step-by-step
+
+### 08 Nov 2023
+
+* *6 hours* | Making BFS visualised and step-by-step
+
+### 09 Nov 2023
+
+* *0.5 hours* | Supervisor meeting
+* *0.5 hours* | Synthesise and write up minutes properly
+
+## Week 9
+
+### 14 Nov 2023
+
+* *5 hours* | Finishing BFS Visualisation off
+
+### 15 Nov 2023
+
+* *6 hours* | Starting BFS Guided
+* *0.5 hours* | Prepare video/email for supervisor, schedule to send
+
+### 16 Nov 2023
+
+* *0.5 hours* | Write up meeting minutes documenting Sofiat's feedback
+
+## Week 10
+
+### 21 Nov 2023
+
+* *6 hours* | Polishing BFS Vis, made a solid start on BFS Guided

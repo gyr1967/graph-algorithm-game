@@ -4,10 +4,12 @@ class Vertex {
     adjList: AdjListVertex[];
     index: number;
     visited: boolean;
-    constructor(n: number) {
+    textName: string;
+    constructor(n: number, textName: string) {
         this.adjList = [];
         this.index = n;
         this.visited = false;
+        this.textName = textName;
     }
 
     getAdjList() {
@@ -28,6 +30,10 @@ class Vertex {
 
     setVisited(b: boolean) {
         this.visited = b;
+    }
+
+    getTextName() {
+        return this.textName;
     }
 
     addToAdjList(n: number) {
