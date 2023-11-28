@@ -1,14 +1,14 @@
 <script setup lang="ts">
-import TEMPGUIDEDBFSGraphDisplay from "../../components/TEMPGUIDEDBFSGraphDisplay.vue";
+import GuidedBFSGraphDisplay from "../../components/GuidedBFSGraphDisplay.vue";
 import BFSPseudo from "../../components/BFSPseudo.vue";
 import BFSSidePanel from "../../components/BFSSidePanel.vue";
 import HintBox from "../../components/HintBox.vue";
 import { ref } from "vue";
-import { BFSData } from "../../types/BFS";
+import { BFSStep } from "../../types/BFS";
 const graphSize = ref<number>(1);
 const currentVertexName = ref<string>("");
 const currentQueue = ref<string[]>([]);
-const pseudoStep = ref<BFSData | null>(null);
+const pseudoStep = ref<BFSStep | null>(null);
 const vertexNames = ref<string[]>([]);
 </script>
 
@@ -20,7 +20,7 @@ const vertexNames = ref<string[]>([]);
         </div>
         <div class="flex justify-center items-center">
             <div class="inline-block justify-self-center self-center">
-                <TEMPGUIDEDBFSGraphDisplay
+                <GuidedBFSGraphDisplay
                     :which-graph-data="1"
                     :scaling-factor="graphSize"
                     stage="guided"
