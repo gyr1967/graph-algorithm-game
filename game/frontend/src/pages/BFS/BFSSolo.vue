@@ -3,9 +3,9 @@
 import GraphSizeSelector from "../../components/GraphSizeSelector.vue";
 import BFSPseudo from "../../components/BFSPseudo.vue";
 import { ref } from "vue";
-import { BFSData } from "../../types/BFS";
+import { BFSStep } from "../../types/BFS";
 const graphSize = ref(1);
-const pseudoStep = ref<BFSData | null>(null);
+const pseudoStep = ref<BFSStep | null>(null);
 </script>
 
 <template>
