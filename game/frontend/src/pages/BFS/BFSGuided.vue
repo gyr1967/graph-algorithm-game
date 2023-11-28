@@ -39,7 +39,6 @@ const visited = ref<Vertex[]>([]);
                 <GuidedBFSGraphDisplay
                     :which-graph-data="1"
                     :scaling-factor="graphSize"
-                    stage="guided"
                     @update:vertex-names="
                         (newValue) => {
                             vertexNames = newValue;

@@ -12,7 +12,6 @@ import AdjListVertex from "../graph/AdjListVertex";
 const props = defineProps<{
     whichGraphData: number;
     scalingFactor: number;
-    stage: "vis" | "guided" | "diy";
 }>();
 const emit = defineEmits([
     "update:vertexNames",
