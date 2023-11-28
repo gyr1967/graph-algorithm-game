@@ -1,6 +1,6 @@
 import Vertex from "../graph/Vertex.ts";
 
-export type BFSData =
+export type BFSStep =
     | "addFirstToQueue"
     | "while"
     | "removeFirstAndMakeItCurrent"
@@ -10,6 +10,12 @@ export type BFSData =
 export type BFSYieldData = {
     visited: Set<number>;
     queue: Vertex[];
-    step: BFSData;
+    step: BFSStep;
     currentVertex: Vertex | null;
 };
+
+export type GuidedSteps =
+    | "visit"
+    | "add-to-queue"
+    | "remove-and-set-to-current"
+    | "done";

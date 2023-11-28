@@ -1,13 +1,13 @@
 <script setup lang="ts">
-import TEMPBFSGraphDisplay from "../../components/TEMPBFSGraphDisplay.vue";
+import VisBFSGraphDisplay from "../../components/VisBFSGraphDisplay.vue";
 import BFSPseudo from "../../components/BFSPseudo.vue";
 import BFSSidePanel from "../../components/BFSSidePanel.vue";
 import { ref } from "vue";
-import { BFSData } from "../../types/BFS";
+import { BFSStep } from "../../types/BFS";
 const graphSize = ref<number>(1);
 const currentVertexName = ref<string>("");
 const currentQueue = ref<string[]>([]);
-const pseudoStep = ref<BFSData | null>(null);
+const pseudoStep = ref<BFSStep | null>(null);
 </script>
 
 <template>
@@ -17,7 +17,7 @@ const pseudoStep = ref<BFSData | null>(null);
         </div>
         <div class="flex justify-center items-center">
             <div class="inline-block justify-self-center self-center">
-                <TEMPBFSGraphDisplay
+                <VisBFSGraphDisplay
                     :which-graph-data="1"
                     :scaling-factor="graphSize"
                     stage="vis"

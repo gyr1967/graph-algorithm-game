@@ -1,29 +1,44 @@
 <script setup lang="ts">
-import TEMPGUIDEDBFSGraphDisplay from "../../components/TEMPGUIDEDBFSGraphDisplay.vue";
+import GuidedBFSGraphDisplay from "../../components/GuidedBFSGraphDisplay.vue";
 import BFSPseudo from "../../components/BFSPseudo.vue";
 import BFSSidePanel from "../../components/BFSSidePanel.vue";
 import HintBox from "../../components/HintBox.vue";
 import { ref } from "vue";
-import { BFSData } from "../../types/BFS";
+import Vertex from "../../graph/Vertex";
+import { GuidedSteps } from "../../types/BFS";
 const graphSize = ref<number>(1);
 const currentVertexName = ref<string>("");
 const currentQueue = ref<string[]>([]);
-const pseudoStep = ref<BFSData | null>(null);
+const guidedStep = ref<GuidedSteps | null>(null);
 const vertexNames = ref<string[]>([]);
+const started = ref<boolean>(false);
+const visited = ref<Vertex[]>([]);
 </script>
 
 <template>
     <div class="grid grid-cols-3">
         <div class="ml-2">
-            <BFSPseudo :current-step="pseudoStep" />
-            <HintBox class="mt-2" :text="pseudoStep" />
+            <BFSPseudo
+                :current-step="
+                    visited.length === 0 && guidedStep === 'add-to-queue'
+                        ? 'addFirstToQueue'
+                        : guidedStep
+                "
+            />
+            <HintBox
+                class="mt-2"
+                :text="guidedStep"
+                :current-vertex-name="currentVertexName"
+                :started="started"
+                :visited="visited"
+                :queue="currentQueue"
+            />
         </div>
         <div class="flex justify-center items-center">
             <div class="inline-block justify-self-center self-center">
-                <TEMPGUIDEDBFSGraphDisplay
+                <GuidedBFSGraphDisplay
                     :which-graph-data="1"
                     :scaling-factor="graphSize"
-                    stage="guided"
                     @update:vertex-names="
                         (newValue) => {
                             vertexNames = newValue;
@@ -39,9 +54,19 @@ const vertexNames = ref<string[]>([]);
                             currentQueue = newValue;
                         }
                     "
-                    @update:pseudo-step="
+                    @update:guided-step="
                         (newValue) => {
-                            pseudoStep = newValue;
+                            guidedStep = newValue;
+                        }
+                    "
+                    @update:started="
+                        (newValue) => {
+                            started = newValue;
+                        }
+                    "
+                    @update:visited="
+                        (newValue) => {
+                            visited = newValue;
                         }
                     "
                 />

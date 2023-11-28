@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import type { BFSData } from "../types/BFS.ts";
+import type { BFSStep, GuidedSteps } from "../types/BFS.ts";
 defineProps<{
-    currentStep: BFSData | null;
+    currentStep: BFSStep | GuidedSteps | null;
 }>();
 </script>
 <template>
@@ -9,7 +9,7 @@ defineProps<{
         <ul class="ml-4 list-disc">
             <li
                 :class="
-                    currentStep == 'addFirstToQueue'
+                    currentStep === 'addFirstToQueue'
                         ? 'bg-white text-black rounded-sm'
                         : ''
                 "
@@ -18,7 +18,7 @@ defineProps<{
             </li>
             <li
                 :class="
-                    currentStep == 'while'
+                    currentStep === 'while'
                         ? 'bg-white text-black rounded-sm'
                         : ''
                 "
@@ -29,7 +29,8 @@ defineProps<{
         <ul class="ml-8 list-disc">
             <li
                 :class="
-                    currentStep == 'removeFirstAndMakeItCurrent'
+                    currentStep === 'removeFirstAndMakeItCurrent' ||
+                    currentStep === 'remove-and-set-to-current'
                         ? 'bg-white text-black rounded-sm'
                         : ''
                 "
@@ -39,7 +40,7 @@ defineProps<{
             </li>
             <li
                 :class="
-                    currentStep == 'markVAsVisited'
+                    currentStep === 'markVAsVisited' || currentStep === 'visit'
                         ? 'bg-white text-black rounded-sm'
                         : ''
                 "
@@ -48,7 +49,8 @@ defineProps<{
             </li>
             <li
                 :class="
-                    currentStep == 'addVNeighboursToQueue'
+                    currentStep === 'addVNeighboursToQueue' ||
+                    currentStep === 'add-to-queue'
                         ? 'bg-white text-black rounded-sm'
                         : ''
                 "

@@ -7,24 +7,20 @@ import VertexOptionMenu from "./VertexOptionMenu.vue";
 import { linkDatas, nodeDatas } from "../utils/graph-data";
 import { letterToNum } from "../utils/num-to-letter";
 import { ref } from "vue";
+import type { GuidedSteps } from "../types/BFS";
 import AdjListVertex from "../graph/AdjListVertex";
 const props = defineProps<{
     whichGraphData: number;
     scalingFactor: number;
-    stage: "vis" | "guided" | "diy";
 }>();
 const emit = defineEmits([
     "update:vertexNames",
     "update:currentQueue",
-    "update:pseudoStep",
+    "update:guidedStep",
     "update:currentVertexName",
+    "update:started",
+    "update:visited",
 ]);
-
-type GuidedSteps =
-    | "visit"
-    | "add-to-queue"
-    | "remove-and-set-to-current"
-    | "done";
 
 class GuidedBFSGraph extends Graph {
     currentVertex = ref<Vertex | null>(null);
@@ -49,7 +45,7 @@ class GuidedBFSGraph extends Graph {
             adjVertices?.every(
                 (v) => this.queue.includes(v) || this.visited.has(v.getIndex()),
             ) ||
-            this.visited.size == 0
+            this.visited.size === 0
         ) {
             setStep("remove-and-set-to-current");
         }
@@ -58,11 +54,12 @@ class GuidedBFSGraph extends Graph {
     visit(nodeId: string) {
         this.changeVertexColour(nodeId, "#e74c3c");
         this.visited.add(letterToNum[nodeId] - 1);
+        emit("update:visited", Array.from(this.visited.values()));
         this.currentVertex.value?.setVisited(true);
         const adjVertices = this.currentVertex.value
             ?.getAdjList()
             .map((alv) => this.getVertex(alv.getVertexIndex()));
-        if (this.visited.size == this.numVertices) {
+        if (this.visited.size === this.numVertices) {
             setStep("done");
             return;
         }
@@ -70,7 +67,7 @@ class GuidedBFSGraph extends Graph {
             adjVertices?.every(
                 (v) => this.queue.includes(v) || this.visited.has(v.getIndex()),
             ) ||
-            this.visited.size == 0
+            this.visited.size === 0
         ) {
             setStep("remove-and-set-to-current");
             return;
@@ -93,7 +90,7 @@ class GuidedBFSGraph extends Graph {
 }
 const started = ref<boolean>(false);
 const currentStep = ref<GuidedSteps | null>("add-to-queue");
-emit("update:pseudoStep", currentStep.value);
+emit("update:guidedStep", currentStep.value);
 const nodeData = nodeDatas[props.whichGraphData];
 emit("update:vertexNames", Object.keys(nodeData));
 const nodeMenuOpen = ref<string>("");
@@ -122,7 +119,7 @@ const setUpGraph = (n: number) => {
 let graph = setUpGraph(Object.entries(nodeData).length);
 
 const handleVertexClicked = (nodeId: string) => {
-    if (nodeMenuOpen.value == nodeId) {
+    if (nodeMenuOpen.value === nodeId) {
         nodeMenuOpen.value = "";
         return;
     }
@@ -130,16 +127,16 @@ const handleVertexClicked = (nodeId: string) => {
 };
 
 const validateStep = (step: GuidedSteps, nodeId: string) => {
-    if (currentStep.value == step) {
-        if (step == "visit") {
+    if (currentStep.value === step) {
+        if (step === "visit") {
             if (validateVisit(nodeId)) {
                 return true;
             }
-        } else if (step == "add-to-queue") {
+        } else if (step === "add-to-queue") {
             if (validateAddToQueue(nodeId)) {
                 return true;
             }
-        } else if (step == "remove-and-set-to-current") {
+        } else if (step === "remove-and-set-to-current") {
             if (validateRemoveAndSetToCurrent(nodeId)) {
                 return true;
             }
@@ -150,7 +147,7 @@ const validateStep = (step: GuidedSteps, nodeId: string) => {
 
 const validateVisit = (nodeId: string) => {
     if (graph.currentVertex) {
-        if (graph.currentVertex.value?.getTextName() == nodeId) {
+        if (graph.currentVertex.value?.getTextName() === nodeId) {
             return true;
         }
     }
@@ -175,7 +172,7 @@ const validateAddToQueue = (nodeId: string) => {
 
 const validateRemoveAndSetToCurrent = (nodeId: string) => {
     if (graph.queue.length > 0) {
-        if (graph.queue[0].getTextName() == nodeId) {
+        if (graph.queue[0].getTextName() === nodeId) {
             return true;
         }
     }
@@ -191,7 +188,7 @@ const checkIndexInAdjList = (
     }
     let result = false;
     adjList.map((alv: AdjListVertex) => {
-        if (alv.getVertexIndex() == letterToNum[nodeId] - 1) {
+        if (alv.getVertexIndex() === letterToNum[nodeId] - 1) {
             result = true;
         }
     });
@@ -200,12 +197,14 @@ const checkIndexInAdjList = (
 
 const setStep = (step: GuidedSteps) => {
     currentStep.value = step;
-    emit("update:pseudoStep", step);
+    emit("update:guidedStep", step);
 };
 
 const startTheAlgorithm = () => {
     started.value = true;
+    emit("update:started", true);
     graph.currentVertex.value = graph.getVertex(0);
+    emit("update:currentVertexName", graph.currentVertex.value?.getTextName());
 };
 </script>
 
