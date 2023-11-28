@@ -18,7 +18,13 @@ const visited = ref<Vertex[]>([]);
 <template>
     <div class="grid grid-cols-3">
         <div class="ml-2">
-            <BFSPseudo :current-step="guidedStep" />
+            <BFSPseudo
+                :current-step="
+                    visited.length === 0 && guidedStep === 'add-to-queue'
+                        ? 'addFirstToQueue'
+                        : guidedStep
+                "
+            />
             <HintBox
                 class="mt-2"
                 :text="guidedStep"

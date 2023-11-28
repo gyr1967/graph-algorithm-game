@@ -29,7 +29,8 @@ defineProps<{
         <ul class="ml-8 list-disc">
             <li
                 :class="
-                    currentStep === 'removeFirstAndMakeItCurrent'
+                    currentStep === 'removeFirstAndMakeItCurrent' ||
+                    currentStep === 'remove-and-set-to-current'
                         ? 'bg-white text-black rounded-sm'
                         : ''
                 "
@@ -39,7 +40,7 @@ defineProps<{
             </li>
             <li
                 :class="
-                    currentStep === 'markVAsVisited'
+                    currentStep === 'markVAsVisited' || currentStep === 'visit'
                         ? 'bg-white text-black rounded-sm'
                         : ''
                 "
@@ -48,7 +49,8 @@ defineProps<{
             </li>
             <li
                 :class="
-                    currentStep === 'addVNeighboursToQueue'
+                    currentStep === 'addVNeighboursToQueue' ||
+                    currentStep === 'add-to-queue'
                         ? 'bg-white text-black rounded-sm'
                         : ''
                 "

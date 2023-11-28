@@ -15,12 +15,12 @@ defineProps<{
             <span>Click start!</span>
         </div>
         <div v-else>
-            <span v-if="text === 'add-to-queue' && visited.length > 0"
-                >Add all of {{ currentVertexName }}'s neighbours (that aren't
+            <span v-if="text === 'add-to-queue' && visited.length > 0">
+                Add all of {{ currentVertexName }}'s neighbours (that aren't
                 already in the queue or visited) to the queue</span
             >
-            <span v-else-if="text === 'add-to-queue' && visited.length === 0"
-                >Add {{ currentVertexName }} to the queue</span
+            <span v-else-if="text === 'add-to-queue' && visited.length === 0">
+                Add {{ currentVertexName }} to the queue</span
             >
             <span v-else-if="text === 'remove-and-set-to-current'"
                 >Remove {{ queue[0] }} from the queue and set it as the current
