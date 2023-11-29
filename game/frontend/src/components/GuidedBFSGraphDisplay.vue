@@ -252,7 +252,7 @@ const startTheAlgorithm = () => {
             <div class="flex justify-center">
                 <button
                     v-if="!started"
-                    class="border border-white p-1 rounded-sm ml-1"
+                    class="border border-white p-1 rounded-sm ml-1 hover:opacity-50"
                     @click="startTheAlgorithm"
                 >
                     Start
