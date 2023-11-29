@@ -32,6 +32,7 @@ const visited = ref<Vertex[]>([]);
                 :started="started"
                 :visited="visited"
                 :queue="currentQueue"
+                guided-or-diy="guided"
             />
         </div>
         <div class="flex justify-center items-center">

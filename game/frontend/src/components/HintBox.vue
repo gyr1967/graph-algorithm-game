@@ -2,14 +2,15 @@
 import { ref } from "vue";
 import Vertex from "../graph/Vertex";
 import { GuidedSteps } from "../types/BFS";
-defineProps<{
+const props = defineProps<{
     text: GuidedSteps | null;
     currentVertexName: string;
     started: boolean;
     visited: Vertex[];
     queue: string[];
+    guidedOrDiy: "guided" | "diy";
 }>();
-const obscureHint = ref<boolean>(true);
+const obscureHint = ref<boolean>(props.guidedOrDiy === "diy");
 </script>
 <template>
     <div class="border border-white p-4 rounded-md shadow-md">
@@ -36,7 +37,7 @@ const obscureHint = ref<boolean>(true);
                 >
                 <span v-else-if="text === 'done'">Done!</span>
             </div>
-            <div v-if="started" class="ml-2">
+            <div v-if="started && guidedOrDiy === 'diy'" class="ml-2">
                 <span
                     class="cursor-help"
                     @mouseenter="
