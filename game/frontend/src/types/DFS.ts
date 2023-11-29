@@ -1,21 +1,21 @@
 import Vertex from "../graph/Vertex.ts";
 
-export type BFSStep =
-    | "addFirstToQueue"
+export type DFSStep =
+    | "addFirstToStack"
     | "while"
     | "removeFirstAndMakeItCurrent"
     | "markVAsVisited"
-    | "addVNeighboursToQueue";
+    | "addVNeighboursToStack";
 
-export type BFSYieldData = {
+export type DFSYieldData = {
     visited: Set<number>;
-    queue: Vertex[];
-    step: BFSStep;
+    stack: Vertex[];
+    step: DFSStep;
     currentVertex: Vertex | null;
 };
 
-export type BFSGuidedSteps =
+export type DFSGuidedSteps =
     | "visit"
-    | "add-to-queue"
+    | "add-to-stack"
     | "remove-and-set-to-current"
     | "done";
