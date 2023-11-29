@@ -8,7 +8,7 @@ import Graph from "../graph/Graph.ts";
 import { linkDatas, nodeDatas } from "../utils/graph-data";
 import { letterToNum, numToLetter } from "../utils/num-to-letter";
 import { ref } from "vue";
-import type { BFSYieldData } from "../types/BFS.ts";
+import type { DFSYieldData } from "../types/DFS.ts";
 const props = defineProps<{
     whichGraphData: number;
     scalingFactor: number;
@@ -16,11 +16,11 @@ const props = defineProps<{
 }>();
 const emit = defineEmits([
     "update:currentVertexName",
-    "update:currentQueue",
+    "update:currentStack",
     "update:pseudoStep",
 ]);
 
-class VisBFSGraph extends Graph {
+class VisDFSGraph extends Graph {
     currentVertex = ref<Vertex | null>(null);
     constructor(n: number) {
         super(n);
@@ -30,28 +30,28 @@ class VisBFSGraph extends Graph {
         nodeColours.value[nodeId] = colour;
     };
 
-    *bfsGenerator(startVertex: Vertex): Generator<BFSYieldData, void, unknown> {
+    *dfsGenerator(startVertex: Vertex): Generator<DFSYieldData, void, unknown> {
         this.vertices.map((v) => {
             v.setVisited(false);
         });
         // put v into q
-        this.queue.push(startVertex);
+        this.stack.push(startVertex);
         yield {
             visited: this.visited,
-            queue: this.queue,
-            step: "addFirstToQueue",
+            stack: this.stack,
+            step: "addFirstToStack",
             currentVertex: startVertex,
         };
-        // while there is something in the queue do
+        // while there is something in the stack do
         yield {
             visited: this.visited,
-            queue: this.queue,
+            stack: this.stack,
             step: "while",
             currentVertex: startVertex,
         };
-        while (this.queue.length !== 0) {
-            // remove the first vertex in the queue, and make it the current vertex
-            const temporary = this.queue.shift();
+        while (this.stack.length !== 0) {
+            // remove the first vertex in the stack, and make it the current vertex
+            const temporary = this.stack.pop();
             if (temporary === undefined) {
                 throw new Error("currentVertex is undefined");
             }
@@ -62,7 +62,7 @@ class VisBFSGraph extends Graph {
             );
             yield {
                 visited: this.visited,
-                queue: this.queue,
+                stack: this.stack,
                 step: "removeFirstAndMakeItCurrent",
                 currentVertex,
             };
@@ -75,7 +75,7 @@ class VisBFSGraph extends Graph {
             );
             yield {
                 visited: this.visited,
-                queue: this.queue,
+                stack: this.stack,
                 step: "markVAsVisited",
                 currentVertex,
             };
@@ -86,7 +86,7 @@ class VisBFSGraph extends Graph {
             //     // change the colour of all of v's neighbours to yellow
             //     this.changeVertexColour(numToLetter[alv.getVertexIndex() + 1], "#f1c40f");
             // })
-            // yield { visited: this.visited, queue, step: "changeVNeighboursToYellow", currentVertex };
+            // yield { visited: this.visited, stack, step: "changeVNeighboursToYellow", currentVertex };
             // // change all the visited ones back to their old colour
             // allAdjacents.map((alv) => {
             //     if (this.visited.has(alv.getVertexIndex())) {
@@ -98,21 +98,21 @@ class VisBFSGraph extends Graph {
                 .filter((alv: AdjListVertex) => {
                     return (
                         !this.visited.has(alv.getVertexIndex()) &&
-                        !this.queue.includes(
+                        !this.stack.includes(
                             this.vertices[alv.getVertexIndex()],
                         )
                     );
                 });
-            // add all of v's unvisited neighbours to the queue
+            // add all of v's unvisited neighbours to the stack
             for (const vertex of unvisitedAdjacents) {
                 const i = vertex.getVertexIndex();
                 const nextVertex = this.vertices[i];
-                this.queue.push(nextVertex);
+                this.stack.push(nextVertex);
             }
             yield {
                 visited: this.visited,
-                queue: this.queue,
-                step: "addVNeighboursToQueue",
+                stack: this.stack,
+                step: "addVNeighboursToStack",
                 currentVertex,
             };
         }
@@ -130,7 +130,7 @@ const setColoursDefault = () => {
 };
 setColoursDefault();
 const setUpGraph = (n: number) => {
-    const graph = new VisBFSGraph(n);
+    const graph = new VisDFSGraph(n);
     Object.keys(linkData).forEach((key) => {
         const link = linkData[key];
         const v1id = letterToNum[link.v1] - 1;
@@ -144,29 +144,29 @@ const setUpGraph = (n: number) => {
 };
 let graph = setUpGraph(Object.entries(nodeData).length);
 const started = ref<boolean>(false);
-const bfsGenerator = ref<Generator<BFSYieldData, void, unknown> | null>(null);
-const startBFS = () => {
+const dfsGenerator = ref<Generator<DFSYieldData, void, unknown> | null>(null);
+const startDFS = () => {
     setColoursDefault();
     graph = setUpGraph(Object.entries(nodeData).length);
-    const generator = graph.bfsGenerator(graph.getVertex(0));
-    bfsGenerator.value = generator;
+    const generator = graph.dfsGenerator(graph.getVertex(0));
+    dfsGenerator.value = generator;
     started.value = true;
 };
 
-const performBFSStep = () => {
-    if (bfsGenerator.value) {
-        const result = bfsGenerator.value.next();
+const performDFSStep = () => {
+    if (dfsGenerator.value) {
+        const result = dfsGenerator.value.next();
         if (result.done) {
-            bfsGenerator.value = null;
+            dfsGenerator.value = null;
             started.value = false;
             emit("update:currentVertexName", "");
-            emit("update:currentQueue", []);
+            emit("update:currentStack", []);
             emit("update:pseudoStep", null);
         } else {
             emit("update:pseudoStep", result.value.step);
             emit(
-                "update:currentQueue",
-                result.value.queue.map((v) => {
+                "update:currentStack",
+                result.value.stack.map((v) => {
                     return numToLetter[v.getIndex() + 1];
                 }),
             );
@@ -216,10 +216,10 @@ const performBFSStep = () => {
             <SearchMediaControlsVue
                 v-if="stage === 'vis'"
                 :started="started"
-                bfs-or-dfs="bfs"
-                @start-b-f-s="startBFS()"
-                @next-step-b-f-s="performBFSStep()"
-                @prev-step-b-f-s="console.log('previous step init')"
+                bfs-or-dfs="dfs"
+                @start-d-f-s="startDFS()"
+                @next-step-d-f-s="performDFSStep()"
+                @prev-step-d-f-s="console.log('previous step init')"
             />
         </div>
     </div>

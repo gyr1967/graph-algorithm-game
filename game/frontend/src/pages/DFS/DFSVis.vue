@@ -1,23 +1,23 @@
 <script setup lang="ts">
-import VisBFSGraphDisplay from "../../components/VisBFSGraphDisplay.vue";
+import VisDFSGraphDisplay from "../../components/VisDFSGraphDisplay.vue";
 import SearchPseudo from "../../components/SearchPseudo.vue";
 import SidePanel from "../../components/SidePanel.vue";
 import { ref } from "vue";
-import { BFSStep } from "../../types/BFS";
+import { DFSStep } from "../../types/DFS";
 const graphSize = ref<number>(1);
 const currentVertexName = ref<string>("");
-const currentQueue = ref<string[]>([]);
-const pseudoStep = ref<BFSStep | null>(null);
+const currentStack = ref<string[]>([]);
+const pseudoStep = ref<DFSStep | null>(null);
 </script>
 
 <template>
     <div class="grid grid-cols-3">
         <div class="ml-2">
-            <SearchPseudo :current-step="pseudoStep" bfs-or-dfs="bfs" />
+            <SearchPseudo :current-step="pseudoStep" bfs-or-dfs="dfs" />
         </div>
         <div class="flex justify-center items-center">
             <div class="inline-block justify-self-center self-center">
-                <VisBFSGraphDisplay
+                <VisDFSGraphDisplay
                     :which-graph-data="1"
                     :scaling-factor="graphSize"
                     stage="vis"
@@ -26,9 +26,9 @@ const pseudoStep = ref<BFSStep | null>(null);
                             currentVertexName = newValue;
                         }
                     "
-                    @update:current-queue="
+                    @update:current-stack="
                         (newValue) => {
-                            currentQueue = newValue;
+                            currentStack = newValue;
                         }
                     "
                     @update:pseudo-step="
@@ -42,8 +42,8 @@ const pseudoStep = ref<BFSStep | null>(null);
         <div class="text-center">
             <SidePanel
                 :current-vertex-name="currentVertexName"
-                :current-queue="currentQueue"
-                bfs-or-dfs="bfs"
+                :current-stack="currentStack"
+                bfs-or-dfs="dfs"
             />
         </div>
     </div>

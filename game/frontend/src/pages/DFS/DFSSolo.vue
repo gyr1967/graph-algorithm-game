@@ -1,15 +1,15 @@
 <script setup lang="ts">
-import GuidedBFSGraphDisplay from "../../components/GuidedBFSGraphDisplay.vue";
+import GuidedDFSGraphDisplay from "../../components/GuidedDFSGraphDisplay.vue";
 import SearchPseudo from "../../components/SearchPseudo.vue";
 import SidePanel from "../../components/SidePanel.vue";
 import HintBox from "../../components/HintBox.vue";
 import { ref } from "vue";
 import Vertex from "../../graph/Vertex";
-import { BFSGuidedSteps } from "../../types/BFS";
+import { DFSGuidedSteps } from "../../types/DFS";
 const graphSize = ref<number>(1);
 const currentVertexName = ref<string>("");
-const currentQueue = ref<string[]>([]);
-const guidedStep = ref<BFSGuidedSteps | null>(null);
+const currentStack = ref<string[]>([]);
+const guidedStep = ref<DFSGuidedSteps | null>(null);
 const vertexNames = ref<string[]>([]);
 const started = ref<boolean>(false);
 const visited = ref<Vertex[]>([]);
@@ -20,12 +20,12 @@ const visited = ref<Vertex[]>([]);
         <div class="ml-2">
             <SearchPseudo
                 :current-step="
-                    visited.length === 0 && guidedStep === 'add-to-queue'
-                        ? 'addFirstToQueue'
+                    visited.length === 0 && guidedStep === 'add-to-stack'
+                        ? 'addFirstToStack'
                         : guidedStep
                 "
                 :no-highlighting="false"
-                bfs-or-dfs="bfs"
+                bfs-or-dfs="dfs"
             />
             <HintBox
                 class="mt-2"
@@ -33,14 +33,14 @@ const visited = ref<Vertex[]>([]);
                 :current-vertex-name="currentVertexName"
                 :started="started"
                 :visited="visited"
-                :queue="currentQueue"
+                :stack="currentStack"
                 guided-or-diy="diy"
-                bfs-or-dfs="bfs"
+                bfs-or-dfs="dfs"
             />
         </div>
         <div class="flex justify-center items-center">
             <div class="inline-block justify-self-center self-center">
-                <GuidedBFSGraphDisplay
+                <GuidedDFSGraphDisplay
                     :which-graph-data="1"
                     :scaling-factor="graphSize"
                     @update:vertex-names="
@@ -53,9 +53,9 @@ const visited = ref<Vertex[]>([]);
                             currentVertexName = newValue;
                         }
                     "
-                    @update:current-queue="
+                    @update:current-stack="
                         (newValue) => {
-                            currentQueue = newValue;
+                            currentStack = newValue;
                         }
                     "
                     @update:guided-step="
@@ -80,8 +80,8 @@ const visited = ref<Vertex[]>([]);
             <SidePanel
                 :vertex-names="vertexNames"
                 :current-vertex-name="currentVertexName"
-                :current-queue="currentQueue"
-                bfs-or-dfs="bfs"
+                :current-stack="currentStack"
+                bfs-or-dfs="dfs"
             />
         </div>
     </div>

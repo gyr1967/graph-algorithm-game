@@ -1,21 +1,27 @@
 <script setup lang="ts">
-import type { BFSStep, GuidedSteps } from "../types/BFS.ts";
-defineProps<{
-    currentStep: BFSStep | GuidedSteps | null;
+import type { BFSStep, BFSGuidedSteps } from "../types/BFS.ts";
+import type { DFSStep, DFSGuidedSteps } from "../types/DFS";
+const props = defineProps<{
+    currentStep: DFSStep | BFSStep | BFSGuidedSteps | DFSGuidedSteps | null;
     noHighlighting?: boolean;
+    bfsOrDfs: "bfs" | "dfs";
 }>();
+
+const stackOrQueue = props.bfsOrDfs === "bfs" ? "Queue" : "Stack";
 </script>
 <template>
     <div class="border border-white p-4 rounded-md shadow-md">
         <ul class="ml-4 list-disc">
             <li
                 :class="
-                    currentStep === 'addFirstToQueue' && !noHighlighting
+                    (currentStep === 'addFirstToQueue' ||
+                        currentStep === 'addFirstToStack') &&
+                    !noHighlighting
                         ? 'bg-white text-black rounded-sm'
                         : ''
                 "
             >
-                Add the start vertex to the queue
+                Add the start vertex to the {{ stackOrQueue }}
             </li>
             <li
                 :class="
@@ -24,7 +30,7 @@ defineProps<{
                         : ''
                 "
             >
-                While there is something in the queue do:
+                While there is something in the {{ stackOrQueue }} do:
             </li>
         </ul>
         <ul class="ml-8 list-disc">
@@ -37,8 +43,8 @@ defineProps<{
                         : ''
                 "
             >
-                Remove the first vertex in the queue, and make it the current
-                vertex
+                Remove the first vertex in the {{ stackOrQueue }}, and make it
+                the current vertex
             </li>
             <li
                 :class="
@@ -54,14 +60,16 @@ defineProps<{
             <li
                 :class="
                     (currentStep === 'addVNeighboursToQueue' ||
-                        currentStep === 'add-to-queue') &&
+                        currentStep === 'addVNeighboursToStack' ||
+                        currentStep === 'add-to-queue' ||
+                        currentStep === 'add-to-stack') &&
                     !noHighlighting
                         ? 'bg-white text-black rounded-sm'
                         : ''
                 "
             >
                 Add all of the current vertex's neighbors (that aren't already
-                visited, or in the queue) to the queue
+                visited, or in the {{ stackOrQueue }}) to the {{ stackOrQueue }}
             </li>
         </ul>
     </div>

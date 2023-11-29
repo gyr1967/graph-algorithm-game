@@ -1,10 +1,17 @@
 <script setup lang="ts">
-defineProps<{
+const props = defineProps<{
     text: string;
     disabled: boolean;
     nodeId: string;
+    bfsOrDfs: "bfs" | "dfs";
 }>();
-defineEmits(["add-to-queue", "visit", "remove-and-set-to-current"]);
+defineEmits([
+    "add-to-queue",
+    "visit",
+    "remove-and-set-to-current",
+    "add-to-stack",
+]);
+const stackOrQueue = props.bfsOrDfs === "bfs" ? "queue" : "stack";
 </script>
 <template>
     <div class="flex justify-center">
@@ -14,9 +21,13 @@ defineEmits(["add-to-queue", "visit", "remove-and-set-to-current"]);
         <button
             :disabled="disabled"
             class="border border-white p-1 rounded-sm ml-1 disabled:opacity-50 disabled:cursor-not-allowed hover:opacity-60"
-            @click="$emit('add-to-queue', nodeId)"
+            @click="
+                bfsOrDfs === 'bfs'
+                    ? $emit('add-to-queue', nodeId)
+                    : $emit('add-to-stack', nodeId)
+            "
         >
-            Add {{ nodeId }} to Queue
+            Add {{ nodeId }} to {{ stackOrQueue }}
         </button>
         <button
             :disabled="disabled"
@@ -32,7 +43,8 @@ defineEmits(["add-to-queue", "visit", "remove-and-set-to-current"]);
             class="border border-white p-1 rounded-sm ml-1 disabled:opacity-50 disabled:cursor-not-allowed hover:opacity-60"
             @click="$emit('remove-and-set-to-current', nodeId)"
         >
-            Remove {{ nodeId }} from queue and set to current vertex
+            Remove {{ nodeId }} from {{ stackOrQueue }} and set to current
+            vertex
         </button>
     </div>
 </template>

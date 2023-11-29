@@ -11,6 +11,7 @@ test("Correct text is shown in HintBox.vue at start", () => {
             visited: [],
             queue: [],
             guidedOrDiy: "guided",
+            bfsOrDfs: "bfs",
         },
     });
 
@@ -28,6 +29,7 @@ test("Correct text is shown in HintBox.vue midway", () => {
             visited: ["A", "B", "C"],
             queue: ["E"],
             guidedOrDiy: "guided",
+            bfsOrDfs: "bfs",
         },
     });
 
@@ -45,10 +47,29 @@ test("Correct text is shown in HintBox.vue midway for DIY", () => {
             visited: ["A", "B", "C"],
             queue: ["E"],
             guidedOrDiy: "diy",
+            bfsOrDfs: "bfs",
         },
     });
 
     const textElement = wrapper.text();
     const expectedText = "Mark D as visitedHint";
+    expect(textElement).toBe(expectedText);
+});
+
+test("Correct hints shown for DFS", () => {
+    const wrapper = mount(HintBox, {
+        props: {
+            text: "add-to-queue",
+            currentVertexName: "A",
+            started: true,
+            visited: [],
+            queue: [],
+            guidedOrDiy: "guided",
+            bfsOrDfs: "dfs",
+        },
+    });
+
+    const textElement = wrapper.text();
+    const expectedText = "Add A to the stack";
     expect(textElement).toBe(expectedText);
 });

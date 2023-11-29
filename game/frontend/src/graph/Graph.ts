@@ -6,6 +6,7 @@ export default class Graph {
     vertices: Vertex[];
     visited: Set<number> = new Set<number>();
     queue: Vertex[] = [];
+    stack: Vertex[] = [];
     constructor(n: number) {
         this.numVertices = n;
         this.vertices = [];
