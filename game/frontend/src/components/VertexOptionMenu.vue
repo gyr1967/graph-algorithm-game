@@ -13,14 +13,14 @@ defineEmits(["add-to-queue", "visit", "remove-and-set-to-current"]);
     <div class="flex justify-center items-center">
         <button
             :disabled="disabled"
-            class="border border-white p-1 rounded-sm ml-1 disabled:opacity-50 disabled:cursor-not-allowed"
+            class="border border-white p-1 rounded-sm ml-1 disabled:opacity-50 disabled:cursor-not-allowed hover:opacity-60"
             @click="$emit('add-to-queue', nodeId)"
         >
             Add {{ nodeId }} to Queue
         </button>
         <button
             :disabled="disabled"
-            class="border border-white p-1 rounded-sm ml-1 disabled:opacity-50 disabled:cursor-not-allowed"
+            class="border border-white p-1 rounded-sm ml-1 disabled:opacity-50 disabled:cursor-not-allowed hover:opacity-60"
             @click="$emit('visit', nodeId)"
         >
             Mark {{ nodeId }} as visited
@@ -29,7 +29,7 @@ defineEmits(["add-to-queue", "visit", "remove-and-set-to-current"]);
     <div class="flex justify-center mt-2">
         <button
             :disabled="disabled"
-            class="border border-white p-1 rounded-sm ml-1 disabled:opacity-50 disabled:cursor-not-allowed"
+            class="border border-white p-1 rounded-sm ml-1 disabled:opacity-50 disabled:cursor-not-allowed hover:opacity-60"
             @click="$emit('remove-and-set-to-current', nodeId)"
         >
             Remove {{ nodeId }} from queue and set to current vertex

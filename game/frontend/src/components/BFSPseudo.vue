@@ -2,6 +2,7 @@
 import type { BFSStep, GuidedSteps } from "../types/BFS.ts";
 defineProps<{
     currentStep: BFSStep | GuidedSteps | null;
+    noHighlighting?: boolean;
 }>();
 </script>
 <template>
@@ -9,7 +10,7 @@ defineProps<{
         <ul class="ml-4 list-disc">
             <li
                 :class="
-                    currentStep === 'addFirstToQueue'
+                    currentStep === 'addFirstToQueue' && !noHighlighting
                         ? 'bg-white text-black rounded-sm'
                         : ''
                 "
@@ -18,7 +19,7 @@ defineProps<{
             </li>
             <li
                 :class="
-                    currentStep === 'while'
+                    currentStep === 'while' && !noHighlighting
                         ? 'bg-white text-black rounded-sm'
                         : ''
                 "
@@ -29,8 +30,9 @@ defineProps<{
         <ul class="ml-8 list-disc">
             <li
                 :class="
-                    currentStep === 'removeFirstAndMakeItCurrent' ||
-                    currentStep === 'remove-and-set-to-current'
+                    (currentStep === 'removeFirstAndMakeItCurrent' ||
+                        currentStep === 'remove-and-set-to-current') &&
+                    !noHighlighting
                         ? 'bg-white text-black rounded-sm'
                         : ''
                 "
@@ -40,7 +42,9 @@ defineProps<{
             </li>
             <li
                 :class="
-                    currentStep === 'markVAsVisited' || currentStep === 'visit'
+                    (currentStep === 'markVAsVisited' ||
+                        currentStep === 'visit') &&
+                    !noHighlighting
                         ? 'bg-white text-black rounded-sm'
                         : ''
                 "
@@ -49,8 +53,9 @@ defineProps<{
             </li>
             <li
                 :class="
-                    currentStep === 'addVNeighboursToQueue' ||
-                    currentStep === 'add-to-queue'
+                    (currentStep === 'addVNeighboursToQueue' ||
+                        currentStep === 'add-to-queue') &&
+                    !noHighlighting
                         ? 'bg-white text-black rounded-sm'
                         : ''
                 "
