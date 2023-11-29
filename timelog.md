@@ -183,3 +183,7 @@
 ### 28 Nov 2023
 
 * *6 hours* | Finish BFS Guided and BFS DIY for the most part
+
+### 29 Nov 2023
+
+* *6 hours* | DFS Done to the same degree as BFS
