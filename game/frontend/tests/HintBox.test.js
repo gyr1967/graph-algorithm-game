@@ -10,11 +10,12 @@ test("Correct text is shown in HintBox.vue at start", () => {
             started: true,
             visited: [],
             queue: [],
+            guidedOrDiy: "guided",
         },
     });
 
     const textElement = wrapper.text();
-    const expectedText = "Add A to the queueHint";
+    const expectedText = "Add A to the queue";
     expect(textElement).toBe(expectedText);
 });
 
@@ -26,6 +27,24 @@ test("Correct text is shown in HintBox.vue midway", () => {
             started: true,
             visited: ["A", "B", "C"],
             queue: ["E"],
+            guidedOrDiy: "guided",
+        },
+    });
+
+    const textElement = wrapper.text();
+    const expectedText = "Mark D as visited";
+    expect(textElement).toBe(expectedText);
+});
+
+test("Correct text is shown in HintBox.vue midway for DIY", () => {
+    const wrapper = mount(HintBox, {
+        props: {
+            text: "visit",
+            currentVertexName: "D",
+            started: true,
+            visited: ["A", "B", "C"],
+            queue: ["E"],
+            guidedOrDiy: "diy",
         },
     });
 
