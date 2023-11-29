@@ -7,7 +7,7 @@ import VertexOptionMenu from "./VertexOptionMenu.vue";
 import { linkDatas, nodeDatas } from "../utils/graph-data";
 import { letterToNum } from "../utils/num-to-letter";
 import { ref } from "vue";
-import type { BFSGuidedSteps } from "../types/BFS";
+import type { DFSGuidedSteps } from "../types/DFS";
 import AdjListVertex from "../graph/AdjListVertex";
 const props = defineProps<{
     whichGraphData: number;
@@ -15,14 +15,14 @@ const props = defineProps<{
 }>();
 const emit = defineEmits([
     "update:vertexNames",
-    "update:currentQueue",
+    "update:currentStack",
     "update:guidedStep",
     "update:currentVertexName",
     "update:started",
     "update:visited",
 ]);
 
-class GuidedBFSGraph extends Graph {
+class GuidedDFSGraph extends Graph {
     currentVertex = ref<Vertex | null>(null);
     constructor(n: number) {
         super(n);
@@ -32,18 +32,18 @@ class GuidedBFSGraph extends Graph {
         nodeColours.value[nodeId] = colour;
     };
 
-    addToQueue(nodeId: string) {
-        this.queue.push(this.getVertex(letterToNum[nodeId] - 1));
+    addToStack(nodeId: string) {
+        this.stack.push(this.getVertex(letterToNum[nodeId] - 1));
         emit(
-            "update:currentQueue",
-            this.queue.map((v) => v.getTextName()),
+            "update:currentStack",
+            this.stack.map((v) => v.getTextName()),
         );
         const adjVertices = this.currentVertex.value
             ?.getAdjList()
             .map((alv) => this.getVertex(alv.getVertexIndex()));
         if (
             adjVertices?.every(
-                (v) => this.queue.includes(v) || this.visited.has(v.getIndex()),
+                (v) => this.stack.includes(v) || this.visited.has(v.getIndex()),
             ) ||
             this.visited.size === 0
         ) {
@@ -65,31 +65,31 @@ class GuidedBFSGraph extends Graph {
         }
         if (
             adjVertices?.every(
-                (v) => this.queue.includes(v) || this.visited.has(v.getIndex()),
+                (v) => this.stack.includes(v) || this.visited.has(v.getIndex()),
             ) ||
             this.visited.size === 0
         ) {
             setStep("remove-and-set-to-current");
             return;
         }
-        setStep("add-to-queue");
+        setStep("add-to-stack");
     }
 
     removeAndSetCurrentVertex() {
-        this.currentVertex.value = this.queue.shift() ?? null;
+        this.currentVertex.value = this.stack.pop() ?? null;
         emit(
             "update:currentVertexName",
             this.currentVertex.value?.getTextName() ?? "",
         );
         emit(
-            "update:currentQueue",
-            this.queue.map((v) => v.getTextName()),
+            "update:currentStack",
+            this.stack.map((v) => v.getTextName()),
         );
         setStep("visit");
     }
 }
 const started = ref<boolean>(false);
-const currentStep = ref<BFSGuidedSteps | null>("add-to-queue");
+const currentStep = ref<DFSGuidedSteps | null>("add-to-stack");
 emit("update:guidedStep", currentStep.value);
 const nodeData = nodeDatas[props.whichGraphData];
 emit("update:vertexNames", Object.keys(nodeData));
@@ -104,7 +104,7 @@ const setColoursDefault = () => {
 };
 setColoursDefault();
 const setUpGraph = (n: number) => {
-    const graph = new GuidedBFSGraph(n);
+    const graph = new GuidedDFSGraph(n);
     Object.keys(linkData).forEach((key) => {
         const link = linkData[key];
         const v1id = letterToNum[link.v1] - 1;
@@ -126,14 +126,14 @@ const handleVertexClicked = (nodeId: string) => {
     nodeMenuOpen.value = nodeId;
 };
 
-const validateStep = (step: BFSGuidedSteps, nodeId: string) => {
+const validateStep = (step: DFSGuidedSteps, nodeId: string) => {
     if (currentStep.value === step) {
         if (step === "visit") {
             if (validateVisit(nodeId)) {
                 return true;
             }
-        } else if (step === "add-to-queue") {
-            if (validateAddToQueue(nodeId)) {
+        } else if (step === "add-to-stack") {
+            if (validateAddToStack(nodeId)) {
                 return true;
             }
         } else if (step === "remove-and-set-to-current") {
@@ -154,9 +154,9 @@ const validateVisit = (nodeId: string) => {
     return false;
 };
 
-const validateAddToQueue = (nodeId: string) => {
+const validateAddToStack = (nodeId: string) => {
     if (
-        graph.queue.includes(graph.getVertex(letterToNum[nodeId] - 1)) ||
+        graph.stack.includes(graph.getVertex(letterToNum[nodeId] - 1)) ||
         graph.visited.has(letterToNum[nodeId] - 1)
     ) {
         return false;
@@ -171,8 +171,8 @@ const validateAddToQueue = (nodeId: string) => {
 };
 
 const validateRemoveAndSetToCurrent = (nodeId: string) => {
-    if (graph.queue.length > 0) {
-        if (graph.queue[0].getTextName() === nodeId) {
+    if (graph.stack.length > 0) {
+        if (graph.stack[graph.stack.length - 1].getTextName() === nodeId) {
             return true;
         }
     }
@@ -195,7 +195,7 @@ const checkIndexInAdjList = (
     return result;
 };
 
-const setStep = (step: BFSGuidedSteps) => {
+const setStep = (step: DFSGuidedSteps) => {
     currentStep.value = step;
     emit("update:guidedStep", step);
 };
@@ -263,11 +263,11 @@ const startTheAlgorithm = () => {
                 :text="nodeMenuOpen !== '' ? nodeMenuOpen : 'Click a vertex'"
                 :disabled="nodeMenuOpen === ''"
                 :node-id="nodeMenuOpen"
-                bfs-or-dfs="bfs"
-                @add-to-queue="
+                bfs-or-dfs="dfs"
+                @add-to-stack="
                     (nodeId: string) => {
-                        if (validateStep('add-to-queue', nodeId)) {
-                            graph.addToQueue(nodeId);
+                        if (validateStep('add-to-stack', nodeId)) {
+                            graph.addToStack(nodeId);
                         } else {
                             console.log('failed validation');
                         }

@@ -8,7 +8,13 @@ const root = "/graph-algorithm-game";
             class="bg-white rounded-sm text-black p-2 text-xl hover:bg-gray-400"
             :to="`${root}/game/bfs`"
         >
-            BFS
+            Breadth-First Search
+        </RouterLink>
+        <RouterLink
+            class="mt-2 bg-white rounded-sm text-black p-2 text-xl hover:bg-gray-400"
+            :to="`${root}/game/dfs`"
+        >
+            Depth-First Search
         </RouterLink>
     </div>
 </template>

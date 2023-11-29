@@ -1,15 +1,15 @@
 <script setup lang="ts">
 import GuidedBFSGraphDisplay from "../../components/GuidedBFSGraphDisplay.vue";
-import BFSPseudo from "../../components/BFSPseudo.vue";
-import BFSSidePanel from "../../components/BFSSidePanel.vue";
+import SearchPseudo from "../../components/SearchPseudo.vue";
+import SidePanel from "../../components/SidePanel.vue";
 import HintBox from "../../components/HintBox.vue";
 import { ref } from "vue";
 import Vertex from "../../graph/Vertex";
-import { GuidedSteps } from "../../types/BFS";
+import { BFSGuidedSteps } from "../../types/BFS";
 const graphSize = ref<number>(1);
 const currentVertexName = ref<string>("");
 const currentQueue = ref<string[]>([]);
-const guidedStep = ref<GuidedSteps | null>(null);
+const guidedStep = ref<BFSGuidedSteps | null>(null);
 const vertexNames = ref<string[]>([]);
 const started = ref<boolean>(false);
 const visited = ref<Vertex[]>([]);
@@ -18,12 +18,13 @@ const visited = ref<Vertex[]>([]);
 <template>
     <div class="grid grid-cols-3">
         <div class="ml-2">
-            <BFSPseudo
+            <SearchPseudo
                 :current-step="
                     visited.length === 0 && guidedStep === 'add-to-queue'
                         ? 'addFirstToQueue'
                         : guidedStep
                 "
+                bfs-or-dfs="bfs"
             />
             <HintBox
                 class="mt-2"
@@ -32,6 +33,8 @@ const visited = ref<Vertex[]>([]);
                 :started="started"
                 :visited="visited"
                 :queue="currentQueue"
+                guided-or-diy="guided"
+                bfs-or-dfs="bfs"
             />
         </div>
         <div class="flex justify-center items-center">
@@ -73,10 +76,11 @@ const visited = ref<Vertex[]>([]);
             </div>
         </div>
         <div class="text-center">
-            <BFSSidePanel
+            <SidePanel
                 :vertex-names="vertexNames"
                 :current-vertex-name="currentVertexName"
                 :current-queue="currentQueue"
+                bfs-or-dfs="bfs"
             />
         </div>
     </div>

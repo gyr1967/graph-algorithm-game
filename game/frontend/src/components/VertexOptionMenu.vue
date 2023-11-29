@@ -1,10 +1,17 @@
 <script setup lang="ts">
-defineProps<{
+const props = defineProps<{
     text: string;
     disabled: boolean;
     nodeId: string;
+    bfsOrDfs: "bfs" | "dfs";
 }>();
-defineEmits(["add-to-queue", "visit", "remove-and-set-to-current"]);
+defineEmits([
+    "add-to-queue",
+    "visit",
+    "remove-and-set-to-current",
+    "add-to-stack",
+]);
+const stackOrQueue = props.bfsOrDfs === "bfs" ? "queue" : "stack";
 </script>
 <template>
     <div class="flex justify-center">
@@ -13,14 +20,18 @@ defineEmits(["add-to-queue", "visit", "remove-and-set-to-current"]);
     <div class="flex justify-center items-center">
         <button
             :disabled="disabled"
-            class="border border-white p-1 rounded-sm ml-1 disabled:opacity-50 disabled:cursor-not-allowed"
-            @click="$emit('add-to-queue', nodeId)"
+            class="border border-white p-1 rounded-sm ml-1 disabled:opacity-50 disabled:cursor-not-allowed hover:opacity-60"
+            @click="
+                bfsOrDfs === 'bfs'
+                    ? $emit('add-to-queue', nodeId)
+                    : $emit('add-to-stack', nodeId)
+            "
         >
-            Add {{ nodeId }} to Queue
+            Add {{ nodeId }} to {{ stackOrQueue }}
         </button>
         <button
             :disabled="disabled"
-            class="border border-white p-1 rounded-sm ml-1 disabled:opacity-50 disabled:cursor-not-allowed"
+            class="border border-white p-1 rounded-sm ml-1 disabled:opacity-50 disabled:cursor-not-allowed hover:opacity-60"
             @click="$emit('visit', nodeId)"
         >
             Mark {{ nodeId }} as visited
@@ -29,10 +40,11 @@ defineEmits(["add-to-queue", "visit", "remove-and-set-to-current"]);
     <div class="flex justify-center mt-2">
         <button
             :disabled="disabled"
-            class="border border-white p-1 rounded-sm ml-1 disabled:opacity-50 disabled:cursor-not-allowed"
+            class="border border-white p-1 rounded-sm ml-1 disabled:opacity-50 disabled:cursor-not-allowed hover:opacity-60"
             @click="$emit('remove-and-set-to-current', nodeId)"
         >
-            Remove {{ nodeId }} from queue and set to current vertex
+            Remove {{ nodeId }} from {{ stackOrQueue }} and set to current
+            vertex
         </button>
     </div>
 </template>

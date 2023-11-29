@@ -18,7 +18,7 @@ Here's an overview of the structure as it stands:
     * [NodeJS](https://nodejs.org/en) (preferably >=18)
 #### Start the development server
 * `% cd game/frontend` -- change to the right directory
-* `% npm install` (or yarn/pnpm equivalent) -- installs the dependencies 
+* `% npm install`  -- installs the dependencies 
 * `% npm run dev` -- start the development server
 
 #### Build (not necessary to run locally)
