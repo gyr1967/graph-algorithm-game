@@ -187,3 +187,13 @@
 ### 29 Nov 2023
 
 * *6 hours* | DFS Done to the same degree as BFS
+
+## Week 12
+
+### Revision week - no work done
+
+## Week 13
+
+### 11 Dec 2023
+
+* *7 hours* | Dijkstra's started on
