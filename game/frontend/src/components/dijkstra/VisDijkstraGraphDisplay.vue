@@ -73,9 +73,10 @@ class VisDijkstraGraph extends DijkstraGraph {
                 );
             });
             for (let adjListVertex of neighboursInQueue) {
+                const v = this.getVertex(adjListVertex.getVertexIndex());
+                this.changeVertexColour(v.getTextName(), "#2ecc71");
                 const alt =
                     currentVertex.getDistance() + adjListVertex.getEdgeWeight();
-                const v = this.getVertex(adjListVertex.getVertexIndex());
                 if (alt < v.getDistance()) {
                     v.setDistance(alt);
                     distances.value[v.getTextName()] = alt;
@@ -91,6 +92,8 @@ class VisDijkstraGraph extends DijkstraGraph {
                         verticesToCheck: this.verticesToCheck,
                     };
                 }
+                // reset colour
+                this.changeVertexColour(v.getTextName(), nodeFill);
             }
         }
         yield {
@@ -132,7 +135,6 @@ const setUpGraph = (n: number) => {
     Object.keys(nodeData).forEach((key) => {
         distances.value[nodeData[key].id] = Infinity;
     });
-    emit("update:distances", distances.value);
     return graph;
 };
 let graph = setUpGraph(Object.entries(nodeData).length);
@@ -148,6 +150,7 @@ const startDijkstras = () => {
     const generator = graph.dijkstraGenerator(graph.getVertex(0));
     dijkstraGenerator.value = generator;
     started.value = true;
+    emit("update:distances", distances.value);
     emit(
         "update:verticesToCheck",
         graph.verticesToCheck.map((v) => v.getTextName()),
