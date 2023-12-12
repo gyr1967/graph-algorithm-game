@@ -36,11 +36,11 @@ class Vertex {
         return this.textName;
     }
 
-    addToAdjList(n: number, edgeWeight: number) {
+    addToAdjList(n: number, edgeWeight: number = 0) {
         if (edgeWeight !== 0) {
-            throw new Error("Edge weight must be 0 for non-weighted graphs");
+            throw new Error("Unweighted graph cannot have edge weights");
         }
-        this.adjList.push(new AdjListVertex(n, 0));
+        this.adjList.push(new AdjListVertex(n));
     }
 
     vertexDegree() {
