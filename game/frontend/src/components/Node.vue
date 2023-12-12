@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { computed } from "vue";
+
 const props = defineProps<{
     cx: number;
     cy: number;
@@ -6,9 +8,23 @@ const props = defineProps<{
     fill: string;
     text?: string;
     currentVertex?: boolean;
+    uncheckedDistance?: number;
 }>();
 const emit = defineEmits(["vertexClicked"]);
 const label = props.text ?? "";
+const distance = computed(() => {
+    console.log("props.uncheckedDistance", props.uncheckedDistance);
+    if (props.uncheckedDistance === undefined) {
+        return undefined;
+    }
+    if (props.uncheckedDistance < 1) {
+        return 0;
+    }
+    if (props.uncheckedDistance === Infinity) {
+        return "∞";
+    }
+    return props.uncheckedDistance;
+});
 const handleClick = () => {
     emit("vertexClicked");
 };
@@ -20,8 +36,8 @@ const handleClick = () => {
         :r="r"
         :fill="fill"
         :stroke="currentVertex ? 'white' : ''"
-        @click="handleClick()"
         :stroke-width="currentVertex ? '2' : ''"
+        @click="handleClick()"
     />
     <text
         v-if="label"
@@ -34,5 +50,16 @@ const handleClick = () => {
         @click="handleClick()"
     >
         {{ label }}
+    </text>
+    <text
+        v-if="distance"
+        :x="cx"
+        :y="cy + 13"
+        text-anchor="middle"
+        alignment-baseline="middle"
+        fill="white"
+        font-size="16"
+    >
+        {{ distance }}
     </text>
 </template>

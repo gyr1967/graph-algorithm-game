@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { computed } from "vue";
+
 const props = defineProps<{
     x1: number;
     y1: number;
@@ -8,7 +10,9 @@ const props = defineProps<{
     strokeWidth: string;
     text?: string;
 }>();
-const label = props.text ?? "";
+const label = computed(() => {
+    return props.text ?? "";
+});
 
 const midpoint = (x1: number, y1: number, x2: number, y2: number) => {
     return {
