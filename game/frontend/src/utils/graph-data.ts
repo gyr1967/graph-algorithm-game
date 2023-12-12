@@ -88,6 +88,7 @@ export const linkDatas: EdgeDatas = {
             y2: nodeDatas[1]["C"].y,
             stroke: "#ccc",
             strokeWidth: "2",
+            weight: 4,
         },
         C_E: {
             v1: "C",
@@ -98,6 +99,7 @@ export const linkDatas: EdgeDatas = {
             y2: nodeDatas[1]["E"].y,
             stroke: "#ccc",
             strokeWidth: "2",
+            weight: 2,
         },
         A_B: {
             v1: "A",
@@ -108,6 +110,7 @@ export const linkDatas: EdgeDatas = {
             y2: nodeDatas[1]["B"].y,
             stroke: "#ccc",
             strokeWidth: "2",
+            weight: 1,
         },
         B_D: {
             v1: "B",
@@ -118,6 +121,7 @@ export const linkDatas: EdgeDatas = {
             y2: nodeDatas[1]["D"].y,
             stroke: "#ccc",
             strokeWidth: "2",
+            weight: 8,
         },
         D_G: {
             v1: "D",
@@ -128,6 +132,7 @@ export const linkDatas: EdgeDatas = {
             y2: nodeDatas[1]["G"].y,
             stroke: "#ccc",
             strokeWidth: "2",
+            weight: 3,
         },
         D_E: {
             v1: "D",
@@ -138,6 +143,7 @@ export const linkDatas: EdgeDatas = {
             y2: nodeDatas[1]["E"].y,
             stroke: "#ccc",
             strokeWidth: "2",
+            weight: 1,
         },
         G_F: {
             v1: "G",
@@ -148,6 +154,7 @@ export const linkDatas: EdgeDatas = {
             y2: nodeDatas[1]["F"].y,
             stroke: "#ccc",
             strokeWidth: "2",
+            weight: 2,
         },
     },
     2: {
