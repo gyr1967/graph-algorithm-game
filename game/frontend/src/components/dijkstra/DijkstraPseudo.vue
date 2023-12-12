@@ -1,6 +1,8 @@
 <script setup lang="ts">
+import { DijkstraStep } from "../../types/Dijkstra";
+
 defineProps<{
-    currentStep: string | null;
+    currentStep: DijkstraStep | null;
     noHighlighting?: boolean;
 }>();
 </script>
@@ -9,9 +11,7 @@ defineProps<{
         <ul class="ml-4 list-disc">
             <li
                 :class="
-                    (currentStep === 'set-source-to-zero' ||
-                        currentStep === 'update-distance') &&
-                    !noHighlighting
+                    currentStep === 'set-source-to-zero' && !noHighlighting
                         ? 'bg-white text-black rounded-sm'
                         : ''
                 "
@@ -37,8 +37,8 @@ defineProps<{
                 </li>
                 <ul class="ml-8 list-disc">
                     <li>
-                        If distance to current vertex + distance to adjacent
-                        vertex is less than the adjacent vertex's distance:
+                        If distance to current vertex + edge weight to adjacent
+                        is less than adjacent's distance:
                     </li>
                     <ul class="ml-8 list-disc">
                         <li
@@ -50,7 +50,7 @@ defineProps<{
                             "
                         >
                             Set the adjacent vertex's distance to distance to
-                            current vertex + distance to adjacent vertex
+                            current vertex + adjacent's edge weight
                         </li>
                         <li
                             :class="
