@@ -1,5 +1,5 @@
 import { numToLetter } from "../utils/num-to-letter";
-import Vertex from "./Vertex";
+import Vertex, { DijkstraVertex } from "./Vertex";
 
 export default class Graph {
     numVertices: number;
@@ -24,6 +24,29 @@ export default class Graph {
     }
 
     getVertices() {
+        return this.vertices;
+    }
+}
+
+export class DijkstraGraph {
+    numVertices: number;
+    vertices: DijkstraVertex[];
+    queue: DijkstraVertex[] = [];
+    stack: DijkstraVertex[] = [];
+    constructor(n: number) {
+        this.numVertices = n;
+        this.vertices = [];
+        for (let i = 0; i < n; i++) {
+            this.vertices.push(new DijkstraVertex(i, numToLetter[i + 1]));
+        }
+    }
+    getVertex(i: number): DijkstraVertex {
+        return this.vertices[i];
+    }
+    setVertex(i: number) {
+        this.vertices[i] = new DijkstraVertex(i, numToLetter[i + 1]);
+    }
+    getVertices(): DijkstraVertex[] {
         return this.vertices;
     }
 }
