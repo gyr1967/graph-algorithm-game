@@ -3,14 +3,13 @@ import { createRouter, createWebHistory } from "vue-router";
 import App from "./App.vue";
 import Home from "./pages/Home.vue";
 import Game from "./pages/Game.vue";
-import BFS from "./pages/BFS/BFS.vue";
 import BFSVis from "./pages/BFS/BFSVis.vue";
 import BFSGuided from "./pages/BFS/BFSGuided.vue";
 import BFSSolo from "./pages/BFS/BFSSolo.vue";
-import DFS from "./pages/DFS/DFS.vue";
 import DFSVis from "./pages/DFS/DFSVis.vue";
 import DFSGuided from "./pages/DFS/DFSGuided.vue";
 import DFSSolo from "./pages/DFS/DFSSolo.vue";
+import DijkstraVis from "./pages/Dijkstra/DijkstraVis.vue";
 import "./style.css";
 
 const root = "/graph-algorithm-game";
@@ -22,10 +21,6 @@ const routes = [
     {
         path: `${root}/game`,
         component: Game,
-    },
-    {
-        path: `${root}/game/bfs`,
-        component: BFS,
     },
     {
         path: `${root}/game/bfs/visualise`,
@@ -40,10 +35,6 @@ const routes = [
         component: BFSSolo,
     },
     {
-        path: `${root}/game/dfs`,
-        component: DFS,
-    },
-    {
         path: `${root}/game/dfs/visualise`,
         component: DFSVis,
     },
@@ -54,6 +45,10 @@ const routes = [
     {
         path: `${root}/game/dfs/solo`,
         component: DFSSolo,
+    },
+    {
+        path: `${root}/game/dijkstra/visualise`,
+        component: DijkstraVis,
     },
 ];
 
