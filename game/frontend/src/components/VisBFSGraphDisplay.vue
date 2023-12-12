@@ -137,8 +137,8 @@ const setUpGraph = (n: number) => {
         const v2id = letterToNum[link.v2] - 1;
         const v1 = graph.getVertex(v1id);
         const v2 = graph.getVertex(v2id);
-        v1.addToAdjList(v2id);
-        v2.addToAdjList(v1id);
+        v1.addToAdjList(v2id, 0);
+        v2.addToAdjList(v1id, 0);
     });
     return graph;
 };

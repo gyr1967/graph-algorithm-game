@@ -1,10 +1,15 @@
 export default class AdjListVertex {
     vertexIndex: number;
-    constructor(n: number) {
+    edgeWeight: number;
+    constructor(n: number, edgeWeight: number) {
         this.vertexIndex = n;
+        this.edgeWeight = edgeWeight;
     }
 
     getVertexIndex() {
         return this.vertexIndex;
+    }
+    getEdgeWeight() {
+        return this.edgeWeight;
     }
 }
