@@ -20,7 +20,24 @@ const midpoint = (x1: number, y1: number, x2: number, y2: number) => {
         y: (y1 + y2) / 2,
     };
 };
-const { x, y } = midpoint(props.x1, props.y1, props.x2, props.y2);
+
+const calculateAngle = (x1: number, y1: number, x2: number, y2: number) => {
+    return Math.atan2(y2 - y1, x2 - x1) * (180 / Math.PI);
+};
+
+const angle = calculateAngle(props.x1, props.y1, props.x2, props.y2);
+
+let textX = 0;
+let textY = 0;
+
+// Adjust text position based on line angle
+if (angle >= -90 && angle < 90) {
+    textX = midpoint(props.x1, props.y1, props.x2, props.y2).x + 5;
+    textY = midpoint(props.x1, props.y1, props.x2, props.y2).y;
+} else {
+    textX = midpoint(props.x1, props.y1, props.x2, props.y2).x - 5;
+    textY = midpoint(props.x1, props.y1, props.x2, props.y2).y;
+}
 </script>
 <template>
     <line
@@ -33,8 +50,8 @@ const { x, y } = midpoint(props.x1, props.y1, props.x2, props.y2);
     />
     <text
         v-if="label"
-        :x="x"
-        :y="y - 10"
+        :x="textX"
+        :y="textY - 10"
         text-anchor="middle"
         alignment-baseline="middle"
         fill="white"

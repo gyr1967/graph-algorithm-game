@@ -92,7 +92,6 @@ class VisDijkstraGraph extends DijkstraGraph {
                         verticesToCheck: this.verticesToCheck,
                     };
                 }
-                // reset colour
                 this.changeVertexColour(v.getTextName(), nodeFill);
             }
         }
@@ -108,7 +107,7 @@ const distances = ref<Record<string, number>>({});
 const linkData = ref<Record<string, EdgeData>>(linkDatas[props.whichGraphData]);
 const randomiseLinkLengths = () => {
     Object.keys(linkData.value).forEach((key) => {
-        linkData.value[key].weight = Math.floor(Math.random() * 6) + 1;
+        linkData.value[key].weight = Math.floor(Math.random() * 14) + 1;
     });
     graph = setUpGraph(Object.entries(nodeData).length);
 };

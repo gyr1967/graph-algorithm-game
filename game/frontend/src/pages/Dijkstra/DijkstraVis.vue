@@ -3,10 +3,10 @@ import VisDijkstraGraph from "../../components/dijkstra/VisDijkstraGraphDisplay.
 import DijkstraPseudo from "../../components/dijkstra/DijkstraPseudo.vue";
 import DijkstraSidePanel from "../../components/dijkstra/DijkstraSidePanel.vue";
 import { ref } from "vue";
-import { DFSStep } from "../../types/DFS";
+import { DijkstraStep } from "../../types/Dijkstra.ts";
 const currentVertexName = ref<string>("");
 const verticesToCheck = ref<string[]>([]);
-const pseudoStep = ref<DFSStep | null>(null);
+const pseudoStep = ref<DijkstraStep | null>(null);
 const distances = ref<Record<string, number>>({});
 </script>
 
@@ -18,7 +18,7 @@ const distances = ref<Record<string, number>>({});
         <div class="flex justify-center items-center">
             <div class="inline-block justify-self-center self-center">
                 <VisDijkstraGraph
-                    :which-graph-data="1"
+                    :which-graph-data="2"
                     :scaling-factor="1.2"
                     @update:current-vertex-name="
                         (newValue) => {
