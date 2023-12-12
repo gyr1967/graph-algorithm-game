@@ -3,8 +3,11 @@ const root = "/graph-algorithm-game";
 </script>
 
 <template>
-    <div class="flex justify-center h-screen items-center w-screen">
-        <div class="mr-2">
+    <div class="flex justify-center mb-2 p-2 text-xl font-bold">
+        <span>Depth-first Search</span>
+    </div>
+    <div class="flex justify-center">
+        <div class="mx-1">
             <RouterLink
                 class="bg-white rounded-sm text-black p-2 text-xl hover:bg-gray-400"
                 :to="`${root}/game/dfs/visualise`"
@@ -12,7 +15,7 @@ const root = "/graph-algorithm-game";
                 Visualisation
             </RouterLink>
         </div>
-        <div class="mr-2">
+        <div class="mx-1">
             <RouterLink
                 class="bg-white rounded-sm text-black p-2 text-xl hover:bg-gray-400"
                 :to="`${root}/game/dfs/guided`"
@@ -20,7 +23,7 @@ const root = "/graph-algorithm-game";
                 Guided
             </RouterLink>
         </div>
-        <div>
+        <div class="mx-1">
             <RouterLink
                 class="bg-white rounded-sm text-black p-2 text-xl hover:bg-gray-400"
                 :to="`${root}/game/dfs/solo`"

@@ -1,20 +1,19 @@
 <script setup lang="ts">
-const root = "/graph-algorithm-game";
+import BFS from "./BFS/BFS.vue";
+import DFS from "./DFS/DFS.vue";
+import Dijkstras from "./Dijkstra/Dijkstras.vue";
 </script>
 
 <template>
-    <div class="flex flex-col items-center justify-center h-screen">
-        <RouterLink
-            class="bg-white rounded-sm text-black p-2 text-xl hover:bg-gray-400"
-            :to="`${root}/game/bfs`"
-        >
-            Breadth-First Search
-        </RouterLink>
-        <RouterLink
-            class="mt-2 bg-white rounded-sm text-black p-2 text-xl hover:bg-gray-400"
-            :to="`${root}/game/dfs`"
-        >
-            Depth-First Search
-        </RouterLink>
+    <div class="grid grid-cols-3 mx-5">
+        <div>
+            <BFS />
+        </div>
+        <div>
+            <DFS />
+        </div>
+        <div>
+            <Dijkstras />
+        </div>
     </div>
 </template>
