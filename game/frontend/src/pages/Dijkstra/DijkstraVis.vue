@@ -1,29 +1,53 @@
 <script setup lang="ts">
 import VisDijkstraGraph from "../../components/dijkstra/VisDijkstraGraphDisplay.vue";
 import DijkstraPseudo from "../../components/dijkstra/DijkstraPseudo.vue";
-import SidePanel from "../../components/SidePanel.vue";
+import DijkstraSidePanel from "../../components/dijkstra/DijkstraSidePanel.vue";
 import { ref } from "vue";
 import { DFSStep } from "../../types/DFS";
 const currentVertexName = ref<string>("");
-const currentStack = ref<string[]>([]);
+const verticesToCheck = ref<string[]>([]);
 const pseudoStep = ref<DFSStep | null>(null);
+const distances = ref<Record<string, number>>({});
 </script>
 
 <template>
     <div class="grid grid-cols-3">
         <div class="ml-2">
-            <DijkstraPseudo :current-step="pseudoStep" bfs-or-dfs="dfs" />
+            <DijkstraPseudo :current-step="pseudoStep" />
         </div>
         <div class="flex justify-center items-center">
             <div class="inline-block justify-self-center self-center">
-                <VisDijkstraGraph :which-graph-data="1" :scaling-factor="1.2" />
+                <VisDijkstraGraph
+                    :which-graph-data="1"
+                    :scaling-factor="1.2"
+                    @update:current-vertex-name="
+                        (newValue) => {
+                            currentVertexName = newValue;
+                        }
+                    "
+                    @update:pseudo-step="
+                        (newValue) => {
+                            pseudoStep = newValue;
+                        }
+                    "
+                    @update:vertices-to-check="
+                        (newValue) => {
+                            verticesToCheck = newValue;
+                        }
+                    "
+                    @update:distances="
+                        (newValue) => {
+                            distances = newValue;
+                        }
+                    "
+                />
             </div>
         </div>
         <div class="text-center">
-            <SidePanel
+            <DijkstraSidePanel
                 :current-vertex-name="currentVertexName"
-                :current-stack="currentStack"
-                bfs-or-dfs="dfs"
+                :vertices-to-check="verticesToCheck"
+                :distances="distances"
             />
         </div>
     </div>

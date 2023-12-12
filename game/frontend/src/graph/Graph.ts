@@ -31,8 +31,7 @@ export default class Graph {
 export class DijkstraGraph {
     numVertices: number;
     vertices: DijkstraVertex[];
-    queue: DijkstraVertex[] = [];
-    stack: DijkstraVertex[] = [];
+    verticesToCheck: DijkstraVertex[] = [];
     constructor(n: number) {
         this.numVertices = n;
         this.vertices = [];

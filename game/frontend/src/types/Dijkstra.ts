@@ -10,7 +10,7 @@ export type DijkstraStep =
 export type DijkstraYieldData = {
     step: DijkstraStep;
     currentVertex: DijkstraVertex | null;
-    queue: DijkstraVertex[];
+    verticesToCheck: DijkstraVertex[];
 };
 
 export type DijkstraGuidedSteps =

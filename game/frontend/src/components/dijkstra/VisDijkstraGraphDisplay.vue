@@ -16,13 +16,15 @@ const props = defineProps<{
 const emit = defineEmits([
     "update:currentVertexName",
     "update:pseudoStep",
-    "update:queue",
+    "update:verticesToCheck",
+    "update:distances",
 ]);
 
 class VisDijkstraGraph extends DijkstraGraph {
     currentVertex = ref<DijkstraVertex | null>(null);
     constructor(n: number) {
         super(n);
+        this.verticesToCheck = this.vertices.slice();
     }
 
     changeVertexColour = (nodeId: string, colour: string) => {
@@ -32,7 +34,7 @@ class VisDijkstraGraph extends DijkstraGraph {
     findClosest() {
         let minDistance = Infinity;
         let closestVertex = null;
-        for (let vertex of this.queue) {
+        for (let vertex of this.verticesToCheck) {
             if (vertex.getDistance() < minDistance) {
                 minDistance = vertex.getDistance();
                 closestVertex = vertex;
@@ -44,30 +46,29 @@ class VisDijkstraGraph extends DijkstraGraph {
     *dijkstraGenerator(
         startVertex: DijkstraVertex,
     ): Generator<DijkstraYieldData, void, unknown> {
-        this.queue = this.vertices.slice();
         startVertex.setDistance(0);
         distances.value[startVertex.getTextName()] = 0;
         yield {
             step: "set-source-to-zero",
             currentVertex: startVertex,
-            queue: this.queue,
+            verticesToCheck: this.verticesToCheck,
         };
 
-        while (this.queue.length > 0) {
+        while (this.verticesToCheck.length > 0) {
             const currentVertex = this.findClosest();
             if (!currentVertex) {
                 throw new Error("currentVertex is null");
             }
-            this.queue = this.queue.filter(
+            this.verticesToCheck = this.verticesToCheck.filter(
                 (v) => v.getIndex() !== currentVertex.getIndex(),
             );
             yield {
                 step: "remove-and-set-to-current",
                 currentVertex: currentVertex,
-                queue: this.queue,
+                verticesToCheck: this.verticesToCheck,
             };
             const neighboursInQueue = currentVertex.getAdjList().filter((v) => {
-                return this.queue.some(
+                return this.verticesToCheck.some(
                     (q) => q.getIndex() === v.getVertexIndex(),
                 );
             });
@@ -81,13 +82,13 @@ class VisDijkstraGraph extends DijkstraGraph {
                     yield {
                         step: "update-distance",
                         currentVertex: currentVertex,
-                        queue: this.queue,
+                        verticesToCheck: this.verticesToCheck,
                     };
                     v.setPreviousVertex(currentVertex);
                     yield {
                         step: "set-adj-prev-to-current",
                         currentVertex: currentVertex,
-                        queue: this.queue,
+                        verticesToCheck: this.verticesToCheck,
                     };
                 }
             }
@@ -95,7 +96,7 @@ class VisDijkstraGraph extends DijkstraGraph {
         yield {
             step: "done",
             currentVertex: null,
-            queue: this.queue,
+            verticesToCheck: this.verticesToCheck,
         };
     }
 }
@@ -131,6 +132,7 @@ const setUpGraph = (n: number) => {
     Object.keys(nodeData).forEach((key) => {
         distances.value[nodeData[key].id] = Infinity;
     });
+    emit("update:distances", distances.value);
     return graph;
 };
 let graph = setUpGraph(Object.entries(nodeData).length);
@@ -146,6 +148,10 @@ const startDijkstras = () => {
     const generator = graph.dijkstraGenerator(graph.getVertex(0));
     dijkstraGenerator.value = generator;
     started.value = true;
+    emit(
+        "update:verticesToCheck",
+        graph.verticesToCheck.map((v) => v.getTextName()),
+    );
 };
 
 const performDijkstraStep = () => {
@@ -158,6 +164,16 @@ const performDijkstraStep = () => {
             emit("update:pseudoStep", null);
         } else {
             emit("update:pseudoStep", result.value.step);
+            emit(
+                "update:verticesToCheck",
+                graph.verticesToCheck.map((v) => v.getTextName()),
+            );
+            if (result.value.currentVertex) {
+                emit(
+                    "update:currentVertexName",
+                    result.value.currentVertex.getTextName(),
+                );
+            }
             graph.currentVertex.value = result.value.currentVertex;
         }
     }

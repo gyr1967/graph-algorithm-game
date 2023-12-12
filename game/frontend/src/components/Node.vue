@@ -13,12 +13,11 @@ const props = defineProps<{
 const emit = defineEmits(["vertexClicked"]);
 const label = props.text ?? "";
 const distance = computed(() => {
-    console.log("props.uncheckedDistance", props.uncheckedDistance);
     if (props.uncheckedDistance === undefined) {
         return undefined;
     }
-    if (props.uncheckedDistance < 1) {
-        return 0;
+    if (props.uncheckedDistance === 0) {
+        return "0";
     }
     if (props.uncheckedDistance === Infinity) {
         return "∞";
