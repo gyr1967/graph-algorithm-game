@@ -26,5 +26,5 @@ export interface EdgeData {
     y2: number;
     stroke: string;
     strokeWidth: string;
-    text?: string;
+    weight?: number;
 }
