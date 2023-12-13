@@ -18,6 +18,7 @@ const emit = defineEmits([
     "update:pseudoStep",
     "update:verticesToCheck",
     "update:distances",
+    "update:vertices",
 ]);
 
 class VisDijkstraGraph extends DijkstraGraph {
@@ -146,6 +147,7 @@ const dijkstraGenerator = ref<Generator<
 const startDijkstras = () => {
     setColoursDefault();
     graph = setUpGraph(Object.entries(nodeData).length);
+    emit("update:vertices", graph.vertices);
     const generator = graph.dijkstraGenerator(graph.getVertex(0));
     dijkstraGenerator.value = generator;
     started.value = true;
@@ -176,6 +178,7 @@ const performDijkstraStep = () => {
                     result.value.currentVertex.getTextName(),
                 );
             }
+            emit("update:vertices", graph.vertices);
             graph.currentVertex.value = result.value.currentVertex;
         }
     }
