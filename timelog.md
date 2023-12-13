@@ -197,3 +197,7 @@
 ### 11 Dec 2023
 
 * *7 hours* | Dijkstra's started on
+
+### 12 Dec 2023
+
+* *7 hours* | Dijkstra's visualisation near finished
