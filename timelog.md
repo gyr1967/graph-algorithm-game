@@ -201,3 +201,7 @@
 ### 12 Dec 2023
 
 * *7 hours* | Dijkstra's visualisation near finished
+
+### 13 Dec 2023
+
+* *8 hours* | Dijkstra's visualisation in a first-draft state, moving on to guided/diy - made decent progress
