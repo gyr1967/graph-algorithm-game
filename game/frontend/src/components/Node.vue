@@ -36,6 +36,7 @@ const handleClick = () => {
         :fill="fill"
         :stroke="currentVertex ? 'white' : ''"
         :stroke-width="currentVertex ? '2' : ''"
+        class="hover:cursor-pointer"
         @click="handleClick()"
     />
     <text
@@ -46,6 +47,7 @@ const handleClick = () => {
         alignment-baseline="middle"
         fill="white"
         font-size="20"
+        class="hover:cursor-pointer"
         @click="handleClick()"
     >
         {{ label }}
@@ -58,6 +60,8 @@ const handleClick = () => {
         alignment-baseline="middle"
         fill="white"
         font-size="16"
+        class="hover:cursor-pointer"
+        @click="handleClick()"
     >
         {{ distance }}
     </text>
