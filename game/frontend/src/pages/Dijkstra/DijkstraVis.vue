@@ -2,12 +2,15 @@
 import VisDijkstraGraph from "../../components/dijkstra/VisDijkstraGraphDisplay.vue";
 import DijkstraPseudo from "../../components/dijkstra/DijkstraPseudo.vue";
 import DijkstraSidePanel from "../../components/dijkstra/DijkstraSidePanel.vue";
+import ShortestPaths from "../../components/dijkstra/ShortestPaths.vue";
 import { ref } from "vue";
 import { DijkstraStep } from "../../types/Dijkstra.ts";
+import { DijkstraVertex } from "../../graph/Vertex";
 const currentVertexName = ref<string>("");
 const verticesToCheck = ref<string[]>([]);
 const pseudoStep = ref<DijkstraStep | null>(null);
 const distances = ref<Record<string, number>>({});
+const vertices = ref<DijkstraVertex[]>([]);
 </script>
 
 <template>
@@ -40,6 +43,11 @@ const distances = ref<Record<string, number>>({});
                             distances = newValue;
                         }
                     "
+                    @update:vertices="
+                        (newValue) => {
+                            vertices = newValue;
+                        }
+                    "
                 />
             </div>
         </div>
@@ -48,6 +56,12 @@ const distances = ref<Record<string, number>>({});
                 :current-vertex-name="currentVertexName"
                 :vertices-to-check="verticesToCheck"
                 :distances="distances"
+            />
+            <ShortestPaths
+                :current-vertex-name="currentVertexName"
+                :vertices="vertices"
+                :distances="distances"
+                :source-name="'A'"
             />
         </div>
     </div>
