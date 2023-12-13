@@ -217,7 +217,7 @@ export const linkDatas: EdgeDatas = {
             y2: nodeDatas[2]["C"].y,
             stroke: "#ccc",
             strokeWidth: "2",
-            weight: 6,
+            weight: 1,
         },
         C_F: {
             v1: "C",
@@ -228,7 +228,7 @@ export const linkDatas: EdgeDatas = {
             y2: nodeDatas[2]["F"].y,
             stroke: "#ccc",
             strokeWidth: "2",
-            weight: 7,
+            weight: 2,
         },
         C_D: {
             v1: "C",
@@ -239,7 +239,7 @@ export const linkDatas: EdgeDatas = {
             y2: nodeDatas[2]["D"].y,
             stroke: "#ccc",
             strokeWidth: "2",
-            weight: 8,
+            weight: 3,
         },
         E_D: {
             v1: "E",
