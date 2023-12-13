@@ -10,6 +10,8 @@ import DFSVis from "./pages/DFS/DFSVis.vue";
 import DFSGuided from "./pages/DFS/DFSGuided.vue";
 import DFSSolo from "./pages/DFS/DFSSolo.vue";
 import DijkstraVis from "./pages/Dijkstra/DijkstraVis.vue";
+import DijkstraGuided from "./pages/Dijkstra/DijkstraGuided.vue";
+import DijkstraDiy from "./pages/Dijkstra/DijkstraDiy.vue";
 import "./style.css";
 
 const root = "/graph-algorithm-game";
@@ -49,6 +51,14 @@ const routes = [
     {
         path: `${root}/game/dijkstra/visualise`,
         component: DijkstraVis,
+    },
+    {
+        path: `${root}/game/dijkstra/guided`,
+        component: DijkstraGuided,
+    },
+    {
+        path: `${root}/game/dijkstra/diy`,
+        component: DijkstraDiy,
     },
 ];
 
