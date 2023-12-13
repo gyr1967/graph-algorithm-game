@@ -53,7 +53,7 @@ const handleClick = () => {
     <text
         v-if="distance"
         :x="cx"
-        :y="cy + 13"
+        :y="cy + Math.floor(r / 1.5)"
         text-anchor="middle"
         alignment-baseline="middle"
         fill="white"
