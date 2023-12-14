@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import DijkstraGuidedGraphDisplay from "../../components/dijkstra/DijkstraGuidedGraphDisplay.vue";
+import DijkstraGraphDisplay from "../../components/dijkstra/DijkstraGraphDisplay.vue";
 import DijkstraPseudo from "../../components/dijkstra/DijkstraPseudo.vue";
 import DijkstraSidePanel from "../../components/dijkstra/DijkstraSidePanel.vue";
 import ShortestPaths from "../../components/dijkstra/ShortestPaths.vue";
@@ -30,7 +30,7 @@ const started = ref<boolean>(false);
         </div>
         <div class="flex justify-center items-center">
             <div class="inline-block justify-self-center self-center">
-                <DijkstraGuidedGraphDisplay
+                <DijkstraGraphDisplay
                     :which-graph-data="2"
                     :scaling-factor="1.2"
                     @update:current-vertex-name="
