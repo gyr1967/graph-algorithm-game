@@ -66,18 +66,24 @@ const started = ref<boolean>(false);
                 />
             </div>
         </div>
-        <div class="text-center">
-            <DijkstraSidePanel
-                :current-vertex-name="currentVertexName"
-                :vertices-to-check="verticesToCheck"
-                :distances="distances"
-            />
-            <ShortestPaths
-                :current-vertex-name="currentVertexName"
-                :vertices="vertices"
-                :distances="distances"
-                :source-name="'A'"
-            />
+        <div class="grid grid-rows-2 gap-1 text-center">
+            <div>
+                <DijkstraSidePanel
+                    class="h-full"
+                    :current-vertex-name="currentVertexName"
+                    :vertices-to-check="verticesToCheck"
+                    :distances="distances"
+                    :vertices="vertices"
+                />
+            </div>
+            <div>
+                <ShortestPaths
+                    :current-vertex-name="currentVertexName"
+                    :vertices="vertices"
+                    :distances="distances"
+                    :source-name="'A'"
+                />
+            </div>
         </div>
     </div>
 </template>
