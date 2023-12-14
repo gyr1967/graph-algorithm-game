@@ -10,8 +10,12 @@ const stackOrQueue = props.bfsOrDfs === "bfs" ? "Queue" : "Stack";
 <template>
     <div class="border border-white p-3 rounded-md shadow-md grid grid-cols-2">
         <div class="mb-2">
-            <span class="font-bold">Current Vertex:</span>
-            <span class="ml-2">{{ currentVertexName }}</span>
+            <div>
+                <span class="font-bold">Current Vertex</span>
+            </div>
+            <div>
+                <span class="ml-2 text-4xl">{{ currentVertexName }}</span>
+            </div>
         </div>
         <div>
             <span class="font-bold mr-2">{{ stackOrQueue }}</span>
