@@ -99,7 +99,7 @@
 
 * *1 hour* | Read over notes from supervisor meetings and flatmate focus group, get project velocity/awareness back up
 * *0.5 hour* | Update MoSCoW requirements
-* *2 hours* | Start wireframing 
+* *2 hours* | Start wireframing
 
 ### 18 Oct 2023
 
@@ -205,3 +205,7 @@
 ### 13 Dec 2023
 
 * *8 hours* | Dijkstra's visualisation in a first-draft state, moving on to guided/diy - made decent progress
+
+### 14 Dec 2023
+
+* *7 hours* | Dijkstra's done to the same standard as BFS and DFS, on to playtesting and fleshing out the website
