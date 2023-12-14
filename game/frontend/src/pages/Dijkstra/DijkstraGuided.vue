@@ -31,8 +31,8 @@ const adjacentVertexName = ref<string>("");
                 :distances="distances"
             />
         </div>
-        <div class="flex justify-center items-center">
-            <div class="inline-block justify-self-center self-center">
+        <div>
+            <div>
                 <DijkstraGraphDisplay
                     :which-graph-data="2"
                     :scaling-factor="1.2"

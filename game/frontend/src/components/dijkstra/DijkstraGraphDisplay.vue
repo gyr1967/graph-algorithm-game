@@ -358,6 +358,7 @@ const findAdjacency = (nodeId: string): AdjListVertex | null => {
             </button>
         </div>
         <DijkstraOptionMenu
+            v-if="started"
             :text="nodeMenuOpen !== '' ? nodeMenuOpen : 'Click a vertex'"
             :disabled="nodeMenuOpen === '' || !started"
             :node-id="nodeMenuOpen"
