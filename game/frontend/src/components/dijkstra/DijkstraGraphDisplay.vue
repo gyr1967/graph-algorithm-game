@@ -233,7 +233,7 @@ const validateStep = (
                 return true;
             }
         } else if (step === "set-source-to-zero") {
-            if (validateSetSourceToZero(nodeId)) {
+            if (validateSetSourceToZero(nodeId, distance)) {
                 return true;
             }
         }
@@ -281,8 +281,8 @@ const validateRemoveAndSetToCurrent = (nodeId: string) => {
     }
 };
 
-const validateSetSourceToZero = (nodeId: string) => {
-    if (nodeId === SOURCEVERTEXNAME) {
+const validateSetSourceToZero = (nodeId: string, distance: number) => {
+    if (nodeId === SOURCEVERTEXNAME && distance === 0) {
         return true;
     }
     return false;
