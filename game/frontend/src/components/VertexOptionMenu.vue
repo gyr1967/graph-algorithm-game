@@ -17,34 +17,38 @@ const stackOrQueue = props.bfsOrDfs === "bfs" ? "queue" : "stack";
     <div class="flex justify-center">
         <span>{{ text }}</span>
     </div>
-    <div class="flex justify-center items-center">
-        <button
-            :disabled="disabled"
-            class="border border-white p-1 rounded-sm ml-1 disabled:opacity-50 disabled:cursor-not-allowed hover:opacity-60"
-            @click="
-                bfsOrDfs === 'bfs'
-                    ? $emit('add-to-queue', nodeId)
-                    : $emit('add-to-stack', nodeId)
-            "
-        >
-            Add {{ nodeId }} to {{ stackOrQueue }}
-        </button>
-        <button
-            :disabled="disabled"
-            class="border border-white p-1 rounded-sm ml-1 disabled:opacity-50 disabled:cursor-not-allowed hover:opacity-60"
-            @click="$emit('visit', nodeId)"
-        >
-            Mark {{ nodeId }} as visited
-        </button>
-    </div>
-    <div class="flex justify-center mt-2">
-        <button
-            :disabled="disabled"
-            class="border border-white p-1 rounded-sm ml-1 disabled:opacity-50 disabled:cursor-not-allowed hover:opacity-60"
-            @click="$emit('remove-and-set-to-current', nodeId)"
-        >
-            Remove {{ nodeId }} from {{ stackOrQueue }} and set to current
-            vertex
-        </button>
+    <div class="grid grid-rows-3 gap-2">
+        <div class="flex justify-center">
+            <button
+                :disabled="disabled"
+                class="border border-white p-1 rounded-sm disabled:opacity-50 disabled:cursor-not-allowed hover:opacity-60"
+                @click="
+                    bfsOrDfs === 'bfs'
+                        ? $emit('add-to-queue', nodeId)
+                        : $emit('add-to-stack', nodeId)
+                "
+            >
+                Add {{ nodeId }} to {{ stackOrQueue }}
+            </button>
+        </div>
+        <div class="flex justify-center">
+            <button
+                :disabled="disabled"
+                class="border border-white p-1 rounded-sm disabled:opacity-50 disabled:cursor-not-allowed hover:opacity-60"
+                @click="$emit('visit', nodeId)"
+            >
+                Mark {{ nodeId }} as visited
+            </button>
+        </div>
+        <div class="flex justify-center">
+            <button
+                :disabled="disabled"
+                class="border border-white p-1 rounded-sm disabled:opacity-50 disabled:cursor-not-allowed hover:opacity-60"
+                @click="$emit('remove-and-set-to-current', nodeId)"
+            >
+                Remove {{ nodeId }} from {{ stackOrQueue }} and set to current
+                vertex
+            </button>
+        </div>
     </div>
 </template>

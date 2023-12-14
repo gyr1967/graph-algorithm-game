@@ -36,7 +36,10 @@ class Vertex {
         return this.textName;
     }
 
-    addToAdjList(n: number) {
+    addToAdjList(n: number, edgeWeight: number = 0) {
+        if (edgeWeight !== 0) {
+            throw new Error("Unweighted graph cannot have edge weights");
+        }
         this.adjList.push(new AdjListVertex(n));
     }
 
@@ -46,3 +49,26 @@ class Vertex {
 }
 
 export default Vertex;
+
+export class DijkstraVertex extends Vertex {
+    distance = Infinity;
+    previousVertex: DijkstraVertex | null = null;
+    constructor(index: number, textName: string) {
+        super(index, textName);
+    }
+    setDistance = (distance: number) => {
+        this.distance = distance;
+    };
+    getDistance = () => {
+        return this.distance;
+    };
+    setPreviousVertex = (previousVertex: DijkstraVertex | null) => {
+        this.previousVertex = previousVertex;
+    };
+    getPreviousVertex = () => {
+        return this.previousVertex;
+    };
+    addToAdjList = (n: number, edgeWeight: number) => {
+        this.adjList.push(new AdjListVertex(n, edgeWeight));
+    };
+}

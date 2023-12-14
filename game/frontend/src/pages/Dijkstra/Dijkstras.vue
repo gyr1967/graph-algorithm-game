@@ -4,13 +4,13 @@ const root = "/graph-algorithm-game";
 
 <template>
     <div class="flex justify-center mb-2 p-2 text-xl font-bold">
-        <span>Breadth-first Search</span>
+        <span>Dijkstra's Shortest Path</span>
     </div>
     <div class="flex justify-center">
         <div class="mx-1">
             <RouterLink
                 class="bg-white rounded-sm text-black p-2 text-xl hover:bg-gray-400"
-                :to="`${root}/game/bfs/visualise`"
+                :to="`${root}/game/dijkstra/visualise`"
             >
                 Visualisation
             </RouterLink>
@@ -18,7 +18,7 @@ const root = "/graph-algorithm-game";
         <div class="mx-1">
             <RouterLink
                 class="bg-white rounded-sm text-black p-2 text-xl hover:bg-gray-400"
-                :to="`${root}/game/bfs/guided`"
+                :to="`${root}/game/dijkstra/guided`"
             >
                 Guided
             </RouterLink>
@@ -26,7 +26,7 @@ const root = "/graph-algorithm-game";
         <div class="mx-1">
             <RouterLink
                 class="bg-white rounded-sm text-black p-2 text-xl hover:bg-gray-400"
-                :to="`${root}/game/bfs/diy`"
+                :to="`${root}/game/dijkstra/diy`"
             >
                 DIY
             </RouterLink>

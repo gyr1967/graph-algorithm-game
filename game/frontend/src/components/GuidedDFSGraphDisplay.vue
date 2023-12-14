@@ -227,7 +227,6 @@ const startTheAlgorithm = () => {
                         :y2="link.y2 * scalingFactor"
                         :stroke="link.stroke"
                         :stroke-width="link.strokeWidth"
-                        :text="link.text"
                     />
                 </g>
                 <g v-for="mykey in Object.keys(nodeData)" :key="mykey">
