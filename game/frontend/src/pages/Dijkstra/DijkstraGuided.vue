@@ -16,8 +16,8 @@ const started = ref<boolean>(false);
 </script>
 
 <template>
-    <div class="grid grid-cols-3">
-        <div class="ml-2">
+    <div class="grid grid-cols-3 gap-1">
+        <div class="ml-2 flex-1">
             <DijkstraPseudo :current-step="pseudoStep" />
             <DijkstraHintBox
                 class="mt-2"

@@ -344,73 +344,65 @@ const findAdjacency = (nodeId: string): AdjListVertex | null => {
                 </g>
             </svg>
         </div>
-        <div>
-            <div class="flex justify-center">
-                <button
-                    v-if="!started"
-                    class="border border-white p-1 rounded-sm ml-1 hover:opacity-50"
-                    @click="startTheAlgorithm"
-                >
-                    Start
-                </button>
-            </div>
-            <DijkstraOptionMenu
-                :text="nodeMenuOpen !== '' ? nodeMenuOpen : 'Click a vertex'"
-                :disabled="nodeMenuOpen === '' || !started"
-                :node-id="nodeMenuOpen"
-                :current-vertex-name="graph.currentVertex.value?.getTextName()"
-                @remove-and-set-to-current="
-                    () => {
-                        if (
-                            validateStep(
-                                'remove-and-set-to-current',
-                                nodeMenuOpen,
-                            )
-                        ) {
-                            graph.removeAndSetCurrentVertex();
-                        } else {
-                            console.log('failed validation');
-                        }
-                    }
-                "
-                @update-distance="
-                    ({ nodeId, distance }) => {
-                        let validation = false;
-                        if (currentStep === 'set-source-to-zero') {
-                            validation = validateStep(
-                                'set-source-to-zero',
-                                nodeId,
-                                distance,
-                            );
-                        } else {
-                            validation = validateStep(
-                                'update-distance',
-                                nodeId,
-                                distance,
-                            );
-                        }
-                        if (validation) {
-                            graph.updateDistance(nodeId, distance);
-                        } else {
-                            console.log('failed validation');
-                        }
-                    }
-                "
-                @set-adj-prev-to-current="
-                    () => {
-                        if (
-                            validateStep(
-                                'set-adj-prev-to-current',
-                                nodeMenuOpen,
-                            )
-                        ) {
-                            graph.setAdjPrevToCurrent(nodeMenuOpen);
-                        } else {
-                            console.log('failed validation');
-                        }
-                    }
-                "
-            />
+    </div>
+    <div class="border border-white p-2 rounded-md shadow-md mt-2">
+        <div class="flex justify-center">
+            <button
+                v-if="!started"
+                class="border border-white p-1 rounded-sm ml-1 hover:opacity-50"
+                @click="startTheAlgorithm"
+            >
+                Start
+            </button>
         </div>
+        <DijkstraOptionMenu
+            :text="nodeMenuOpen !== '' ? nodeMenuOpen : 'Click a vertex'"
+            :disabled="nodeMenuOpen === '' || !started"
+            :node-id="nodeMenuOpen"
+            :current-vertex-name="graph.currentVertex.value?.getTextName()"
+            @remove-and-set-to-current="
+                () => {
+                    if (
+                        validateStep('remove-and-set-to-current', nodeMenuOpen)
+                    ) {
+                        graph.removeAndSetCurrentVertex();
+                    } else {
+                        console.log('failed validation');
+                    }
+                }
+            "
+            @update-distance="
+                ({ nodeId, distance }) => {
+                    let validation = false;
+                    if (currentStep === 'set-source-to-zero') {
+                        validation = validateStep(
+                            'set-source-to-zero',
+                            nodeId,
+                            distance,
+                        );
+                    } else {
+                        validation = validateStep(
+                            'update-distance',
+                            nodeId,
+                            distance,
+                        );
+                    }
+                    if (validation) {
+                        graph.updateDistance(nodeId, distance);
+                    } else {
+                        console.log('failed validation');
+                    }
+                }
+            "
+            @set-adj-prev-to-current="
+                () => {
+                    if (validateStep('set-adj-prev-to-current', nodeMenuOpen)) {
+                        graph.setAdjPrevToCurrent(nodeMenuOpen);
+                    } else {
+                        console.log('failed validation');
+                    }
+                }
+            "
+        />
     </div>
 </template>
