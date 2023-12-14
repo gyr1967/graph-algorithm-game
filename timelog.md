@@ -183,3 +183,25 @@
 ### 28 Nov 2023
 
 * *6 hours* | Finish BFS Guided and BFS DIY for the most part
+
+### 29 Nov 2023
+
+* *6 hours* | DFS Done to the same degree as BFS
+
+## Week 12
+
+### Revision week - no work done
+
+## Week 13
+
+### 11 Dec 2023
+
+* *7 hours* | Dijkstra's started on
+
+### 12 Dec 2023
+
+* *7 hours* | Dijkstra's visualisation near finished
+
+### 13 Dec 2023
+
+* *8 hours* | Dijkstra's visualisation in a first-draft state, moving on to guided/diy - made decent progress
