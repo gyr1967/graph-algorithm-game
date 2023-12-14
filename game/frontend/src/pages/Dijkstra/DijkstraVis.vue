@@ -18,8 +18,8 @@ const vertices = ref<DijkstraVertex[]>([]);
         <div class="ml-2">
             <DijkstraPseudo :current-step="pseudoStep" />
         </div>
-        <div class="flex justify-center items-center">
-            <div class="inline-block justify-self-center self-center">
+        <div class="flex justify-center">
+            <div>
                 <VisDijkstraGraph
                     :which-graph-data="2"
                     :scaling-factor="1.2"
@@ -51,18 +51,24 @@ const vertices = ref<DijkstraVertex[]>([]);
                 />
             </div>
         </div>
-        <div class="text-center">
-            <DijkstraSidePanel
-                :current-vertex-name="currentVertexName"
-                :vertices-to-check="verticesToCheck"
-                :distances="distances"
-            />
-            <ShortestPaths
-                :current-vertex-name="currentVertexName"
-                :vertices="vertices"
-                :distances="distances"
-                :source-name="'A'"
-            />
+        <div class="grid grid-rows-2 gap-1 text-center">
+            <div>
+                <DijkstraSidePanel
+                    class="h-full"
+                    :current-vertex-name="currentVertexName"
+                    :vertices-to-check="verticesToCheck"
+                    :distances="distances"
+                    :vertices="vertices"
+                />
+            </div>
+            <div>
+                <ShortestPaths
+                    :current-vertex-name="currentVertexName"
+                    :vertices="vertices"
+                    :distances="distances"
+                    :source-name="'A'"
+                />
+            </div>
         </div>
     </div>
 </template>
