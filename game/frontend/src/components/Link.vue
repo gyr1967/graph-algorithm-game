@@ -8,10 +8,10 @@ const props = defineProps<{
     y2: number;
     stroke: string;
     strokeWidth: string;
-    text?: string;
+    weight?: number;
 }>();
 const label = computed(() => {
-    return props.text ?? "";
+    return props.weight ? props.weight.toString() : "";
 });
 
 const midpoint = (x1: number, y1: number, x2: number, y2: number) => {

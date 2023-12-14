@@ -203,7 +203,7 @@ const performDijkstraStep = () => {
                         :y2="link.y2 * scalingFactor"
                         :stroke="link.stroke"
                         :stroke-width="link.strokeWidth"
-                        :text="link.weight ? link.weight.toString() : ''"
+                        :weight="link.weight"
                     />
                 </g>
                 <g v-for="mykey in Object.keys(nodeData)" :key="mykey">

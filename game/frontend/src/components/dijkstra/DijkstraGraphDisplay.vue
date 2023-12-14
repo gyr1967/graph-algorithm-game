@@ -154,13 +154,13 @@ const adjToVisit = ref<DijkstraVertex[]>([]);
 const nodeData = nodeDatas[props.whichGraphData];
 const distances = ref<Record<string, number>>({});
 const linkData = ref<Record<string, EdgeData>>(linkDatas[props.whichGraphData]);
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const randomiseLinkLengths = () => {
-    Object.keys(linkData.value).forEach((key) => {
-        linkData.value[key].weight = Math.floor(Math.random() * 14) + 1;
-    });
-    graph = setUpGraph(Object.entries(nodeData).length);
-};
+// currently unused
+// const randomiseLinkLengths = () => {
+//     Object.keys(linkData.value).forEach((key) => {
+//         linkData.value[key].weight = Math.floor(Math.random() * 14) + 1;
+//     });
+//     graph = setUpGraph(Object.entries(nodeData).length);
+// };
 const nodeFill = "#3498db";
 const nodeMenuOpen = ref<string>("");
 const nodeColours = ref<Record<string, string>>({});
@@ -324,7 +324,7 @@ const findAdjacency = (nodeId: string): AdjListVertex | null => {
                         :y2="link.y2 * scalingFactor"
                         :stroke="link.stroke"
                         :stroke-width="link.strokeWidth"
-                        :text="link.weight ? link.weight.toString() : ''"
+                        :weight="link.weight"
                     />
                 </g>
                 <g v-for="mykey in Object.keys(nodeData)" :key="mykey">
