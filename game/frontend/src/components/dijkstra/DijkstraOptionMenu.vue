@@ -28,43 +28,47 @@ const submitDistance = () => {
     <div class="flex justify-center">
         <span>{{ text }}</span>
     </div>
-    <div class="flex justify-center items-center">
-        <button
-            :disabled="disabled"
-            class="border border-white p-1 rounded-sm ml-1 disabled:opacity-50 disabled:cursor-not-allowed hover:opacity-60"
-            @click="$emit('remove-and-set-to-current', nodeId)"
-        >
-            Remove {{ nodeId }} from Queue and set to current vertex
-        </button>
-        <div
-            :disabled="disabled"
-            class="border border-white p-1 rounded-sm ml-1 disabled:opacity-50 disabled:cursor-not-allowed"
-        >
-            Set {{ nodeId }} distance from source
-            <input
-                v-model="newDistance"
-                class="text-black"
-                type="number"
-                min="0"
-                max="100"
-            />
+    <div class="grid grid-rows-3 gap-2">
+        <div class="flex justify-center">
             <button
-                :disabled="newDistance === null || disabled"
-                class="border border-white p-1 rounded-sm ml-1 disabled:opacity-50 disabled:cursor-not-allowed hover:opacity-60"
-                @click="submitDistance"
+                :disabled="disabled"
+                class="border border-white p-1 rounded-sm disabled:opacity-50 disabled:cursor-not-allowed hover:opacity-60"
+                @click="$emit('remove-and-set-to-current', nodeId)"
             >
-                Submit
+                Remove {{ nodeId }} from Queue and set to current vertex
             </button>
         </div>
-    </div>
-    <div class="flex justify-center mt-2">
-        <button
-            :disabled="disabled"
-            class="border border-white p-1 rounded-sm ml-1 disabled:opacity-50 disabled:cursor-not-allowed hover:opacity-60"
-            @click="$emit('set-adj-prev-to-current', nodeId)"
+        <div
+            :class="disabled ? 'opacity-50 cursor-not-allowed' : ''"
+            class="border border-white p-1 rounded-sm flex justify-evenly items-center"
         >
-            Set {{ nodeId }}'s previous vertex to
-            {{ currentVertexName }}
-        </button>
+            <span>Set {{ nodeId }}'s distance from source</span>
+            <div>
+                <input
+                    v-model="newDistance"
+                    class="text-black"
+                    type="number"
+                    min="0"
+                    max="100"
+                />
+                <button
+                    :disabled="newDistance === null || disabled"
+                    class="border border-white p-1 rounded-sm disabled:opacity-50 disabled:cursor-not-allowed hover:opacity-60 ml-2"
+                    @click="submitDistance"
+                >
+                    Submit
+                </button>
+            </div>
+        </div>
+        <div class="flex justify-center">
+            <button
+                :disabled="disabled"
+                class="border border-white p-1 rounded-sm ml-1 disabled:opacity-50 disabled:cursor-not-allowed hover:opacity-60"
+                @click="$emit('set-adj-prev-to-current', nodeId)"
+            >
+                Set {{ nodeId }}'s previous vertex to
+                {{ currentVertexName }}
+            </button>
+        </div>
     </div>
 </template>
