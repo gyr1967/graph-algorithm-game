@@ -8,6 +8,11 @@ defineProps<{
 </script>
 <template>
     <div class="border border-white p-4 rounded-md shadow-md">
+        <div>
+            <h2 class="text-xl font-bold">
+                Dijkstra's Shortest Path Algorithm
+            </h2>
+        </div>
         <ul class="ml-4 list-disc">
             <li
                 :class="
