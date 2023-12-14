@@ -21,6 +21,7 @@ const emit = defineEmits([
     "update:distances",
     "update:vertices",
     "update:started",
+    "update:adjacentVertexName",
 ]);
 
 const SOURCEVERTEXNAME = "A";
@@ -94,6 +95,7 @@ class VisDijkstraGraph extends DijkstraGraph {
             if (vertex.getTextName() === SOURCEVERTEXNAME) {
                 setStep("remove-and-set-to-current");
             } else {
+                emit("update:adjacentVertexName", vertex.getTextName());
                 setStep("set-adj-prev-to-current");
             }
         }

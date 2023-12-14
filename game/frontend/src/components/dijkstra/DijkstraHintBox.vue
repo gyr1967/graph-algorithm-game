@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { computed, ref } from "vue";
 import { DijkstraStep } from "../../types/Dijkstra.ts";
 const props = defineProps<{
     text: DijkstraStep | null;
@@ -7,7 +7,24 @@ const props = defineProps<{
     started: boolean;
     queue?: string[];
     guidedOrDiy: "guided" | "diy";
+    adjacentVertexName: string;
+    distances?: Record<string, number>;
 }>();
+
+const smallestVertexDistanceInQueue = computed(() => {
+    if (props.queue) {
+        let minDistance = Infinity;
+        let minVertex = "";
+        for (let vertex of props.queue) {
+            if (props.distances && props.distances[vertex] < minDistance) {
+                minDistance = props.distances[vertex];
+                minVertex = vertex;
+            }
+        }
+        return minVertex;
+    }
+    return null;
+});
 const obscureHint = ref<boolean>(props.guidedOrDiy === "diy");
 </script>
 <template>
@@ -21,14 +38,15 @@ const obscureHint = ref<boolean>(props.guidedOrDiy === "diy");
                     Set the source vertex distance to zero</span
                 >
                 <span v-else-if="text === 'update-distance'">
-                    Add {{ currentVertexName }} to the queue</span
+                    Update the distance of an adjacent vertex</span
                 >
                 <span v-else-if="text === 'remove-and-set-to-current'">
-                    Remove the vertex with the least distance from the queue and
-                    set it as the current vertex
+                    Remove {{ smallestVertexDistanceInQueue }} from the queue
+                    and set it as the current vertex
                 </span>
                 <span v-else-if="text === 'set-adj-prev-to-current'">
-                    >Mark {{ currentVertexName }} as visited</span
+                    >Set {{ adjacentVertexName }}'s previous vertex to
+                    {{ currentVertexName }}</span
                 >
                 <span v-else-if="text === 'done'">Done!</span>
             </div>

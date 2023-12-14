@@ -63,7 +63,7 @@ const submitDistance = () => {
             class="border border-white p-1 rounded-sm ml-1 disabled:opacity-50 disabled:cursor-not-allowed hover:opacity-60"
             @click="$emit('set-adj-prev-to-current', nodeId)"
         >
-            Set {{ nodeId }}'s adjacent vertices' previous vertex to
+            Set {{ nodeId }}'s previous vertex to
             {{ currentVertexName }}
         </button>
     </div>

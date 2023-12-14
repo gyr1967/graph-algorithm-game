@@ -13,10 +13,11 @@ const pseudoStep = ref<DijkstraStep | null>(null);
 const distances = ref<Record<string, number>>({});
 const vertices = ref<DijkstraVertex[]>([]);
 const started = ref<boolean>(false);
+const adjacentVertexName = ref<string>("");
 </script>
 
 <template>
-    <div class="grid grid-cols-3">
+    <div class="grid grid-cols-3 gap-1">
         <div class="ml-2 flex-1">
             <DijkstraPseudo :current-step="pseudoStep" />
             <DijkstraHintBox
@@ -25,7 +26,9 @@ const started = ref<boolean>(false);
                 :current-vertex-name="currentVertexName"
                 :started="started"
                 :queue="verticesToCheck"
-                guided-or-diy="diy"
+                guided-or-diy="guided"
+                :adjacent-vertex-name="adjacentVertexName"
+                :distances="distances"
             />
         </div>
         <div class="flex justify-center items-center">
@@ -61,6 +64,11 @@ const started = ref<boolean>(false);
                     @update:started="
                         (newValue) => {
                             started = newValue;
+                        }
+                    "
+                    @update:adjacent-vertex-name="
+                        (newValue) => {
+                            adjacentVertexName = newValue;
                         }
                     "
                 />
