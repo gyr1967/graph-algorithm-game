@@ -33,7 +33,7 @@ const routes = [
         component: BFSGuided,
     },
     {
-        path: `${root}/game/bfs/solo`,
+        path: `${root}/game/bfs/diy`,
         component: BFSSolo,
     },
     {
@@ -45,7 +45,7 @@ const routes = [
         component: DFSGuided,
     },
     {
-        path: `${root}/game/dfs/solo`,
+        path: `${root}/game/dfs/diy`,
         component: DFSSolo,
     },
     {

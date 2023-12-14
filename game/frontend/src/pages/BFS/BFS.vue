@@ -26,7 +26,7 @@ const root = "/graph-algorithm-game";
         <div class="mx-1">
             <RouterLink
                 class="bg-white rounded-sm text-black p-2 text-xl hover:bg-gray-400"
-                :to="`${root}/game/bfs/solo`"
+                :to="`${root}/game/bfs/diy`"
             >
                 DIY
             </RouterLink>
