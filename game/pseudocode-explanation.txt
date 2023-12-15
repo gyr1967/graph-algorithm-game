@@ -1,0 +1,9 @@
+One way we can express what an algorithm does is through 'pseudocode': a set of instructions designed to be human-readable (think a cake recipe) but
+somewhat similar to the code we would write that tells the computer what to do. 
+In the pseudocode for BFS and DFS we have some code that is further indented than the rest. This is because they are inside what we call a 
+'while loop'. The line that says 'while there is something in the queue' begins this loop, and the pseudocode steps indented inside it
+are repeated until the condition is false (the queue is empty)
+
+The second thing to notice is in the Dijkstra pseudocode we have something similar, an 'if condition' that is not repeated, but is executed 
+once if the condition is true.
+
