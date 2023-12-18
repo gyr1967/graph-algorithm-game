@@ -3,7 +3,7 @@ const root = "/graph-algorithm-game";
 </script>
 
 <template>
-    <div class="border-b mb-6">
+    <div class="border-b mb-6 bg-gray-800">
         <nav
             class="container px-6 py-6 mx-auto md:flex md:justify-between md:items-center"
         >
