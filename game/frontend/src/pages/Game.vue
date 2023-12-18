@@ -11,7 +11,7 @@ import DFSGuided from "./DFS/DFSGuided.vue";
 import DFSDIY from "./DFS/DFSDIY.vue";
 import DijkstraVis from "./Dijkstra/DijkstraVis.vue";
 import DijkstraGuided from "./Dijkstra/DijkstraGuided.vue";
-import DijkstraDIY from "./Dijkstra/DijkstraDIY.vue";
+import DijkstraDIY from "./Dijkstra/DijkstraDIYbustcache.vue";
 import { Pages } from "../utils/pages";
 
 const page = ref<Pages | null>(null);
