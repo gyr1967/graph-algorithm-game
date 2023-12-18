@@ -209,3 +209,7 @@
 ### 14 Dec 2023
 
 * *7 hours* | Dijkstra's done to the same standard as BFS and DFS, on to playtesting and fleshing out the website
+
+### 15 Dec 2023
+
+* *4 hours* | Review of where I'm at, what needs to be done, what I want to do, what I can do in the time remaining. Status report created and sent to supervisor and uploaded to moodle
