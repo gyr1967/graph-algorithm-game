@@ -18,30 +18,37 @@ const page = ref<Pages | null>(null);
 </script>
 
 <template>
-    <div class="grid grid-cols-3 mx-5">
-        <div>
-            <BFS
-                @vis="page = Pages.BFS_Vis"
-                @guided="page = Pages.BFS_Guided"
-                @diy="page = Pages.BFS_DIY"
-            />
-        </div>
-        <div>
-            <DFS
-                @vis="page = Pages.DFS_Vis"
-                @guided="page = Pages.DFS_Guided"
-                @diy="page = Pages.DFS_DIY"
-            />
-        </div>
-        <div>
-            <Dijkstras
-                @vis="page = Pages.Dijkstra_Vis"
-                @guided="page = Pages.Dijkstra_Guided"
-                @diy="page = Pages.Dijkstra_DIY"
-            />
+    <div class="border-b">
+        <div class="mb-2 grid grid-cols-3 mx-5">
+            <div>
+                <BFS
+                    @vis="page = Pages.BFS_Vis"
+                    @guided="page = Pages.BFS_Guided"
+                    @diy="page = Pages.BFS_DIY"
+                />
+            </div>
+            <div>
+                <DFS
+                    @vis="page = Pages.DFS_Vis"
+                    @guided="page = Pages.DFS_Guided"
+                    @diy="page = Pages.DFS_DIY"
+                />
+            </div>
+            <div>
+                <Dijkstras
+                    @vis="page = Pages.Dijkstra_Vis"
+                    @guided="page = Pages.Dijkstra_Guided"
+                    @diy="page = Pages.Dijkstra_DIY"
+                />
+            </div>
         </div>
     </div>
-    <div class="mt-2">
+    <div class="mt-4">
+        <template v-if="page === null">
+            <div class="text-center text-2xl font-bold">
+                Select an algorithm to begin!
+            </div>
+        </template>
         <template v-if="page === Pages.BFS_Vis">
             <BFSVis />
         </template>
