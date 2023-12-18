@@ -43,7 +43,7 @@ const page = ref<Pages | null>(null);
             </div>
         </div>
     </div>
-    <div class="mt-4">
+    <div class="mt-4 h-screen">
         <template v-if="page === null">
             <div class="text-center text-2xl font-bold">
                 Select an algorithm to begin!
