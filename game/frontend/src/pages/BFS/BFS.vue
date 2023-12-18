@@ -1,5 +1,9 @@
 <script setup lang="ts">
-const root = "/graph-algorithm-game";
+import { ref } from "vue";
+import { Pages } from "../../utils/pages";
+
+defineEmits(["vis", "guided", "diy"]);
+const page = ref<Pages | null>(null);
 </script>
 
 <template>
@@ -8,28 +12,46 @@ const root = "/graph-algorithm-game";
     </div>
     <div class="flex justify-center">
         <div class="mx-1">
-            <RouterLink
+            <button
+                :class="page === Pages.BFS_Vis ? 'bg-gray-500' : ''"
                 class="bg-white rounded-sm text-black p-2 text-xl hover:bg-gray-400"
-                :to="`${root}/game/bfs/visualise`"
+                @click="
+                    () => {
+                        page = Pages.BFS_Vis;
+                        $emit('vis');
+                    }
+                "
             >
                 Visualisation
-            </RouterLink>
+            </button>
         </div>
         <div class="mx-1">
-            <RouterLink
+            <button
+                :class="page === Pages.BFS_Guided ? 'bg-gray-500' : ''"
                 class="bg-white rounded-sm text-black p-2 text-xl hover:bg-gray-400"
-                :to="`${root}/game/bfs/guided`"
+                @click="
+                    () => {
+                        page = Pages.BFS_Guided;
+                        $emit('guided');
+                    }
+                "
             >
                 Guided
-            </RouterLink>
+            </button>
         </div>
         <div class="mx-1">
-            <RouterLink
+            <button
+                :class="page === Pages.BFS_DIY ? 'bg-gray-500' : ''"
                 class="bg-white rounded-sm text-black p-2 text-xl hover:bg-gray-400"
-                :to="`${root}/game/bfs/diy`"
+                @click="
+                    () => {
+                        page = Pages.BFS_DIY;
+                        $emit('diy');
+                    }
+                "
             >
                 DIY
-            </RouterLink>
+            </button>
         </div>
     </div>
 </template>
