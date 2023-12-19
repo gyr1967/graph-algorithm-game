@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import PageSelector from "./PageSelector.vue";
+import PageSelector from "../components/PageSelector.vue";
 import BFSVis from "./BFS/BFSVis.vue";
 import BFSDIY from "./BFS/BFSDIY.vue";
 import DFSVis from "./DFS/DFSVis.vue";
