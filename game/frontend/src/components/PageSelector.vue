@@ -1,4 +1,7 @@
 <script setup lang="ts">
+import BFSExplainDialog from "./BFSExplainDialog.vue";
+import DFSExplainDialog from "./DFSExplainDialog.vue";
+import DijkstraExplainDialog from "./DijkstraExplainDialog.vue";
 import { ref } from "vue";
 
 defineProps<{
@@ -13,12 +16,36 @@ const setPage = (emitEvent: "vis" | "diy") => {
     page.value = emitEvent;
     emit(emitEvent);
 };
+const showHelp = ref(false);
+
+const openModal = () => {
+    showHelp.value = true;
+};
+const closeModal = () => {
+    showHelp.value = false;
+};
 </script>
 
 <template>
-    <div class="flex justify-center mb-2 p-2 text-xl font-bold">
-        <span>{{ title }}</span>
+    <div class="flex justify-center items-center mb-2 p-2">
+        <span class="text-xl font-bold">{{ title }}</span>
+        <button class="mx-2" @click="openModal()">?</button>
     </div>
+    <BFSExplainDialog
+        v-if="algorithm === 'BFS'"
+        :is-open="showHelp"
+        @close-modal="closeModal()"
+    />
+    <DFSExplainDialog
+        v-else-if="algorithm === 'DFS'"
+        :is-open="showHelp"
+        @close-modal="closeModal()"
+    />
+    <DijkstraExplainDialog
+        v-else-if="algorithm === 'Dijkstra'"
+        :is-open="showHelp"
+        @close-modal="closeModal()"
+    />
     <div class="flex justify-center">
         <div class="mx-1">
             <button
