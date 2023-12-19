@@ -9,7 +9,6 @@ const props = defineProps<{
     visited: Vertex[];
     stack?: string[];
     queue?: string[];
-    guidedOrDiy: "guided" | "diy";
     bfsOrDfs: "bfs" | "dfs";
 }>();
 const stackOrQueue = props.bfsOrDfs === "bfs" ? "queue" : "stack";
