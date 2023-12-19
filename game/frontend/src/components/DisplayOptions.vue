@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, defineEmits } from "vue";
+import { ref } from "vue";
 
 const emit = defineEmits(["hideHints", "hidePseudo", "hideHighlights"]);
 const hideHints = ref<boolean>(false);
