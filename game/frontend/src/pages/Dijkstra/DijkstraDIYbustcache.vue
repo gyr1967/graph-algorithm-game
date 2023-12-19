@@ -47,7 +47,7 @@ const hideHighlights = ref<boolean>(false);
                 @hide-highlights="hideHighlights = !hideHighlights"
             />
         </div>
-        <div class="flex justify-center items-center">
+        <div class="flex justify-center">
             <div>
                 <DijkstraGraphDisplay
                     :which-graph-data="2"
