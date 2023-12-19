@@ -5,6 +5,7 @@ const props = defineProps<{
     currentStep: DFSStep | BFSStep | BFSGuidedSteps | DFSGuidedSteps | null;
     noHighlighting?: boolean;
     bfsOrDfs: "bfs" | "dfs";
+    hideHighlights: boolean;
 }>();
 
 const stackOrQueue = props.bfsOrDfs === "bfs" ? "Queue" : "Stack";
@@ -21,7 +22,8 @@ const stackOrQueue = props.bfsOrDfs === "bfs" ? "Queue" : "Stack";
                 :class="
                     (currentStep === 'addFirstToQueue' ||
                         currentStep === 'addFirstToStack') &&
-                    !noHighlighting
+                    !noHighlighting &&
+                    !hideHighlights
                         ? 'bg-white text-black rounded-sm'
                         : ''
                 "
@@ -43,7 +45,8 @@ const stackOrQueue = props.bfsOrDfs === "bfs" ? "Queue" : "Stack";
                 :class="
                     (currentStep === 'removeFirstAndMakeItCurrent' ||
                         currentStep === 'remove-and-set-to-current') &&
-                    !noHighlighting
+                    !noHighlighting &&
+                    !hideHighlights
                         ? 'bg-white text-black rounded-sm'
                         : ''
                 "
@@ -55,7 +58,8 @@ const stackOrQueue = props.bfsOrDfs === "bfs" ? "Queue" : "Stack";
                 :class="
                     (currentStep === 'markVAsVisited' ||
                         currentStep === 'visit') &&
-                    !noHighlighting
+                    !noHighlighting &&
+                    !hideHighlights
                         ? 'bg-white text-black rounded-sm'
                         : ''
                 "
@@ -68,7 +72,8 @@ const stackOrQueue = props.bfsOrDfs === "bfs" ? "Queue" : "Stack";
                         currentStep === 'addVNeighboursToStack' ||
                         currentStep === 'add-to-queue' ||
                         currentStep === 'add-to-stack') &&
-                    !noHighlighting
+                    !noHighlighting &&
+                    !hideHighlights
                         ? 'bg-white text-black rounded-sm'
                         : ''
                 "

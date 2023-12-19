@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { ref } from "vue";
 import Vertex from "../graph/Vertex";
 import { DFSGuidedSteps } from "../types/DFS";
 import { BFSGuidedSteps } from "../types/BFS";
@@ -13,7 +12,6 @@ const props = defineProps<{
     guidedOrDiy: "guided" | "diy";
     bfsOrDfs: "bfs" | "dfs";
 }>();
-const obscureHint = ref<boolean>(props.guidedOrDiy === "diy");
 const stackOrQueue = props.bfsOrDfs === "bfs" ? "queue" : "stack";
 </script>
 <template>
@@ -22,7 +20,7 @@ const stackOrQueue = props.bfsOrDfs === "bfs" ? "queue" : "stack";
             <div v-if="!started">
                 <span>Click start!</span>
             </div>
-            <div v-else :class="obscureHint ? 'blur-sm select-none' : ''">
+            <div v-else>
                 <span
                     v-if="
                         (text === 'add-to-stack' || text === 'add-to-queue') &&
@@ -49,22 +47,6 @@ const stackOrQueue = props.bfsOrDfs === "bfs" ? "queue" : "stack";
                     >Mark {{ currentVertexName }} as visited</span
                 >
                 <span v-else-if="text === 'done'">Done!</span>
-            </div>
-            <div v-if="started && guidedOrDiy === 'diy'" class="ml-2">
-                <span
-                    class="cursor-help"
-                    @mouseenter="
-                        () => {
-                            obscureHint = false;
-                        }
-                    "
-                    @mouseleave="
-                        () => {
-                            obscureHint = true;
-                        }
-                    "
-                    >Hint</span
-                >
             </div>
         </div>
     </div>

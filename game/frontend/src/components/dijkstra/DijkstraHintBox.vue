@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref } from "vue";
+import { computed } from "vue";
 import { DijkstraStep } from "../../types/Dijkstra.ts";
 const props = defineProps<{
     text: DijkstraStep | null;
@@ -25,7 +25,6 @@ const smallestVertexDistanceInQueue = computed(() => {
     }
     return null;
 });
-const obscureHint = ref<boolean>(props.guidedOrDiy === "diy");
 </script>
 <template>
     <div class="border border-white p-4 rounded-md shadow-md">
@@ -33,7 +32,7 @@ const obscureHint = ref<boolean>(props.guidedOrDiy === "diy");
             <div v-if="!started">
                 <span>Click start!</span>
             </div>
-            <div v-else :class="obscureHint ? 'blur-sm select-none' : ''">
+            <div v-else>
                 <span v-if="text === 'set-source-to-zero'">
                     Set the source vertex distance to zero</span
                 >
@@ -49,22 +48,6 @@ const obscureHint = ref<boolean>(props.guidedOrDiy === "diy");
                     {{ currentVertexName }}</span
                 >
                 <span v-else-if="text === 'done'">Done!</span>
-            </div>
-            <div v-if="started && guidedOrDiy === 'diy'" class="ml-2">
-                <span
-                    class="cursor-help"
-                    @mouseenter="
-                        () => {
-                            obscureHint = false;
-                        }
-                    "
-                    @mouseleave="
-                        () => {
-                            obscureHint = true;
-                        }
-                    "
-                    >Hint</span
-                >
             </div>
         </div>
     </div>
