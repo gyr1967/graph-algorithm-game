@@ -16,7 +16,10 @@ const vertices = ref<DijkstraVertex[]>([]);
 <template>
     <div class="grid grid-cols-3">
         <div class="ml-2">
-            <DijkstraPseudo :current-step="pseudoStep" />
+            <DijkstraPseudo
+                :current-step="pseudoStep"
+                :hide-highlights="false"
+            />
         </div>
         <div class="flex justify-center">
             <div>

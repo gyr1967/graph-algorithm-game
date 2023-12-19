@@ -1,11 +1,10 @@
 import { mount } from "@vue/test-utils";
 import { expect, test } from "vitest";
 import AdjListVertex from "../src/graph/AdjListVertex";
-import GuidedBFSGraphDisplay from "../src/components/GuidedBFSGraphDisplay.vue";
-
+import DIYBFSGraphDisplay from "../src/components/DIYBFSGraphDisplay.vue";
 test("component renders with the correct width and height", () => {
     const scalingFactor = 2;
-    const wrapper = mount(GuidedBFSGraphDisplay, {
+    const wrapper = mount(DIYBFSGraphDisplay, {
         props: {
             whichGraphData: 1,
             scalingFactor,
@@ -22,7 +21,7 @@ test("component renders with the correct width and height", () => {
 
 test("component renders the correct number of nodes and links", () => {
     const scalingFactor = 1;
-    const wrapper = mount(GuidedBFSGraphDisplay, {
+    const wrapper = mount(DIYBFSGraphDisplay, {
         props: {
             whichGraphData: 1,
             scalingFactor,
@@ -39,7 +38,7 @@ test("component renders the correct number of nodes and links", () => {
 
 test("graph data structure has the correct number of vertices", () => {
     const scalingFactor = 1;
-    const wrapper = mount(GuidedBFSGraphDisplay, {
+    const wrapper = mount(DIYBFSGraphDisplay, {
         props: {
             whichGraphData: 1,
             scalingFactor,
@@ -51,7 +50,7 @@ test("graph data structure has the correct number of vertices", () => {
 
 test("vertices are correctly connected", () => {
     const scalingFactor = 1;
-    const wrapper = mount(GuidedBFSGraphDisplay, {
+    const wrapper = mount(DIYBFSGraphDisplay, {
         props: {
             whichGraphData: 1,
             scalingFactor,
@@ -87,7 +86,7 @@ test("vertices are correctly connected", () => {
 
 test("breadth first starts", () => {
     const scalingFactor = 1;
-    const wrapper = mount(GuidedBFSGraphDisplay, {
+    const wrapper = mount(DIYBFSGraphDisplay, {
         props: {
             whichGraphData: 1,
             scalingFactor,

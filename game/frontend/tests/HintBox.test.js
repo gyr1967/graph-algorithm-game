@@ -10,7 +10,6 @@ test("Correct text is shown in HintBox.vue at start", () => {
             started: true,
             visited: [],
             queue: [],
-            guidedOrDiy: "guided",
             bfsOrDfs: "bfs",
         },
     });
@@ -28,7 +27,6 @@ test("Correct text is shown in HintBox.vue midway", () => {
             started: true,
             visited: ["A", "B", "C"],
             queue: ["E"],
-            guidedOrDiy: "guided",
             bfsOrDfs: "bfs",
         },
     });
@@ -46,13 +44,12 @@ test("Correct text is shown in HintBox.vue midway for DIY", () => {
             started: true,
             visited: ["A", "B", "C"],
             queue: ["E"],
-            guidedOrDiy: "diy",
             bfsOrDfs: "bfs",
         },
     });
 
     const textElement = wrapper.text();
-    const expectedText = "Mark D as visitedHint";
+    const expectedText = "Mark D as visited";
     expect(textElement).toBe(expectedText);
 });
 
@@ -64,7 +61,6 @@ test("Correct hints shown for DFS", () => {
             started: true,
             visited: [],
             queue: [],
-            guidedOrDiy: "guided",
             bfsOrDfs: "dfs",
         },
     });

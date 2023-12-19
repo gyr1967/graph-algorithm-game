@@ -13,7 +13,11 @@ const pseudoStep = ref<BFSStep | null>(null);
 <template>
     <div class="grid grid-cols-3">
         <div class="ml-2">
-            <SearchPseudo :current-step="pseudoStep" bfs-or-dfs="bfs" />
+            <SearchPseudo
+                :current-step="pseudoStep"
+                bfs-or-dfs="bfs"
+                :hide-highlights="false"
+            />
         </div>
         <div class="flex justify-center items-center">
             <div class="inline-block justify-self-center self-center">
