@@ -4,6 +4,7 @@ import DijkstraPseudo from "../../components/dijkstra/DijkstraPseudo.vue";
 import DijkstraSidePanel from "../../components/dijkstra/DijkstraSidePanel.vue";
 import ShortestPaths from "../../components/dijkstra/ShortestPaths.vue";
 import DijkstraHintBox from "../../components/dijkstra/DijkstraHintBox.vue";
+import DisplayOptions from "../../components/DisplayOptions.vue";
 import { ref } from "vue";
 import { DijkstraStep } from "../../types/Dijkstra.ts";
 import { DijkstraVertex } from "../../graph/Vertex";
@@ -14,14 +15,23 @@ const distances = ref<Record<string, number>>({});
 const vertices = ref<DijkstraVertex[]>([]);
 const started = ref<boolean>(false);
 const adjacentVertexName = ref<string>("");
+const hidePseudo = ref<boolean>(false);
+const hideHint = ref<boolean>(false);
+const hideHighlights = ref<boolean>(false);
 </script>
 
 <template>
     <div class="grid grid-cols-3 gap-1">
         <div class="ml-2 flex-1">
-            <DijkstraPseudo :current-step="pseudoStep" />
+            <DijkstraPseudo
+                :class="hidePseudo ? 'blur-sm' : ''"
+                class="cursor-pointer"
+                :current-step="pseudoStep"
+                :hide-highlights="hideHighlights"
+            />
             <DijkstraHintBox
-                class="mt-2"
+                class="mt-2 cursor-pointer"
+                :class="hideHint ? 'blur-sm' : ''"
                 :text="pseudoStep"
                 :current-vertex-name="currentVertexName"
                 :started="started"
@@ -30,8 +40,14 @@ const adjacentVertexName = ref<string>("");
                 :adjacent-vertex-name="adjacentVertexName"
                 :distances="distances"
             />
+            <DisplayOptions
+                class="mt-2"
+                @hide-hints="hideHint = !hideHint"
+                @hide-pseudo="hidePseudo = !hidePseudo"
+                @hide-highlights="hideHighlights = !hideHighlights"
+            />
         </div>
-        <div>
+        <div class="flex justify-center items-center">
             <div>
                 <DijkstraGraphDisplay
                     :which-graph-data="2"

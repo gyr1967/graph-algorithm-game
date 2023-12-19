@@ -1,14 +1,16 @@
 <script setup lang="ts">
 import { ref } from "vue";
-// import type { Pages } from "../utils/pages";
 
 defineProps<{
     title: string;
     algorithm: "BFS" | "DFS" | "Dijkstra";
+    leftButtonSelected: boolean;
+    rightButtonSelected: boolean;
 }>();
 const emit = defineEmits(["vis", "diy"]);
 const page = ref<"vis" | "diy" | null>(null);
 const setPage = (emitEvent: "vis" | "diy") => {
+    page.value = emitEvent;
     emit(emitEvent);
 };
 </script>
@@ -20,8 +22,8 @@ const setPage = (emitEvent: "vis" | "diy") => {
     <div class="flex justify-center">
         <div class="mx-1">
             <button
-                :class="page === 'vis' ? 'bg-gray-500' : ''"
-                class="bg-white rounded-sm text-black p-2 text-xl hover:bg-gray-400"
+                :class="leftButtonSelected ? 'bg-gray-600' : 'bg-white'"
+                class="rounded-sm text-black p-2 text-xl hover:bg-gray-400"
                 @click="setPage('vis')"
             >
                 Visualisation
@@ -29,8 +31,8 @@ const setPage = (emitEvent: "vis" | "diy") => {
         </div>
         <div class="mx-1">
             <button
-                :class="page === 'diy' ? 'bg-gray-500' : ''"
-                class="bg-white rounded-sm text-black p-2 text-xl hover:bg-gray-400"
+                :class="rightButtonSelected ? 'bg-gray-500' : 'bg-white'"
+                class="rounded-sm text-black p-2 text-xl hover:bg-gray-400"
                 @click="setPage('diy')"
             >
                 DIY

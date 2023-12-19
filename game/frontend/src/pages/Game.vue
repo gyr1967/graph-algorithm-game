@@ -19,6 +19,8 @@ const page = ref<Pages | null>(null);
                 <PageSelector
                     title="Breadth-first Search"
                     algorithm="BFS"
+                    :left-button-selected="page === 'BFS_Vis'"
+                    :right-button-selected="page === 'BFS_DIY'"
                     @vis="page = 'BFS_Vis'"
                     @diy="page = 'BFS_DIY'"
                 />
@@ -27,6 +29,8 @@ const page = ref<Pages | null>(null);
                 <PageSelector
                     title="Depth-first Search"
                     algorithm="DFS"
+                    :left-button-selected="page === 'DFS_Vis'"
+                    :right-button-selected="page === 'DFS_DIY'"
                     @vis="page = 'DFS_Vis'"
                     @diy="page = 'DFS_DIY'"
                 />
@@ -35,6 +39,8 @@ const page = ref<Pages | null>(null);
                 <PageSelector
                     title="Dijkstra's Shortest Path"
                     algorithm="Dijkstra"
+                    :left-button-selected="page === 'Dijkstra_Vis'"
+                    :right-button-selected="page === 'Dijkstra_DIY'"
                     @vis="page = 'Dijkstra_Vis'"
                     @diy="page = 'Dijkstra_DIY'"
                 />
