@@ -32,7 +32,7 @@ const submitDistance = () => {
         <div class="flex justify-center">
             <button
                 :disabled="disabled"
-                class="border border-white p-1 rounded-sm disabled:opacity-50 disabled:cursor-not-allowed hover:opacity-60"
+                class="rounded-sm text-black p-1 hover:bg-gray-400 bg-white disabled:opacity-50 disabled:cursor-not-allowed"
                 @click="$emit('remove-and-set-to-current', nodeId)"
             >
                 Remove {{ nodeId }} from Queue and set to current vertex
@@ -46,14 +46,14 @@ const submitDistance = () => {
             <div>
                 <input
                     v-model="newDistance"
-                    class="text-black"
+                    class="text-black rounded-md"
                     type="number"
                     min="0"
                     max="100"
                 />
                 <button
                     :disabled="newDistance === null || disabled"
-                    class="border border-white p-1 rounded-sm disabled:opacity-50 disabled:cursor-not-allowed hover:opacity-60 ml-2"
+                    class="rounded-sm text-black p-1 hover:bg-gray-400 bg-white disabled:opacity-50 disabled:cursor-not-allowed mx-1"
                     @click="submitDistance"
                 >
                     Submit
@@ -63,7 +63,7 @@ const submitDistance = () => {
         <div class="flex justify-center">
             <button
                 :disabled="disabled"
-                class="border border-white p-1 rounded-sm ml-1 disabled:opacity-50 disabled:cursor-not-allowed hover:opacity-60"
+                class="rounded-sm text-black p-1 hover:bg-gray-400 bg-white disabled:opacity-50 disabled:cursor-not-allowed"
                 @click="$emit('set-adj-prev-to-current', nodeId)"
             >
                 Set {{ nodeId }}'s previous vertex to

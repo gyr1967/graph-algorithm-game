@@ -18,11 +18,12 @@ const adjacentVertexName = ref<string>("");
 const hidePseudo = ref<boolean>(false);
 const hideHint = ref<boolean>(false);
 const hideHighlights = ref<boolean>(false);
+const sourceName = ref<string>("");
 </script>
 
 <template>
     <div class="grid grid-cols-3 gap-1">
-        <div class="ml-2 flex-1">
+        <div class="ml-2">
             <DijkstraPseudo
                 :class="hidePseudo ? 'blur-sm' : ''"
                 class="cursor-pointer"
@@ -47,7 +48,7 @@ const hideHighlights = ref<boolean>(false);
                 @hide-highlights="hideHighlights = !hideHighlights"
             />
         </div>
-        <div class="flex justify-center items-center">
+        <div class="flex justify-center">
             <div>
                 <DijkstraGraphDisplay
                     :which-graph-data="2"
@@ -87,10 +88,15 @@ const hideHighlights = ref<boolean>(false);
                             adjacentVertexName = newValue;
                         }
                     "
+                    @update:source-name="
+                        (newValue) => {
+                            sourceName = newValue;
+                        }
+                    "
                 />
             </div>
         </div>
-        <div class="grid grid-rows-2 gap-1 text-center">
+        <div class="grid grid-rows-2 gap-1 text-center mr-2">
             <div>
                 <DijkstraSidePanel
                     class="h-full"
@@ -105,7 +111,7 @@ const hideHighlights = ref<boolean>(false);
                     :current-vertex-name="currentVertexName"
                     :vertices="vertices"
                     :distances="distances"
-                    :source-name="'A'"
+                    :source-name="sourceName"
                 />
             </div>
         </div>

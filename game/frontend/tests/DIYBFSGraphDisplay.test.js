@@ -94,6 +94,7 @@ test("breadth first starts", () => {
     });
     const graph = wrapper.vm.graph;
     const vertices = graph.getVertices();
+    wrapper.vm.sourceVertexName = "A";
     wrapper.vm.startTheAlgorithm();
     expect(graph.currentVertex.value).toEqual(vertices[0]);
 });

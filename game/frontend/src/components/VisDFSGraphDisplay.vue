@@ -145,10 +145,10 @@ const setUpGraph = (n: number) => {
 let graph = setUpGraph(Object.entries(nodeData).length);
 const started = ref<boolean>(false);
 const dfsGenerator = ref<Generator<DFSYieldData, void, unknown> | null>(null);
-const startDFS = () => {
+const startDFS = (startIndex: number) => {
     setColoursDefault();
     graph = setUpGraph(Object.entries(nodeData).length);
-    const generator = graph.dfsGenerator(graph.getVertex(0));
+    const generator = graph.dfsGenerator(graph.getVertex(startIndex));
     dfsGenerator.value = generator;
     started.value = true;
 };
@@ -211,12 +211,15 @@ const performDFSStep = () => {
                 </g>
             </svg>
         </div>
+    </div>
+    <div class="border boder-white p-2 rounded-md shadow-md mt-2">
         <div class="bottom-0 left-0 w-full flex justify-center">
             <SearchMediaControlsVue
                 v-if="stage === 'vis'"
                 :started="started"
                 bfs-or-dfs="dfs"
-                @start-d-f-s="startDFS()"
+                :number-of-vertices="Object.entries(nodeData).length"
+                @start-d-f-s="(startIndex) => startDFS(startIndex)"
                 @next-step-d-f-s="performDFSStep()"
                 @prev-step-d-f-s="console.log('previous step init')"
             />

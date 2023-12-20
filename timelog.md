@@ -219,3 +219,7 @@
 ### 18 Dec 2023
 
 * *7 hours* | Set up footer, fleshed out homepage, rearranged navigation and page layout
+
+### 19 Dec 2023
+
+* *7 hours* | Reshuffle to remove the guided sections, add options to blur out the pseudocode, hints and highlighting. 

@@ -4,6 +4,7 @@ import Link from "./Link.vue";
 import Vertex from "../graph/Vertex.ts";
 import Graph from "../graph/Graph.ts";
 import VertexOptionMenu from "./VertexOptionMenu.vue";
+import StartVertexChoice from "./StartVertexChoice.vue";
 import { linkDatas, nodeDatas } from "../utils/graph-data";
 import { letterToNum } from "../utils/num-to-letter";
 import { ref } from "vue";
@@ -89,6 +90,7 @@ class GuidedDFSGraph extends Graph {
     }
 }
 const started = ref<boolean>(false);
+const sourceVertexName = ref<string>("");
 const currentStep = ref<DFSGuidedSteps | null>("add-to-stack");
 emit("update:guidedStep", currentStep.value);
 const nodeData = nodeDatas[props.whichGraphData];
@@ -203,7 +205,9 @@ const setStep = (step: DFSGuidedSteps) => {
 const startTheAlgorithm = () => {
     started.value = true;
     emit("update:started", true);
-    graph.currentVertex.value = graph.getVertex(0);
+    graph.currentVertex.value = graph.getVertex(
+        letterToNum[sourceVertexName.value] - 1,
+    );
     emit("update:currentVertexName", graph.currentVertex.value?.getTextName());
 };
 </script>
@@ -247,50 +251,58 @@ const startTheAlgorithm = () => {
                 </g>
             </svg>
         </div>
-        <div>
-            <div class="flex justify-center">
-                <button
-                    v-if="!started"
-                    class="border border-white p-1 rounded-sm ml-1 hover:opacity-50"
-                    @click="startTheAlgorithm"
-                >
-                    Start
-                </button>
-            </div>
-            <VertexOptionMenu
-                v-if="started"
-                :text="nodeMenuOpen !== '' ? nodeMenuOpen : 'Click a vertex'"
-                :disabled="nodeMenuOpen === ''"
-                :node-id="nodeMenuOpen"
-                bfs-or-dfs="dfs"
-                @add-to-stack="
-                    (nodeId: string) => {
-                        if (validateStep('add-to-stack', nodeId)) {
-                            graph.addToStack(nodeId);
-                        } else {
-                            console.log('failed validation');
-                        }
-                    }
-                "
-                @visit="
-                    (nodeId: string) => {
-                        if (validateStep('visit', nodeId)) {
-                            graph.visit(nodeId);
-                        } else {
-                            ('failed validation');
-                        }
-                    }
-                "
-                @remove-and-set-to-current="
-                    (nodeId: string) => {
-                        if (validateStep('remove-and-set-to-current', nodeId)) {
-                            graph.removeAndSetCurrentVertex();
-                        } else {
-                            console.log('failed validation');
-                        }
+    </div>
+    <div class="border boder-white p-2 rounded-md shadow-md mt-2">
+        <div v-if="!started" class="flex justify-center">
+            <StartVertexChoice
+                :disabled="false"
+                :number-of-vertices="Object.keys(nodeData).length"
+                @update:source-choice="
+                    (newValue: Record<string, string>) => {
+                        sourceVertexName = newValue.id;
                     }
                 "
             />
+            <button
+                class="rounded-sm text-black p-1 hover:bg-gray-400 bg-white mx-1"
+                @click="startTheAlgorithm"
+            >
+                Start
+            </button>
         </div>
+        <VertexOptionMenu
+            v-if="started"
+            :text="nodeMenuOpen !== '' ? nodeMenuOpen : 'Click a vertex'"
+            :disabled="nodeMenuOpen === ''"
+            :node-id="nodeMenuOpen"
+            bfs-or-dfs="dfs"
+            @add-to-stack="
+                (nodeId: string) => {
+                    if (validateStep('add-to-stack', nodeId)) {
+                        graph.addToStack(nodeId);
+                    } else {
+                        console.log('failed validation');
+                    }
+                }
+            "
+            @visit="
+                (nodeId: string) => {
+                    if (validateStep('visit', nodeId)) {
+                        graph.visit(nodeId);
+                    } else {
+                        ('failed validation');
+                    }
+                }
+            "
+            @remove-and-set-to-current="
+                (nodeId: string) => {
+                    if (validateStep('remove-and-set-to-current', nodeId)) {
+                        graph.removeAndSetCurrentVertex();
+                    } else {
+                        console.log('failed validation');
+                    }
+                }
+            "
+        />
     </div>
 </template>
