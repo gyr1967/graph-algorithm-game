@@ -89,7 +89,7 @@ const sourceName = ref<string>("");
                         }
                     "
                     @update:source-name="
-                        (newValue) => {
+                        (newValue: string) => {
                             sourceName = newValue;
                         }
                     "
