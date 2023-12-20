@@ -14,7 +14,7 @@ const vertices = ref<DijkstraVertex[]>([]);
 </script>
 
 <template>
-    <div class="grid grid-cols-3">
+    <div class="grid grid-cols-3 gap-1">
         <div class="ml-2">
             <DijkstraPseudo
                 :current-step="pseudoStep"

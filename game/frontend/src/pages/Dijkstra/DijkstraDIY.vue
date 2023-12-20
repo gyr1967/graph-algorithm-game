@@ -22,7 +22,7 @@ const hideHighlights = ref<boolean>(false);
 
 <template>
     <div class="grid grid-cols-3 gap-1">
-        <div class="ml-2 flex-1">
+        <div class="ml-2">
             <DijkstraPseudo
                 :class="hidePseudo ? 'blur-sm' : ''"
                 class="cursor-pointer"

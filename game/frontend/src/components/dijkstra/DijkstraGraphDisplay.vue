@@ -351,7 +351,7 @@ const findAdjacency = (nodeId: string): AdjListVertex | null => {
         <div class="flex justify-center">
             <button
                 v-if="!started"
-                class="border border-white p-1 rounded-sm ml-1 hover:opacity-50"
+                class="rounded-sm text-black p-1 hover:bg-gray-400 bg-white"
                 @click="startTheAlgorithm"
             >
                 Start
