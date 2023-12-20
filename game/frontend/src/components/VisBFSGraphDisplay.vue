@@ -153,15 +153,19 @@ const startBFS = (startIndex: number) => {
     started.value = true;
 };
 
+const reset = () => {
+    bfsGenerator.value = null;
+    started.value = false;
+    emit("update:currentVertexName", "");
+    emit("update:currentQueue", []);
+    emit("update:pseudoStep", null);
+};
+
 const performBFSStep = () => {
     if (bfsGenerator.value) {
         const result = bfsGenerator.value.next();
         if (result.done) {
-            bfsGenerator.value = null;
-            started.value = false;
-            emit("update:currentVertexName", "");
-            emit("update:currentQueue", []);
-            emit("update:pseudoStep", null);
+            reset();
         } else {
             emit("update:pseudoStep", result.value.step);
             emit(
@@ -219,9 +223,9 @@ const performBFSStep = () => {
                 :started="started"
                 bfs-or-dfs="bfs"
                 :number-of-vertices="Object.entries(nodeData).length"
-                @start-b-f-s="(startIndex) => startBFS(startIndex)"
-                @next-step-b-f-s="performBFSStep()"
-                @prev-step-b-f-s="console.log('previous step init')"
+                @start="(startIndex) => startBFS(startIndex)"
+                @next-step="performBFSStep()"
+                @reset="reset()"
             />
         </div>
     </div>

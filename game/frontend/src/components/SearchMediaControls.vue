@@ -8,14 +8,7 @@ defineProps<{
     bfsOrDfs: "bfs" | "dfs";
     numberOfVertices: number;
 }>();
-defineEmits([
-    "startBFS",
-    "nextStepBFS",
-    "prevStepBFS",
-    "startDFS",
-    "nextStepDFS",
-    "prevStepDFS",
-]);
+defineEmits(["start", "nextStep", "reset"]);
 const choice = ref<Record<string, string>>({ id: "A" });
 </script>
 <template>
@@ -32,11 +25,7 @@ const choice = ref<Record<string, string>>({ id: "A" });
         <button
             :disabled="started"
             class="bg-white text-black rounded-sm p-1 mx-1 hover:bg-gray-400 disabled:bg-gray-600 disabled:cursor-not-allowed"
-            @click="
-                bfsOrDfs === 'bfs'
-                    ? $emit('startBFS', letterToNum[choice.id] - 1)
-                    : $emit('startDFS', letterToNum[choice.id] - 1)
-            "
+            @click="$emit('start', letterToNum[choice.id] - 1)"
         >
             Start
         </button>
@@ -44,18 +33,14 @@ const choice = ref<Record<string, string>>({ id: "A" });
     <button
         :disabled="!started"
         class="bg-white text-black rounded-sm p-1 ml-1 mr-1 hover:bg-gray-400 disabled:bg-gray-600 disabled:cursor-not-allowed"
-        @click="
-            bfsOrDfs === 'bfs' ? $emit('prevStepBFS') : $emit('prevStepDFS')
-        "
+        @click="$emit('reset')"
     >
-        Previous (TODO)
+        Reset
     </button>
     <button
         :disabled="!started"
         class="bg-white text-black rounded-sm p-1 ml-1 hover:bg-gray-400 disabled:bg-gray-600 disabled:cursor-not-allowed"
-        @click="
-            bfsOrDfs === 'bfs' ? $emit('nextStepBFS') : $emit('nextStepDFS')
-        "
+        @click="$emit('nextStep')"
     >
         Next
     </button>
