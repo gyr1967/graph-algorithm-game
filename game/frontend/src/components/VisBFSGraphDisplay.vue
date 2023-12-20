@@ -145,10 +145,10 @@ const setUpGraph = (n: number) => {
 let graph = setUpGraph(Object.entries(nodeData).length);
 const started = ref<boolean>(false);
 const bfsGenerator = ref<Generator<BFSYieldData, void, unknown> | null>(null);
-const startBFS = () => {
+const startBFS = (startIndex: number) => {
     setColoursDefault();
     graph = setUpGraph(Object.entries(nodeData).length);
-    const generator = graph.bfsGenerator(graph.getVertex(0));
+    const generator = graph.bfsGenerator(graph.getVertex(startIndex));
     bfsGenerator.value = generator;
     started.value = true;
 };
@@ -218,7 +218,8 @@ const performBFSStep = () => {
                 v-if="stage === 'vis'"
                 :started="started"
                 bfs-or-dfs="bfs"
-                @start-b-f-s="startBFS()"
+                :number-of-vertices="Object.entries(nodeData).length"
+                @start-b-f-s="(startIndex) => startBFS(startIndex)"
                 @next-step-b-f-s="performBFSStep()"
                 @prev-step-b-f-s="console.log('previous step init')"
             />

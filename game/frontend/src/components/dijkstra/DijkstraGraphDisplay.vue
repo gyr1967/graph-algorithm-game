@@ -247,7 +247,6 @@ const validateUpdateDistance = (nodeId: string, distance: number) => {
     const adj = findAdjacency(nodeId);
     const vertex = graph.getVertex(letterToNum[nodeId] - 1);
     if (adj === null && vertex.getTextName() !== SOURCEVERTEXNAME) {
-        console.log;
         return false;
     }
     if (adj === null && vertex.getTextName() === SOURCEVERTEXNAME) {

@@ -18,6 +18,7 @@ const adjacentVertexName = ref<string>("");
 const hidePseudo = ref<boolean>(false);
 const hideHint = ref<boolean>(false);
 const hideHighlights = ref<boolean>(false);
+const sourceName = ref<string>("");
 </script>
 
 <template>
@@ -87,6 +88,11 @@ const hideHighlights = ref<boolean>(false);
                             adjacentVertexName = newValue;
                         }
                     "
+                    @update:source-name="
+                        (newValue) => {
+                            sourceName = newValue;
+                        }
+                    "
                 />
             </div>
         </div>
@@ -105,7 +111,7 @@ const hideHighlights = ref<boolean>(false);
                     :current-vertex-name="currentVertexName"
                     :vertices="vertices"
                     :distances="distances"
-                    :source-name="'A'"
+                    :source-name="sourceName"
                 />
             </div>
         </div>

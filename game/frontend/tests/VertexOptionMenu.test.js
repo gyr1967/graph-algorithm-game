@@ -13,7 +13,6 @@ test("Correct text is shown in VertexOptionsMenu for DFS", () => {
     });
 
     const textElement = wrapper.text();
-    console.log(textElement);
     const expectedText1 = "Add A to stack";
     const expectedText2 = "Remove A from stack and set to current vertex";
     const expectedText3 = "Mark A as visited";
@@ -35,7 +34,6 @@ test("Correct text is shown in VertexOptionsMenu for BFS", () => {
     });
 
     const textElement = wrapper.text();
-    console.log(textElement);
     const expectedText1 = "Add A to queue";
     const expectedText2 = "Remove A from queue and set to current vertex";
     const expectedText3 = "Mark A as visited";

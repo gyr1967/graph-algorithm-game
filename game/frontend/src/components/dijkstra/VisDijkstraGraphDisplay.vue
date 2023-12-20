@@ -6,7 +6,7 @@ import type { DijkstraYieldData } from "../../types/Dijkstra.ts";
 import { DijkstraVertex } from "../../graph/Vertex.ts";
 import { DijkstraGraph } from "../../graph/Graph.ts";
 import { linkDatas, nodeDatas } from "../../utils/graph-data";
-import { letterToNum } from "../../utils/num-to-letter";
+import { letterToNum, numToLetter } from "../../utils/num-to-letter";
 import { ref } from "vue";
 import { EdgeData } from "../../types/GraphData";
 const props = defineProps<{
@@ -19,6 +19,7 @@ const emit = defineEmits([
     "update:verticesToCheck",
     "update:distances",
     "update:vertices",
+    "update:sourceName",
 ]);
 
 class VisDijkstraGraph extends DijkstraGraph {
@@ -145,6 +146,7 @@ const dijkstraGenerator = ref<Generator<
     unknown
 > | null>(null);
 const startDijkstras = (startIndex: number) => {
+    emit("update:sourceName", numToLetter[startIndex + 1]);
     setColoursDefault();
     graph = setUpGraph(Object.entries(nodeData).length);
     emit("update:vertices", graph.vertices);
@@ -227,6 +229,7 @@ const performDijkstraStep = () => {
         <div class="bottom-0 left-0 w-full flex justify-center">
             <DijkstraMediaControls
                 :started="started"
+                :number-of-vertices="Object.entries(nodeData).length"
                 @start-dijkstras="(startIndex) => startDijkstras(startIndex)"
                 @next-step-dijkstras="performDijkstraStep"
                 @prev-step-dijkstras="
