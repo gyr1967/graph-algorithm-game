@@ -90,7 +90,7 @@ const hideHighlights = ref<boolean>(false);
                 />
             </div>
         </div>
-        <div class="grid grid-rows-2 gap-1 text-center">
+        <div class="grid grid-rows-2 gap-1 text-center mr-2">
             <div>
                 <DijkstraSidePanel
                     class="h-full"
