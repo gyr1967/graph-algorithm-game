@@ -144,11 +144,11 @@ const dijkstraGenerator = ref<Generator<
     void,
     unknown
 > | null>(null);
-const startDijkstras = () => {
+const startDijkstras = (startIndex: number) => {
     setColoursDefault();
     graph = setUpGraph(Object.entries(nodeData).length);
     emit("update:vertices", graph.vertices);
-    const generator = graph.dijkstraGenerator(graph.getVertex(0));
+    const generator = graph.dijkstraGenerator(graph.getVertex(startIndex));
     dijkstraGenerator.value = generator;
     started.value = true;
     emit("update:distances", distances.value);
@@ -222,10 +222,12 @@ const performDijkstraStep = () => {
                 </g>
             </svg>
         </div>
+    </div>
+    <div class="border border-white p-2 rounded-md shadow-md mt-2">
         <div class="bottom-0 left-0 w-full flex justify-center">
             <DijkstraMediaControls
                 :started="started"
-                @start-dijkstras="startDijkstras"
+                @start-dijkstras="(startIndex) => startDijkstras(startIndex)"
                 @next-step-dijkstras="performDijkstraStep"
                 @prev-step-dijkstras="
                     () => {

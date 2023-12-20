@@ -247,50 +247,50 @@ const startTheAlgorithm = () => {
                 </g>
             </svg>
         </div>
-        <div>
-            <div class="flex justify-center">
-                <button
-                    v-if="!started"
-                    class="border border-white p-1 rounded-sm ml-1 hover:opacity-50"
-                    @click="startTheAlgorithm"
-                >
-                    Start
-                </button>
-            </div>
-            <VertexOptionMenu
-                v-if="started"
-                :text="nodeMenuOpen !== '' ? nodeMenuOpen : 'Click a vertex'"
-                :disabled="nodeMenuOpen === ''"
-                :node-id="nodeMenuOpen"
-                bfs-or-dfs="dfs"
-                @add-to-stack="
-                    (nodeId: string) => {
-                        if (validateStep('add-to-stack', nodeId)) {
-                            graph.addToStack(nodeId);
-                        } else {
-                            console.log('failed validation');
-                        }
-                    }
-                "
-                @visit="
-                    (nodeId: string) => {
-                        if (validateStep('visit', nodeId)) {
-                            graph.visit(nodeId);
-                        } else {
-                            ('failed validation');
-                        }
-                    }
-                "
-                @remove-and-set-to-current="
-                    (nodeId: string) => {
-                        if (validateStep('remove-and-set-to-current', nodeId)) {
-                            graph.removeAndSetCurrentVertex();
-                        } else {
-                            console.log('failed validation');
-                        }
-                    }
-                "
-            />
+    </div>
+    <div class="border boder-white p-2 rounded-md shadow-md mt-2">
+        <div class="flex justify-center">
+            <button
+                v-if="!started"
+                class="rounded-sm text-black p-1 hover:bg-gray-400 bg-white"
+                @click="startTheAlgorithm"
+            >
+                Start
+            </button>
         </div>
+        <VertexOptionMenu
+            v-if="started"
+            :text="nodeMenuOpen !== '' ? nodeMenuOpen : 'Click a vertex'"
+            :disabled="nodeMenuOpen === ''"
+            :node-id="nodeMenuOpen"
+            bfs-or-dfs="dfs"
+            @add-to-stack="
+                (nodeId: string) => {
+                    if (validateStep('add-to-stack', nodeId)) {
+                        graph.addToStack(nodeId);
+                    } else {
+                        console.log('failed validation');
+                    }
+                }
+            "
+            @visit="
+                (nodeId: string) => {
+                    if (validateStep('visit', nodeId)) {
+                        graph.visit(nodeId);
+                    } else {
+                        ('failed validation');
+                    }
+                }
+            "
+            @remove-and-set-to-current="
+                (nodeId: string) => {
+                    if (validateStep('remove-and-set-to-current', nodeId)) {
+                        graph.removeAndSetCurrentVertex();
+                    } else {
+                        console.log('failed validation');
+                    }
+                }
+            "
+        />
     </div>
 </template>
