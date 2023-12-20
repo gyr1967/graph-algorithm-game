@@ -2,6 +2,7 @@
 import Node from "../Node.vue";
 import Link from "../Link.vue";
 import DijkstraOptionMenu from "./DijkstraOptionMenu.vue";
+import StartVertexChoice from "../StartVertexChoice.vue";
 import { DijkstraVertex } from "../../graph/Vertex.ts";
 import { DijkstraGraph } from "../../graph/Graph.ts";
 import { linkDatas, nodeDatas } from "../../utils/graph-data";
@@ -23,8 +24,6 @@ const emit = defineEmits([
     "update:started",
     "update:adjacentVertexName",
 ]);
-
-const SOURCEVERTEXNAME = "A";
 
 class VisDijkstraGraph extends DijkstraGraph {
     currentVertex = ref<DijkstraVertex | null>(null);
@@ -92,7 +91,7 @@ class VisDijkstraGraph extends DijkstraGraph {
             distances.value[nodeId] = distance;
             emit("update:distances", distances.value);
             emit("update:vertices", this.vertices);
-            if (vertex.getTextName() === SOURCEVERTEXNAME) {
+            if (vertex.getTextName() === sourceVertexName.value) {
                 setStep("remove-and-set-to-current");
             } else {
                 emit("update:adjacentVertexName", vertex.getTextName());
@@ -149,7 +148,7 @@ const setStep = (step: DijkstraStep) => {
     currentStep.value = step;
     emit("update:pseudoStep", step);
 };
-
+const sourceVertexName = ref<string>("");
 const adjToVisit = ref<DijkstraVertex[]>([]);
 const nodeData = nodeDatas[props.whichGraphData];
 const distances = ref<Record<string, number>>({});
@@ -194,7 +193,9 @@ const currentStep = ref<DijkstraStep | null>(null);
 const startTheAlgorithm = () => {
     started.value = true;
     emit("update:started", true);
-    graph.currentVertex.value = graph.getVertex(0);
+    graph.currentVertex.value = graph.getVertex(
+        letterToNum[sourceVertexName.value] - 1,
+    );
     emit("update:currentVertexName", graph.currentVertex.value?.getTextName());
     emit("update:vertices", graph.vertices);
     emit("update:distances", distances.value);
@@ -246,10 +247,10 @@ const validateStep = (
 const validateUpdateDistance = (nodeId: string, distance: number) => {
     const adj = findAdjacency(nodeId);
     const vertex = graph.getVertex(letterToNum[nodeId] - 1);
-    if (adj === null && vertex.getTextName() !== SOURCEVERTEXNAME) {
+    if (adj === null && vertex.getTextName() !== sourceVertexName.value) {
         return false;
     }
-    if (adj === null && vertex.getTextName() === SOURCEVERTEXNAME) {
+    if (adj === null && vertex.getTextName() === sourceVertexName.value) {
         if (distance === 0) {
             return true;
         }
@@ -283,7 +284,7 @@ const validateRemoveAndSetToCurrent = (nodeId: string) => {
 };
 
 const validateSetSourceToZero = (nodeId: string, distance: number) => {
-    if (nodeId === SOURCEVERTEXNAME && distance === 0) {
+    if (nodeId === sourceVertexName.value && distance === 0) {
         return true;
     }
     return false;
@@ -347,10 +348,18 @@ const findAdjacency = (nodeId: string): AdjListVertex | null => {
         </div>
     </div>
     <div class="border border-white p-2 rounded-md shadow-md mt-2">
-        <div class="flex justify-center">
+        <div v-if="!started" class="flex justify-center">
+            <StartVertexChoice
+                :disabled="false"
+                :number-of-vertices="Object.keys(nodeData).length"
+                @update:source-choice="
+                    (newValue: Record<string, string>) => {
+                        sourceVertexName = newValue.id;
+                    }
+                "
+            />
             <button
-                v-if="!started"
-                class="rounded-sm text-black p-1 hover:bg-gray-400 bg-white"
+                class="mx-1 rounded-sm text-black p-1 hover:bg-gray-400 bg-white"
                 @click="startTheAlgorithm"
             >
                 Start
