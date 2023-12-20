@@ -52,7 +52,7 @@ const hideHighlights = ref<boolean>(false);
             />
         </div>
         <div class="flex justify-center items-center">
-            <div class="inline-block justify-self-center self-center">
+            <div>
                 <DIYBFSGraphDisplay
                     :which-graph-data="1"
                     :scaling-factor="graphSize"
@@ -89,7 +89,7 @@ const hideHighlights = ref<boolean>(false);
                 />
             </div>
         </div>
-        <div class="text-center">
+        <div class="text-center mr-2">
             <SidePanel
                 :vertex-names="vertexNames"
                 :current-vertex-name="currentVertexName"

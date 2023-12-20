@@ -6,7 +6,7 @@ import BFSDIY from "./BFS/BFSDIY.vue";
 import DFSVis from "./DFS/DFSVis.vue";
 import DFSDIY from "./DFS/DFSDIY.vue";
 import DijkstraVis from "./Dijkstra/DijkstraVis.vue";
-import DijkstraDIY from "./Dijkstra/DijkstraDIYbustcache.vue";
+import DijkstraDIY from "./Dijkstra/DijkstraDIY.vue";
 import type { Pages } from "../utils/pages";
 
 const page = ref<Pages | null>(null);
