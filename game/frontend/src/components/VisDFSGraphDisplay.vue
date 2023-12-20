@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import Node from "./Node.vue";
 import Link from "./Link.vue";
-import SearchMediaControlsVue from "./SearchMediaControls.vue";
+import MediaControls from "./MediaControls.vue";
 import AdjListVertex from "../graph/AdjListVertex.ts";
 import Vertex from "../graph/Vertex.ts";
 import Graph from "../graph/Graph.ts";
@@ -153,15 +153,19 @@ const startDFS = (startIndex: number) => {
     started.value = true;
 };
 
+const reset = () => {
+    dfsGenerator.value = null;
+    started.value = false;
+    emit("update:currentVertexName", "");
+    emit("update:currentStack", []);
+    emit("update:pseudoStep", null);
+};
+
 const performDFSStep = () => {
     if (dfsGenerator.value) {
         const result = dfsGenerator.value.next();
         if (result.done) {
-            dfsGenerator.value = null;
-            started.value = false;
-            emit("update:currentVertexName", "");
-            emit("update:currentStack", []);
-            emit("update:pseudoStep", null);
+            reset();
         } else {
             emit("update:pseudoStep", result.value.step);
             emit(
@@ -214,14 +218,14 @@ const performDFSStep = () => {
     </div>
     <div class="border boder-white p-2 rounded-md shadow-md mt-2">
         <div class="bottom-0 left-0 w-full flex justify-center">
-            <SearchMediaControlsVue
+            <MediaControls
                 v-if="stage === 'vis'"
                 :started="started"
                 bfs-or-dfs="dfs"
                 :number-of-vertices="Object.entries(nodeData).length"
-                @start-d-f-s="(startIndex) => startDFS(startIndex)"
-                @next-step-d-f-s="performDFSStep()"
-                @prev-step-d-f-s="console.log('previous step init')"
+                @start="(startIndex) => startDFS(startIndex)"
+                @next-step="performDFSStep()"
+                @reset="reset()"
             />
         </div>
     </div>

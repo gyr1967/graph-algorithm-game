@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import Node from "../Node.vue";
 import Link from "../Link.vue";
-import DijkstraMediaControls from "./DijkstraMediaControls.vue";
+import MediaControls from "../MediaControls.vue";
 import type { DijkstraYieldData } from "../../types/Dijkstra.ts";
 import { DijkstraVertex } from "../../graph/Vertex.ts";
 import { DijkstraGraph } from "../../graph/Graph.ts";
@@ -160,14 +160,18 @@ const startDijkstras = (startIndex: number) => {
     );
 };
 
+const reset = () => {
+    dijkstraGenerator.value = null;
+    started.value = false;
+    emit("update:currentVertexName", "");
+    emit("update:pseudoStep", null);
+};
+
 const performDijkstraStep = () => {
     if (dijkstraGenerator.value) {
         const result = dijkstraGenerator.value.next();
         if (result.done) {
-            dijkstraGenerator.value = null;
-            started.value = false;
-            emit("update:currentVertexName", "");
-            emit("update:pseudoStep", null);
+            reset();
         } else {
             emit("update:pseudoStep", result.value.step);
             emit(
@@ -227,16 +231,13 @@ const performDijkstraStep = () => {
     </div>
     <div class="border border-white p-2 rounded-md shadow-md mt-2">
         <div class="bottom-0 left-0 w-full flex justify-center">
-            <DijkstraMediaControls
+            <MediaControls
                 :started="started"
                 :number-of-vertices="Object.entries(nodeData).length"
-                @start-dijkstras="(startIndex) => startDijkstras(startIndex)"
-                @next-step-dijkstras="performDijkstraStep"
-                @prev-step-dijkstras="
-                    () => {
-                        console.log('to do');
-                    }
-                "
+                :is-dijkstras="true"
+                @start="(startIndex) => startDijkstras(startIndex)"
+                @next-step="performDijkstraStep"
+                @reset="reset()"
                 @randomise-link-lengths="randomiseLinkLengths"
             />
         </div>

@@ -1,22 +1,19 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import StartVertexChoice from "../StartVertexChoice.vue";
-import { letterToNum } from "../../utils/num-to-letter";
+import { letterToNum } from "../utils/num-to-letter";
+import StartVertexChoice from "./StartVertexChoice.vue";
+
 defineProps<{
     started: boolean;
+    isDijkstras?: boolean;
     numberOfVertices: number;
 }>();
-defineEmits([
-    "startDijkstras",
-    "nextStepDijkstras",
-    "prevStepDijkstras",
-    "randomiseLinkLengths",
-]);
+defineEmits(["start", "nextStep", "reset", "randomiseLinkLengths"]);
 const choice = ref<Record<string, string>>({ id: "A" });
 </script>
 <template>
     <div class="flex-row">
-        <div class="flex justify-center mb-2">
+        <div v-if="isDijkstras === true" class="flex justify-center mb-2">
             <button
                 :disabled="started"
                 class="bg-white text-black rounded-sm p-1 mx-1 hover:bg-gray-400 disabled:bg-gray-600 disabled:cursor-not-allowed"
@@ -39,22 +36,22 @@ const choice = ref<Record<string, string>>({ id: "A" });
                 <button
                     :disabled="started"
                     class="bg-white text-black rounded-sm p-1 mx-1 hover:bg-gray-400 disabled:bg-gray-600 disabled:cursor-not-allowed"
-                    @click="$emit('startDijkstras', letterToNum[choice.id] - 1)"
+                    @click="$emit('start', letterToNum[choice.id] - 1)"
                 >
                     Start
                 </button>
             </div>
             <button
                 :disabled="!started"
-                class="bg-white text-black rounded-sm p-1 mx-1 hover:bg-gray-400 disabled:bg-gray-600 disabled:cursor-not-allowed"
-                @click="$emit('prevStepDijkstras')"
+                class="bg-white text-black rounded-sm p-1 ml-1 mr-1 hover:bg-gray-400 disabled:bg-gray-600 disabled:cursor-not-allowed"
+                @click="$emit('reset')"
             >
-                Previous (TODO)
+                Reset
             </button>
             <button
                 :disabled="!started"
-                class="bg-white text-black rounded-sm p-1 mx-1 hover:bg-gray-400 disabled:bg-gray-600 disabled:cursor-not-allowed"
-                @click="$emit('nextStepDijkstras')"
+                class="bg-white text-black rounded-sm p-1 ml-1 hover:bg-gray-400 disabled:bg-gray-600 disabled:cursor-not-allowed"
+                @click="$emit('nextStep')"
             >
                 Next
             </button>
