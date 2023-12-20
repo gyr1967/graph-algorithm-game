@@ -52,7 +52,7 @@ const hideHighlights = ref<boolean>(false);
                 @hide-highlights="hideHighlights = !hideHighlights"
             />
         </div>
-        <div class="flex justify-center items-center mr-2">
+        <div class="flex justify-center items-center">
             <div>
                 <DIYDFSGraphDisplay
                     :which-graph-data="1"
@@ -91,7 +91,7 @@ const hideHighlights = ref<boolean>(false);
                 />
             </div>
         </div>
-        <div class="text-center">
+        <div class="text-center mr-2">
             <SidePanel
                 :vertex-names="vertexNames"
                 :current-vertex-name="currentVertexName"
