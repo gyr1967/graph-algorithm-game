@@ -4,6 +4,7 @@ import Link from "./Link.vue";
 import Vertex from "../graph/Vertex.ts";
 import Graph from "../graph/Graph.ts";
 import VertexOptionMenu from "./VertexOptionMenu.vue";
+import StartVertexChoice from "./StartVertexChoice.vue";
 import { linkDatas, nodeDatas } from "../utils/graph-data";
 import { letterToNum } from "../utils/num-to-letter";
 import { ref } from "vue";
@@ -89,6 +90,7 @@ class GuidedBFSGraph extends Graph {
     }
 }
 const started = ref<boolean>(false);
+const sourceVertexName = ref<string>("");
 const currentStep = ref<BFSGuidedSteps | null>("add-to-queue");
 emit("update:guidedStep", currentStep.value);
 const nodeData = nodeDatas[props.whichGraphData];
@@ -203,7 +205,9 @@ const setStep = (step: BFSGuidedSteps) => {
 const startTheAlgorithm = () => {
     started.value = true;
     emit("update:started", true);
-    graph.currentVertex.value = graph.getVertex(0);
+    graph.currentVertex.value = graph.getVertex(
+        letterToNum[sourceVertexName.value] - 1,
+    );
     emit("update:currentVertexName", graph.currentVertex.value?.getTextName());
 };
 </script>
@@ -249,10 +253,18 @@ const startTheAlgorithm = () => {
         </div>
     </div>
     <div class="border boder-white p-2 rounded-md shadow-md mt-2">
-        <div class="flex justify-center">
+        <div v-if="!started" class="flex justify-center">
+            <StartVertexChoice
+                :disabled="false"
+                :number-of-vertices="Object.keys(nodeData).length"
+                @update:source-choice="
+                    (newValue: Record<string, string>) => {
+                        sourceVertexName = newValue.id;
+                    }
+                "
+            />
             <button
-                v-if="!started"
-                class="rounded-sm text-black p-1 hover:bg-gray-400 bg-white disabled:opacity-50 disabled:cursor-not-allowed"
+                class="rounded-sm text-black p-1 hover:bg-gray-400 bg-white mx-1"
                 @click="startTheAlgorithm"
             >
                 Start
