@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import PageSelector from "./PageSelector.vue";
+import PageSelector from "../components/PageSelector.vue";
 import BFSVis from "./BFS/BFSVis.vue";
 import BFSDIY from "./BFS/BFSDIY.vue";
 import DFSVis from "./DFS/DFSVis.vue";
 import DFSDIY from "./DFS/DFSDIY.vue";
 import DijkstraVis from "./Dijkstra/DijkstraVis.vue";
-import DijkstraDIY from "./Dijkstra/DijkstraDIYbustcache.vue";
+import DijkstraDIY from "./Dijkstra/DijkstraDIY.vue";
 import type { Pages } from "../utils/pages";
 
 const page = ref<Pages | null>(null);

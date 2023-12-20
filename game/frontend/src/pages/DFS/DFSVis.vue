@@ -20,7 +20,7 @@ const pseudoStep = ref<DFSStep | null>(null);
             />
         </div>
         <div class="flex justify-center items-center">
-            <div class="inline-block justify-self-center self-center">
+            <div>
                 <VisDFSGraphDisplay
                     :which-graph-data="1"
                     :scaling-factor="graphSize"
@@ -43,7 +43,7 @@ const pseudoStep = ref<DFSStep | null>(null);
                 />
             </div>
         </div>
-        <div class="text-center">
+        <div class="text-center mr-2">
             <SidePanel
                 :current-vertex-name="currentVertexName"
                 :current-stack="currentStack"

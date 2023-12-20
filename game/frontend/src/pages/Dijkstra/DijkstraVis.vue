@@ -11,10 +11,11 @@ const verticesToCheck = ref<string[]>([]);
 const pseudoStep = ref<DijkstraStep | null>(null);
 const distances = ref<Record<string, number>>({});
 const vertices = ref<DijkstraVertex[]>([]);
+const sourceName = ref<string>("");
 </script>
 
 <template>
-    <div class="grid grid-cols-3">
+    <div class="grid grid-cols-3 gap-1">
         <div class="ml-2">
             <DijkstraPseudo
                 :current-step="pseudoStep"
@@ -51,10 +52,15 @@ const vertices = ref<DijkstraVertex[]>([]);
                             vertices = newValue;
                         }
                     "
+                    @update:source-name="
+                        (newValue) => {
+                            sourceName = newValue;
+                        }
+                    "
                 />
             </div>
         </div>
-        <div class="grid grid-rows-2 gap-1 text-center">
+        <div class="grid grid-rows-2 gap-1 text-center mr-2">
             <div>
                 <DijkstraSidePanel
                     class="h-full"
@@ -69,7 +75,7 @@ const vertices = ref<DijkstraVertex[]>([]);
                     :current-vertex-name="currentVertexName"
                     :vertices="vertices"
                     :distances="distances"
-                    :source-name="'A'"
+                    :source-name="sourceName"
                 />
             </div>
         </div>

@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import Node from "../Node.vue";
 import Link from "../Link.vue";
-import DijkstraMediaControls from "./DijkstraMediaControls.vue";
+import MediaControls from "../MediaControls.vue";
 import type { DijkstraYieldData } from "../../types/Dijkstra.ts";
 import { DijkstraVertex } from "../../graph/Vertex.ts";
 import { DijkstraGraph } from "../../graph/Graph.ts";
 import { linkDatas, nodeDatas } from "../../utils/graph-data";
-import { letterToNum } from "../../utils/num-to-letter";
+import { letterToNum, numToLetter } from "../../utils/num-to-letter";
 import { ref } from "vue";
 import { EdgeData } from "../../types/GraphData";
 const props = defineProps<{
@@ -19,6 +19,7 @@ const emit = defineEmits([
     "update:verticesToCheck",
     "update:distances",
     "update:vertices",
+    "update:sourceName",
 ]);
 
 class VisDijkstraGraph extends DijkstraGraph {
@@ -144,11 +145,12 @@ const dijkstraGenerator = ref<Generator<
     void,
     unknown
 > | null>(null);
-const startDijkstras = () => {
+const startDijkstras = (startIndex: number) => {
+    emit("update:sourceName", numToLetter[startIndex + 1]);
     setColoursDefault();
     graph = setUpGraph(Object.entries(nodeData).length);
     emit("update:vertices", graph.vertices);
-    const generator = graph.dijkstraGenerator(graph.getVertex(0));
+    const generator = graph.dijkstraGenerator(graph.getVertex(startIndex));
     dijkstraGenerator.value = generator;
     started.value = true;
     emit("update:distances", distances.value);
@@ -158,14 +160,18 @@ const startDijkstras = () => {
     );
 };
 
+const reset = () => {
+    dijkstraGenerator.value = null;
+    started.value = false;
+    emit("update:currentVertexName", "");
+    emit("update:pseudoStep", null);
+};
+
 const performDijkstraStep = () => {
     if (dijkstraGenerator.value) {
         const result = dijkstraGenerator.value.next();
         if (result.done) {
-            dijkstraGenerator.value = null;
-            started.value = false;
-            emit("update:currentVertexName", "");
-            emit("update:pseudoStep", null);
+            reset();
         } else {
             emit("update:pseudoStep", result.value.step);
             emit(
@@ -222,16 +228,16 @@ const performDijkstraStep = () => {
                 </g>
             </svg>
         </div>
+    </div>
+    <div class="border border-white p-2 rounded-md shadow-md mt-2">
         <div class="bottom-0 left-0 w-full flex justify-center">
-            <DijkstraMediaControls
+            <MediaControls
                 :started="started"
-                @start-dijkstras="startDijkstras"
-                @next-step-dijkstras="performDijkstraStep"
-                @prev-step-dijkstras="
-                    () => {
-                        console.log('to do');
-                    }
-                "
+                :number-of-vertices="Object.entries(nodeData).length"
+                :is-dijkstras="true"
+                @start="(startIndex) => startDijkstras(startIndex)"
+                @next-step="performDijkstraStep"
+                @reset="reset()"
                 @randomise-link-lengths="randomiseLinkLengths"
             />
         </div>

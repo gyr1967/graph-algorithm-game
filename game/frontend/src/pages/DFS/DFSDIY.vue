@@ -91,7 +91,7 @@ const hideHighlights = ref<boolean>(false);
                 />
             </div>
         </div>
-        <div class="text-center">
+        <div class="text-center mr-2">
             <SidePanel
                 :vertex-names="vertexNames"
                 :current-vertex-name="currentVertexName"

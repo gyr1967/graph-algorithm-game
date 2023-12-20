@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import Node from "./Node.vue";
 import Link from "./Link.vue";
-import SearchMediaControlsVue from "./SearchMediaControls.vue";
+import MediaControlsVue from "./MediaControls.vue";
 import AdjListVertex from "../graph/AdjListVertex.ts";
 import Vertex from "../graph/Vertex.ts";
 import Graph from "../graph/Graph.ts";
@@ -145,23 +145,27 @@ const setUpGraph = (n: number) => {
 let graph = setUpGraph(Object.entries(nodeData).length);
 const started = ref<boolean>(false);
 const bfsGenerator = ref<Generator<BFSYieldData, void, unknown> | null>(null);
-const startBFS = () => {
+const startBFS = (startIndex: number) => {
     setColoursDefault();
     graph = setUpGraph(Object.entries(nodeData).length);
-    const generator = graph.bfsGenerator(graph.getVertex(0));
+    const generator = graph.bfsGenerator(graph.getVertex(startIndex));
     bfsGenerator.value = generator;
     started.value = true;
+};
+
+const reset = () => {
+    bfsGenerator.value = null;
+    started.value = false;
+    emit("update:currentVertexName", "");
+    emit("update:currentQueue", []);
+    emit("update:pseudoStep", null);
 };
 
 const performBFSStep = () => {
     if (bfsGenerator.value) {
         const result = bfsGenerator.value.next();
         if (result.done) {
-            bfsGenerator.value = null;
-            started.value = false;
-            emit("update:currentVertexName", "");
-            emit("update:currentQueue", []);
-            emit("update:pseudoStep", null);
+            reset();
         } else {
             emit("update:pseudoStep", result.value.step);
             emit(
@@ -211,14 +215,17 @@ const performBFSStep = () => {
                 </g>
             </svg>
         </div>
+    </div>
+    <div class="border boder-white p-2 rounded-md shadow-md mt-2">
         <div class="bottom-0 left-0 w-full flex justify-center">
-            <SearchMediaControlsVue
+            <MediaControlsVue
                 v-if="stage === 'vis'"
                 :started="started"
                 bfs-or-dfs="bfs"
-                @start-b-f-s="startBFS()"
-                @next-step-b-f-s="performBFSStep()"
-                @prev-step-b-f-s="console.log('previous step init')"
+                :number-of-vertices="Object.entries(nodeData).length"
+                @start="(startIndex) => startBFS(startIndex)"
+                @next-step="performBFSStep()"
+                @reset="reset()"
             />
         </div>
     </div>
