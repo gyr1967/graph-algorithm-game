@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import Node from "./Node.vue";
 import Link from "./Link.vue";
-import SearchMediaControlsVue from "./SearchMediaControls.vue";
+import MediaControlsVue from "./MediaControls.vue";
 import AdjListVertex from "../graph/AdjListVertex.ts";
 import Vertex from "../graph/Vertex.ts";
 import Graph from "../graph/Graph.ts";
@@ -218,7 +218,7 @@ const performBFSStep = () => {
     </div>
     <div class="border boder-white p-2 rounded-md shadow-md mt-2">
         <div class="bottom-0 left-0 w-full flex justify-center">
-            <SearchMediaControlsVue
+            <MediaControlsVue
                 v-if="stage === 'vis'"
                 :started="started"
                 bfs-or-dfs="bfs"
