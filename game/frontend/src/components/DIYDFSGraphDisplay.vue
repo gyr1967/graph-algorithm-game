@@ -90,7 +90,7 @@ class GuidedDFSGraph extends Graph {
     }
 }
 const started = ref<boolean>(false);
-const sourceVertexName = ref<string>("");
+const sourceVertexName = ref<string>("A");
 const currentStep = ref<DFSGuidedSteps | null>("add-to-stack");
 emit("update:guidedStep", currentStep.value);
 const nodeData = nodeDatas[props.whichGraphData];

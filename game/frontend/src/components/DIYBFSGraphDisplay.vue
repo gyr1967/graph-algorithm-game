@@ -90,7 +90,7 @@ class GuidedBFSGraph extends Graph {
     }
 }
 const started = ref<boolean>(false);
-const sourceVertexName = ref<string>("");
+const sourceVertexName = ref<string>("A");
 const currentStep = ref<BFSGuidedSteps | null>("add-to-queue");
 emit("update:guidedStep", currentStep.value);
 const nodeData = nodeDatas[props.whichGraphData];
