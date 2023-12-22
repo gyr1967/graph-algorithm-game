@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import PageSelector from "../components/PageSelector.vue";
 import BFSVis from "./BFS/BFSVis.vue";
 import BFSDIY from "./BFS/BFSDIY.vue";
 import DFSVis from "./DFS/DFSVis.vue";
@@ -10,49 +9,63 @@ import DijkstraDIY from "./Dijkstra/DijkstraDIY.vue";
 import type { Pages } from "../utils/pages";
 
 const page = ref<Pages | null>(null);
+
+const pagesList: { key: Pages; label: string }[] = [
+    { key: "BFS_Vis", label: "BFS Visualisation" },
+    { key: "BFS_DIY", label: "BFS DIY" },
+    { key: "DFS_Vis", label: "DFS Visualisation" },
+    { key: "DFS_DIY", label: "DFS DIY" },
+    { key: "Dijkstra_Vis", label: "Dijkstra Visualisation" },
+    { key: "Dijkstra_DIY", label: "Dijkstra DIY" },
+];
 </script>
 
 <template>
     <div class="border-b">
-        <div class="mb-2 grid grid-cols-3 mx-5">
-            <div>
-                <PageSelector
-                    title="Breadth-first Search"
-                    algorithm="BFS"
-                    :left-button-selected="page === 'BFS_Vis'"
-                    :right-button-selected="page === 'BFS_DIY'"
-                    @vis="page = 'BFS_Vis'"
-                    @diy="page = 'BFS_DIY'"
-                />
+        <div v-if="page === null">
+            <div class="text-center text-2xl font-bold my-2">
+                Select an algorithm to begin!
             </div>
+        </div>
+        <div class="flex justify-center my-2">
             <div>
-                <PageSelector
-                    title="Depth-first Search"
-                    algorithm="DFS"
-                    :left-button-selected="page === 'DFS_Vis'"
-                    :right-button-selected="page === 'DFS_DIY'"
-                    @vis="page = 'DFS_Vis'"
-                    @diy="page = 'DFS_DIY'"
-                />
-            </div>
-            <div>
-                <PageSelector
-                    title="Dijkstra's Shortest Path"
-                    algorithm="Dijkstra"
-                    :left-button-selected="page === 'Dijkstra_Vis'"
-                    :right-button-selected="page === 'Dijkstra_DIY'"
-                    @vis="page = 'Dijkstra_Vis'"
-                    @diy="page = 'Dijkstra_DIY'"
-                />
+                <div class="bg-gray-500 text-black rounded-md flex">
+                    <button
+                        v-for="currentPage in pagesList"
+                        :key="currentPage.key"
+                        :class="
+                            page === currentPage.key
+                                ? 'bg-white'
+                                : 'bg-gray-500'
+                        "
+                        class="p-2 rounded-md"
+                        @click="page = currentPage.key"
+                    >
+                        {{ currentPage.label }}
+                    </button>
+                </div>
             </div>
         </div>
     </div>
     <div class="mt-4 h-screen">
-        <template v-if="page === null">
-            <div class="text-center text-2xl font-bold">
-                Select an algorithm to begin!
-            </div>
-        </template>
+        <div
+            v-if="page === 'BFS_Vis' || page === 'BFS_DIY'"
+            class="text-center text-2xl font-bold my-2"
+        >
+            Breadth First Search
+        </div>
+        <div
+            v-else-if="page === 'DFS_Vis' || page === 'DFS_DIY'"
+            class="text-center text-2xl font-bold my-2"
+        >
+            Depth First Search
+        </div>
+        <div
+            v-else-if="page === 'Dijkstra_Vis' || page === 'Dijkstra_DIY'"
+            class="text-center text-2xl font-bold my-2"
+        >
+            Dijkstra's Algorithm
+        </div>
         <template v-if="page === 'BFS_Vis'">
             <BFSVis />
         </template>
