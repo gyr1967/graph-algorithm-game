@@ -24,7 +24,6 @@ const pseudoStep = ref<DFSStep | null>(null);
                 <VisDFSGraphDisplay
                     :which-graph-data="1"
                     :scaling-factor="graphSize"
-                    stage="vis"
                     @update:current-vertex-name="
                         (newValue) => {
                             currentVertexName = newValue;

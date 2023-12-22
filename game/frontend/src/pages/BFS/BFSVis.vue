@@ -24,7 +24,6 @@ const pseudoStep = ref<BFSStep | null>(null);
                 <VisBFSGraphDisplay
                     :which-graph-data="1"
                     :scaling-factor="graphSize"
-                    stage="vis"
                     @update:current-vertex-name="
                         (newValue) => {
                             currentVertexName = newValue;
