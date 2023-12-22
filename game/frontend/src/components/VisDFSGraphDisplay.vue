@@ -12,7 +12,6 @@ import type { DFSYieldData } from "../types/DFS.ts";
 const props = defineProps<{
     whichGraphData: number;
     scalingFactor: number;
-    stage: "vis" | "guided" | "diy";
 }>();
 const emit = defineEmits([
     "update:currentVertexName",
@@ -219,7 +218,6 @@ const performDFSStep = () => {
     <div class="border boder-white p-2 rounded-md shadow-md mt-2">
         <div class="bottom-0 left-0 w-full flex justify-center">
             <MediaControls
-                v-if="stage === 'vis'"
                 :started="started"
                 bfs-or-dfs="dfs"
                 :number-of-vertices="Object.entries(nodeData).length"
