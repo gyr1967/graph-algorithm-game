@@ -14,7 +14,7 @@ export type BFSYieldData = {
     currentVertex: Vertex | null;
 };
 
-export type BFSGuidedSteps =
+export type BFSDIYSteps =
     | "visit"
     | "add-to-queue"
     | "remove-and-set-to-current"

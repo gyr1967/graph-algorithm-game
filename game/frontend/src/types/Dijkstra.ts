@@ -13,7 +13,7 @@ export type DijkstraYieldData = {
     verticesToCheck: DijkstraVertex[];
 };
 
-export type DijkstraGuidedSteps =
+export type DijkstraDIYSteps =
     | "visit"
     | "add-to-stack"
     | "remove-and-set-to-current"

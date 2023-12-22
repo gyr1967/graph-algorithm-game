@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import { computed } from "vue";
+import { computed, ref } from "vue";
 import { DijkstraStep } from "../../types/Dijkstra.ts";
+import { EyeIcon, EyeSlashIcon } from "@heroicons/vue/20/solid";
 const props = defineProps<{
     text: DijkstraStep | null;
     currentVertexName: string;
@@ -25,10 +26,17 @@ const smallestVertexDistanceInQueue = computed(() => {
     }
     return null;
 });
+
+const isBlurred = ref<boolean>(false);
+const toggleBlur = () => {
+    isBlurred.value = !isBlurred.value;
+};
 </script>
 <template>
-    <div class="border border-white p-4 rounded-md shadow-md">
-        <div class="flex justify-between">
+    <div
+        class="border border-white p-4 rounded-md shadow-md flex justify-between"
+    >
+        <div :class="isBlurred ? 'blur-sm' : ''">
             <div v-if="!started">
                 <span>Click start!</span>
             </div>
@@ -49,6 +57,15 @@ const smallestVertexDistanceInQueue = computed(() => {
                 >
                 <span v-else-if="text === 'done'">Done!</span>
             </div>
+        </div>
+        <div>
+            <button
+                class="bg-white text-black rounded-sm p-1 mx-1 w-7 h-8"
+                @click="toggleBlur()"
+            >
+                <EyeSlashIcon v-if="isBlurred" class="w-5 h-5" />
+                <EyeIcon v-else class="w-5 h-5" />
+            </button>
         </div>
     </div>
 </template>
