@@ -2,28 +2,23 @@
 import SearchPseudo from "../../components/SearchPseudo.vue";
 import SidePanel from "../../components/SidePanel.vue";
 import HintBox from "../../components/HintBox.vue";
-import DisplayOptions from "../../components/DisplayOptions.vue";
 import { ref } from "vue";
 import Vertex from "../../graph/Vertex";
-import { DFSGuidedSteps } from "../../types/DFS";
+import { DFSDIYSteps } from "../../types/DFS";
 import DIYDFSGraphDisplay from "../../components/DIYDFSGraphDisplay.vue";
 const graphSize = ref<number>(1);
 const currentVertexName = ref<string>("");
 const currentStack = ref<string[]>([]);
-const guidedStep = ref<DFSGuidedSteps | null>(null);
+const guidedStep = ref<DFSDIYSteps | null>(null);
 const vertexNames = ref<string[]>([]);
 const started = ref<boolean>(false);
 const visited = ref<Vertex[]>([]);
-const hidePseudo = ref<boolean>(false);
-const hideHint = ref<boolean>(false);
-const hideHighlights = ref<boolean>(false);
 </script>
 
 <template>
     <div class="grid grid-cols-3">
         <div class="ml-2">
             <SearchPseudo
-                :class="hidePseudo ? 'blur-sm' : ''"
                 class="cursor-pointer"
                 :current-step="
                     visited.length === 0 && guidedStep === 'add-to-stack'
@@ -32,11 +27,10 @@ const hideHighlights = ref<boolean>(false);
                 "
                 :no-highlighting="false"
                 bfs-or-dfs="dfs"
-                :hide-highlights="hideHighlights"
+                :is-diy="true"
             />
             <HintBox
                 class="mt-2 cursor-pointer"
-                :class="hideHint ? 'blur-sm' : ''"
                 :text="guidedStep"
                 :current-vertex-name="currentVertexName"
                 :started="started"
@@ -45,19 +39,12 @@ const hideHighlights = ref<boolean>(false);
                 guided-or-diy="diy"
                 bfs-or-dfs="dfs"
             />
-            <DisplayOptions
-                class="mt-2"
-                @hide-hints="hideHint = !hideHint"
-                @hide-pseudo="hidePseudo = !hidePseudo"
-                @hide-highlights="hideHighlights = !hideHighlights"
-            />
         </div>
         <div class="flex justify-center items-center">
             <div>
                 <DIYDFSGraphDisplay
                     :which-graph-data="1"
                     :scaling-factor="graphSize"
-                    :hide-highlights="hideHighlights"
                     @update:vertex-names="
                         (newValue) => {
                             vertexNames = newValue;

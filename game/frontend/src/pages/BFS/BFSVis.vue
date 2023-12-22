@@ -16,7 +16,7 @@ const pseudoStep = ref<BFSStep | null>(null);
             <SearchPseudo
                 :current-step="pseudoStep"
                 bfs-or-dfs="bfs"
-                :hide-highlights="false"
+                :is-diy="false"
             />
         </div>
         <div class="flex justify-center items-center">

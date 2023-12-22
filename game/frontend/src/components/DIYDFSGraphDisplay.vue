@@ -8,7 +8,7 @@ import StartVertexChoice from "./StartVertexChoice.vue";
 import { linkDatas, nodeDatas } from "../utils/graph-data";
 import { letterToNum } from "../utils/num-to-letter";
 import { ref } from "vue";
-import type { DFSGuidedSteps } from "../types/DFS";
+import type { DFSDIYSteps } from "../types/DFS";
 import AdjListVertex from "../graph/AdjListVertex";
 const props = defineProps<{
     whichGraphData: number;
@@ -23,7 +23,7 @@ const emit = defineEmits([
     "update:visited",
 ]);
 
-class GuidedDFSGraph extends Graph {
+class DIYDFSGraph extends Graph {
     currentVertex = ref<Vertex | null>(null);
     constructor(n: number) {
         super(n);
@@ -91,7 +91,7 @@ class GuidedDFSGraph extends Graph {
 }
 const started = ref<boolean>(false);
 const sourceVertexName = ref<string>("A");
-const currentStep = ref<DFSGuidedSteps | null>("add-to-stack");
+const currentStep = ref<DFSDIYSteps | null>("add-to-stack");
 emit("update:guidedStep", currentStep.value);
 const nodeData = nodeDatas[props.whichGraphData];
 emit("update:vertexNames", Object.keys(nodeData));
@@ -106,7 +106,7 @@ const setColoursDefault = () => {
 };
 setColoursDefault();
 const setUpGraph = (n: number) => {
-    const graph = new GuidedDFSGraph(n);
+    const graph = new DIYDFSGraph(n);
     Object.keys(linkData).forEach((key) => {
         const link = linkData[key];
         const v1id = letterToNum[link.v1] - 1;
@@ -128,7 +128,7 @@ const handleVertexClicked = (nodeId: string) => {
     nodeMenuOpen.value = nodeId;
 };
 
-const validateStep = (step: DFSGuidedSteps, nodeId: string) => {
+const validateStep = (step: DFSDIYSteps, nodeId: string) => {
     if (currentStep.value === step) {
         if (step === "visit") {
             if (validateVisit(nodeId)) {
@@ -197,7 +197,7 @@ const checkIndexInAdjList = (
     return result;
 };
 
-const setStep = (step: DFSGuidedSteps) => {
+const setStep = (step: DFSDIYSteps) => {
     currentStep.value = step;
     emit("update:guidedStep", step);
 };
