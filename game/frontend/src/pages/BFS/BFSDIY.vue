@@ -29,7 +29,7 @@ const visited = ref<Vertex[]>([]);
                 :is-diy="true"
             />
             <HintBox
-                class="mt-2 cursor-pointer"
+                class="mt-2"
                 :text="diyStep"
                 :current-vertex-name="currentVertexName"
                 :started="started"

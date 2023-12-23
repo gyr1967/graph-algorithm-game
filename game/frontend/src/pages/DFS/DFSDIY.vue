@@ -19,7 +19,6 @@ const visited = ref<Vertex[]>([]);
     <div class="grid grid-cols-3">
         <div class="ml-2">
             <SearchPseudo
-                class="cursor-pointer"
                 :current-step="
                     visited.length === 0 && diyStep === 'add-to-stack'
                         ? 'addFirstToStack'
@@ -30,7 +29,7 @@ const visited = ref<Vertex[]>([]);
                 :is-diy="true"
             />
             <HintBox
-                class="mt-2 cursor-pointer"
+                class="mt-2"
                 :text="diyStep"
                 :current-vertex-name="currentVertexName"
                 :started="started"
