@@ -64,7 +64,7 @@ const pagesList: { key: Pages; label: string }[] = [
             v-else-if="page === 'Dijkstra_Vis' || page === 'Dijkstra_DIY'"
             class="text-center text-2xl font-bold my-2"
         >
-            Dijkstra's Algorithm
+            Dijkstra's Shortest Path Algorithm
         </div>
         <template v-if="page === 'BFS_Vis'">
             <BFSVis />
