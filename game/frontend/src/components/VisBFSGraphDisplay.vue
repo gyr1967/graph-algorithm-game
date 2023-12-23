@@ -78,20 +78,6 @@ class VisBFSGraph extends Graph {
                 step: "markVAsVisited",
                 currentVertex,
             };
-            // uncomment this to demonstrate how it looks - it might be a little too confusing - and i don't think it's something
-            // i'd include in the manual process, and I want the visualisation to be same as the guided and diy ones so I'll leave it out for now
-            // const allAdjacents = currentVertex.getAdjList();
-            // allAdjacents.map((alv) => {
-            //     // change the colour of all of v's neighbours to yellow
-            //     this.changeVertexColour(numToLetter[alv.getVertexIndex() + 1], "#f1c40f");
-            // })
-            // yield { visited: this.visited, queue, step: "changeVNeighboursToYellow", currentVertex };
-            // // change all the visited ones back to their old colour
-            // allAdjacents.map((alv) => {
-            //     if (this.visited.has(alv.getVertexIndex())) {
-            //         this.changeVertexColour(numToLetter[alv.getVertexIndex() + 1], "#e74c3c");
-            //     }
-            // })
             const unvisitedAdjacents = currentVertex
                 .getAdjList()
                 .filter((alv: AdjListVertex) => {

@@ -35,7 +35,6 @@ const visited = ref<Vertex[]>([]);
                 :started="started"
                 :visited="visited"
                 :queue="currentQueue"
-                guided-or-diy="diy"
                 bfs-or-dfs="bfs"
             />
         </div>
@@ -59,7 +58,7 @@ const visited = ref<Vertex[]>([]);
                             currentQueue = newValue;
                         }
                     "
-                    @update:guided-step="
+                    @update:diy-step="
                         (newValue) => {
                             diyStep = newValue;
                         }

@@ -7,7 +7,6 @@ const props = defineProps<{
     currentVertexName: string;
     started: boolean;
     queue?: string[];
-    guidedOrDiy: "guided" | "diy";
     adjacentVertexName: string;
     distances?: Record<string, number>;
 }>();
