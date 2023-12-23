@@ -91,7 +91,7 @@ class DIYBFSGraph extends Graph {
 }
 const started = ref<boolean>(false);
 const sourceVertexName = ref<string>("A");
-const currentStep = ref<BFSDIYSteps | null>("add-to-queue");
+const currentStep = ref<BFSDIYSteps | null>(null);
 emit("update:diyStep", currentStep.value);
 const nodeData = nodeDatas[props.whichGraphData];
 emit("update:vertexNames", Object.keys(nodeData));
@@ -205,6 +205,8 @@ const setStep = (step: BFSDIYSteps) => {
 const startTheAlgorithm = () => {
     started.value = true;
     emit("update:started", true);
+    setStep("add-to-queue");
+    emit("update:diyStep", "add-to-queue");
     graph.currentVertex.value = graph.getVertex(
         letterToNum[sourceVertexName.value] - 1,
     );

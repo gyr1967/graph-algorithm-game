@@ -91,7 +91,7 @@ class DIYDFSGraph extends Graph {
 }
 const started = ref<boolean>(false);
 const sourceVertexName = ref<string>("A");
-const currentStep = ref<DFSDIYSteps | null>("add-to-stack");
+const currentStep = ref<DFSDIYSteps | null>(null);
 emit("update:diyStep", currentStep.value);
 const nodeData = nodeDatas[props.whichGraphData];
 emit("update:vertexNames", Object.keys(nodeData));
@@ -205,6 +205,8 @@ const setStep = (step: DFSDIYSteps) => {
 const startTheAlgorithm = () => {
     started.value = true;
     emit("update:started", true);
+    setStep("add-to-stack");
+    emit("update:diyStep", "add-to-stack");
     graph.currentVertex.value = graph.getVertex(
         letterToNum[sourceVertexName.value] - 1,
     );
