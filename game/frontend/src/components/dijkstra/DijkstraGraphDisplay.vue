@@ -148,7 +148,7 @@ const setStep = (step: DijkstraStep) => {
     currentStep.value = step;
     emit("update:pseudoStep", step);
 };
-const sourceVertexName = ref<string>("");
+const sourceVertexName = ref<string>("A");
 const adjToVisit = ref<DijkstraVertex[]>([]);
 const nodeData = nodeDatas[props.whichGraphData];
 const distances = ref<Record<string, number>>({});
