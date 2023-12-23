@@ -17,7 +17,7 @@ const props = defineProps<{
 const emit = defineEmits([
     "update:vertexNames",
     "update:currentStack",
-    "update:guidedStep",
+    "update:diyStep",
     "update:currentVertexName",
     "update:started",
     "update:visited",
@@ -91,8 +91,8 @@ class DIYDFSGraph extends Graph {
 }
 const started = ref<boolean>(false);
 const sourceVertexName = ref<string>("A");
-const currentStep = ref<DFSDIYSteps | null>("add-to-stack");
-emit("update:guidedStep", currentStep.value);
+const currentStep = ref<DFSDIYSteps | null>(null);
+emit("update:diyStep", currentStep.value);
 const nodeData = nodeDatas[props.whichGraphData];
 emit("update:vertexNames", Object.keys(nodeData));
 const nodeMenuOpen = ref<string>("");
@@ -199,12 +199,14 @@ const checkIndexInAdjList = (
 
 const setStep = (step: DFSDIYSteps) => {
     currentStep.value = step;
-    emit("update:guidedStep", step);
+    emit("update:diyStep", step);
 };
 
 const startTheAlgorithm = () => {
     started.value = true;
     emit("update:started", true);
+    setStep("add-to-stack");
+    emit("update:diyStep", "add-to-stack");
     graph.currentVertex.value = graph.getVertex(
         letterToNum[sourceVertexName.value] - 1,
     );

@@ -223,3 +223,19 @@
 ### 19 Dec 2023
 
 * *7 hours* | Reshuffle to remove the guided sections, add options to blur out the pseudocode, hints and highlighting. 
+
+### 20 Dec 2023
+
+* *7 hours* | UI changes, reset button, playtesting with family, choice of vertex
+
+### 21 Dec 2023
+
+* *2 hours* | Bug fixes and creating issues
+
+### 22 Dec 2023
+
+* *5 hours* | Redo UI of alg navigation, change UI of hiding help
+
+### 23 Dec 2023 (Saturday)
+
+

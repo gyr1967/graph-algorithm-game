@@ -17,7 +17,7 @@ const props = defineProps<{
 const emit = defineEmits([
     "update:vertexNames",
     "update:currentQueue",
-    "update:guidedStep",
+    "update:diyStep",
     "update:currentVertexName",
     "update:started",
     "update:visited",
@@ -91,8 +91,8 @@ class DIYBFSGraph extends Graph {
 }
 const started = ref<boolean>(false);
 const sourceVertexName = ref<string>("A");
-const currentStep = ref<BFSDIYSteps | null>("add-to-queue");
-emit("update:guidedStep", currentStep.value);
+const currentStep = ref<BFSDIYSteps | null>(null);
+emit("update:diyStep", currentStep.value);
 const nodeData = nodeDatas[props.whichGraphData];
 emit("update:vertexNames", Object.keys(nodeData));
 const nodeMenuOpen = ref<string>("");
@@ -199,12 +199,14 @@ const checkIndexInAdjList = (
 
 const setStep = (step: BFSDIYSteps) => {
     currentStep.value = step;
-    emit("update:guidedStep", step);
+    emit("update:diyStep", step);
 };
 
 const startTheAlgorithm = () => {
     started.value = true;
     emit("update:started", true);
+    setStep("add-to-queue");
+    emit("update:diyStep", "add-to-queue");
     graph.currentVertex.value = graph.getVertex(
         letterToNum[sourceVertexName.value] - 1,
     );

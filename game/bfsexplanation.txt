@@ -1,0 +1,9 @@
+Breadth-First Search (BFS) is a graph traversal algorithm. This means that it aims to find or 'visit' all the vertices in an unexplored graph.
+It does this by making use of a 'queue'. A queue is a data structure that works exactly the same as the queues we humans make when waiting in line;
+The first person in is the first person out. 
+BFS adds vertices to the queue, then removes the first in the queue, 'visits' it, then adds all of that vertex's unvisited neighbours 
+to the queue, until there are no more vertices to visit. 
+The queue is represented on the right hand side of the screen, as well as the current vertex.
+On the left is the pseudocode, and in the middle is the graph itself, with the controls to choose which vertex
+to start on, and step through the algorithm.
+The reason it's called Breadth-First is because the algorithm explores wide instead of tunneling deep down one avenue like Depth-First Search does. 

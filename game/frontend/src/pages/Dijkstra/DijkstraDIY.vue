@@ -27,7 +27,6 @@ const sourceName = ref<string>("");
                 :current-vertex-name="currentVertexName"
                 :started="started"
                 :queue="verticesToCheck"
-                guided-or-diy="guided"
                 :adjacent-vertex-name="adjacentVertexName"
                 :distances="distances"
             />
