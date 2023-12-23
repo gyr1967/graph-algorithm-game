@@ -1,0 +1,11 @@
+Depth-First Search (DFS) is another graph traversal algorithm. This means that it aims to find or 'visit' all the vertices in an unexplored graph.
+It does this by making use of a 'stack'. A stack is a data structure that works exactly the same as a stack of dinner plates; 
+The first plate on is the last plate off.
+DFS adds vertices to the stack, then removes the first in the stack, 'visits' it, then adds all of that vertex's unvisited neighbours 
+to the stack, until there are no more vertices to visit. 
+The stack is represented on the right hand side of the screen, as well as the current vertex.
+On the left is the pseudocode, and in the middle is the graph itself, with the controls to choose which vertex
+to start on, and step through the algorithm.
+The reason it's called Depth-First is because the algorithm tunnels deep down one avenue before exploring wider.
+You may notice the algorithm is nearly identical to Breadth-First Search, with the only difference being the use of a stack vs a queue, which
+affects the order vertices are visited. 
