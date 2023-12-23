@@ -24,20 +24,22 @@ const sortedVerticesToCheck = computed(() =>
             </div>
         </div>
         <div>
-            <span class="font-bold mr-2">Vertices To Check</span>
+            <span class="font-bold mr-2">Priority Queue</span>
             <div>
                 <div
-                    v-for="(item, index) in [...sortedVerticesToCheck]"
+                    v-for="(item, index) in [
+                        ...sortedVerticesToCheck,
+                    ].reverse()"
                     :key="index"
                     class="border border-gray-300 rounded-sm px-2 py-1 mr-1"
                 >
                     <span>{{ item }}</span>
-                    <span class="text-sm ml-2"
-                        >d:
+                    <span class="text-sm ml-2">
+                        d:
                         {{
                             distances[item] === Infinity ? "∞" : distances[item]
-                        }}</span
-                    >
+                        }}
+                    </span>
                 </div>
             </div>
         </div>

@@ -55,7 +55,7 @@ const toggleBlur = () => {
                 >
                     Set source vertex distance to zero
                 </li>
-                <li>While the queue is not empty:</li>
+                <li>While the priority queue is not empty:</li>
                 <ul class="ml-8 list-disc">
                     <li
                         :class="
@@ -66,12 +66,12 @@ const toggleBlur = () => {
                                 : ''
                         "
                     >
-                        Remove the closest vertex to the source in the queue,
-                        and make it the current vertex
+                        Remove the closest vertex to the source in the priority
+                        queue, and make it the current vertex
                     </li>
                     <li>
                         For each vertex adjacent to the current vertex that is
-                        in the queue:
+                        in the priority queue:
                     </li>
                     <ul class="ml-8 list-disc">
                         <li>
