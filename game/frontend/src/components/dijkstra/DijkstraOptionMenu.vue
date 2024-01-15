@@ -2,6 +2,7 @@
 import { ref } from "vue";
 
 const props = defineProps<{
+    wrongChoice: boolean;
     text: string;
     disabled: boolean;
     nodeId: string;
@@ -32,7 +33,10 @@ const submitDistance = () => {
         <div class="flex justify-center">
             <button
                 :disabled="disabled"
-                class="rounded-sm text-black p-1 hover:bg-gray-400 bg-white disabled:opacity-50 disabled:cursor-not-allowed"
+                :class="
+                    wrongChoice ? 'bg-red-500' : 'bg-white hover:bg-gray-400'
+                "
+                class="rounded-sm text-black p-1 disabled:opacity-50 disabled:cursor-not-allowed"
                 @click="$emit('remove-and-set-to-current', nodeId)"
             >
                 Remove {{ nodeId }} from Queue and set to current vertex
@@ -53,7 +57,12 @@ const submitDistance = () => {
                 />
                 <button
                     :disabled="newDistance === null || disabled"
-                    class="rounded-sm text-black p-1 hover:bg-gray-400 bg-white disabled:opacity-50 disabled:cursor-not-allowed mx-1"
+                    :class="
+                        wrongChoice
+                            ? 'bg-red-500'
+                            : 'bg-white hover:bg-gray-400'
+                    "
+                    class="rounded-sm text-black p-1 disabled:opacity-50 disabled:cursor-not-allowed mx-1"
                     @click="submitDistance"
                 >
                     Submit
@@ -63,7 +72,10 @@ const submitDistance = () => {
         <div class="flex justify-center">
             <button
                 :disabled="disabled"
-                class="rounded-sm text-black p-1 hover:bg-gray-400 bg-white disabled:opacity-50 disabled:cursor-not-allowed"
+                :class="
+                    wrongChoice ? 'bg-red-500' : 'bg-white hover:bg-gray-400'
+                "
+                class="rounded-sm text-black p-1 disabled:opacity-50 disabled:cursor-not-allowed"
                 @click="$emit('set-adj-prev-to-current', nodeId)"
             >
                 Set {{ nodeId }}'s previous vertex to
