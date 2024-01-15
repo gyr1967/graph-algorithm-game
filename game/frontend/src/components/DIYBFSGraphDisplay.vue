@@ -89,6 +89,7 @@ class DIYBFSGraph extends Graph {
         setStep("visit");
     }
 }
+const wrongChoice = ref<boolean>(false);
 const started = ref<boolean>(false);
 const sourceVertexName = ref<string>("A");
 const currentStep = ref<BFSDIYSteps | null>(null);
@@ -144,6 +145,10 @@ const validateStep = (step: BFSDIYSteps, nodeId: string) => {
             }
         }
     }
+    wrongChoice.value = true;
+    setTimeout(() => {
+        wrongChoice.value = false;
+    }, 500);
     return false;
 };
 
@@ -274,6 +279,7 @@ const startTheAlgorithm = () => {
         </div>
         <VertexOptionMenu
             v-if="started"
+            :wrong-choice="wrongChoice"
             :text="nodeMenuOpen !== '' ? nodeMenuOpen : 'Click a vertex'"
             :disabled="nodeMenuOpen === ''"
             :node-id="nodeMenuOpen"
