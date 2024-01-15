@@ -16,7 +16,7 @@ const pseudoStep = ref<DFSStep | null>(null);
             <SearchPseudo
                 :current-step="pseudoStep"
                 bfs-or-dfs="dfs"
-                :hide-highlights="false"
+                :is-diy="false"
             />
         </div>
         <div class="flex justify-center items-center">
@@ -24,7 +24,6 @@ const pseudoStep = ref<DFSStep | null>(null);
                 <VisDFSGraphDisplay
                     :which-graph-data="1"
                     :scaling-factor="graphSize"
-                    stage="vis"
                     @update:current-vertex-name="
                         (newValue) => {
                             currentVertexName = newValue;

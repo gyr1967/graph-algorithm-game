@@ -14,7 +14,7 @@ export type DFSYieldData = {
     currentVertex: Vertex | null;
 };
 
-export type DFSGuidedSteps =
+export type DFSDIYSteps =
     | "visit"
     | "add-to-stack"
     | "remove-and-set-to-current"

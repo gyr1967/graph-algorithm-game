@@ -148,7 +148,8 @@ const setStep = (step: DijkstraStep) => {
     currentStep.value = step;
     emit("update:pseudoStep", step);
 };
-const sourceVertexName = ref<string>("");
+const wrongChoice = ref<boolean>(false);
+const sourceVertexName = ref<string>("A");
 const adjToVisit = ref<DijkstraVertex[]>([]);
 const nodeData = nodeDatas[props.whichGraphData];
 const distances = ref<Record<string, number>>({});
@@ -222,6 +223,10 @@ const validateStep = (
     if (currentStep.value === step) {
         if (step === "update-distance") {
             if (distance === Infinity) {
+                wrongChoice.value = true;
+                setTimeout(() => {
+                    wrongChoice.value = false;
+                }, 500);
                 return false;
             }
             if (validateUpdateDistance(nodeId, distance)) {
@@ -241,7 +246,10 @@ const validateStep = (
             }
         }
     }
-    console.log("wrong step");
+    wrongChoice.value = true;
+    setTimeout(() => {
+        wrongChoice.value = false;
+    }, 500);
     return false;
 };
 const validateUpdateDistance = (nodeId: string, distance: number) => {
@@ -367,6 +375,7 @@ const findAdjacency = (nodeId: string): AdjListVertex | null => {
         </div>
         <DijkstraOptionMenu
             v-if="started"
+            :wrong-choice="wrongChoice"
             :text="nodeMenuOpen !== '' ? nodeMenuOpen : 'Click a vertex'"
             :disabled="nodeMenuOpen === '' || !started"
             :node-id="nodeMenuOpen"

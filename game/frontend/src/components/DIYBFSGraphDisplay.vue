@@ -8,7 +8,7 @@ import StartVertexChoice from "./StartVertexChoice.vue";
 import { linkDatas, nodeDatas } from "../utils/graph-data";
 import { letterToNum } from "../utils/num-to-letter";
 import { ref } from "vue";
-import type { BFSGuidedSteps } from "../types/BFS";
+import type { BFSDIYSteps } from "../types/BFS";
 import AdjListVertex from "../graph/AdjListVertex";
 const props = defineProps<{
     whichGraphData: number;
@@ -17,13 +17,13 @@ const props = defineProps<{
 const emit = defineEmits([
     "update:vertexNames",
     "update:currentQueue",
-    "update:guidedStep",
+    "update:diyStep",
     "update:currentVertexName",
     "update:started",
     "update:visited",
 ]);
 
-class GuidedBFSGraph extends Graph {
+class DIYBFSGraph extends Graph {
     currentVertex = ref<Vertex | null>(null);
     constructor(n: number) {
         super(n);
@@ -89,10 +89,11 @@ class GuidedBFSGraph extends Graph {
         setStep("visit");
     }
 }
+const wrongChoice = ref<boolean>(false);
 const started = ref<boolean>(false);
-const sourceVertexName = ref<string>("");
-const currentStep = ref<BFSGuidedSteps | null>("add-to-queue");
-emit("update:guidedStep", currentStep.value);
+const sourceVertexName = ref<string>("A");
+const currentStep = ref<BFSDIYSteps | null>(null);
+emit("update:diyStep", currentStep.value);
 const nodeData = nodeDatas[props.whichGraphData];
 emit("update:vertexNames", Object.keys(nodeData));
 const nodeMenuOpen = ref<string>("");
@@ -106,7 +107,7 @@ const setColoursDefault = () => {
 };
 setColoursDefault();
 const setUpGraph = (n: number) => {
-    const graph = new GuidedBFSGraph(n);
+    const graph = new DIYBFSGraph(n);
     Object.keys(linkData).forEach((key) => {
         const link = linkData[key];
         const v1id = letterToNum[link.v1] - 1;
@@ -128,7 +129,7 @@ const handleVertexClicked = (nodeId: string) => {
     nodeMenuOpen.value = nodeId;
 };
 
-const validateStep = (step: BFSGuidedSteps, nodeId: string) => {
+const validateStep = (step: BFSDIYSteps, nodeId: string) => {
     if (currentStep.value === step) {
         if (step === "visit") {
             if (validateVisit(nodeId)) {
@@ -144,6 +145,10 @@ const validateStep = (step: BFSGuidedSteps, nodeId: string) => {
             }
         }
     }
+    wrongChoice.value = true;
+    setTimeout(() => {
+        wrongChoice.value = false;
+    }, 500);
     return false;
 };
 
@@ -166,6 +171,12 @@ const validateAddToQueue = (nodeId: string) => {
     if (
         !checkIndexInAdjList(nodeId, graph.currentVertex.value?.getAdjList()) &&
         graph.visited.size > 0
+    ) {
+        return false;
+    }
+    if (
+        graph.visited.size === 0 &&
+        nodeId !== graph.currentVertex.value?.getTextName()
     ) {
         return false;
     }
@@ -197,14 +208,16 @@ const checkIndexInAdjList = (
     return result;
 };
 
-const setStep = (step: BFSGuidedSteps) => {
+const setStep = (step: BFSDIYSteps) => {
     currentStep.value = step;
-    emit("update:guidedStep", step);
+    emit("update:diyStep", step);
 };
 
 const startTheAlgorithm = () => {
     started.value = true;
     emit("update:started", true);
+    setStep("add-to-queue");
+    emit("update:diyStep", "add-to-queue");
     graph.currentVertex.value = graph.getVertex(
         letterToNum[sourceVertexName.value] - 1,
     );
@@ -272,6 +285,7 @@ const startTheAlgorithm = () => {
         </div>
         <VertexOptionMenu
             v-if="started"
+            :wrong-choice="wrongChoice"
             :text="nodeMenuOpen !== '' ? nodeMenuOpen : 'Click a vertex'"
             :disabled="nodeMenuOpen === ''"
             :node-id="nodeMenuOpen"

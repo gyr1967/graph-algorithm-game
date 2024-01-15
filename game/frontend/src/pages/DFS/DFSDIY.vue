@@ -2,54 +2,40 @@
 import SearchPseudo from "../../components/SearchPseudo.vue";
 import SidePanel from "../../components/SidePanel.vue";
 import HintBox from "../../components/HintBox.vue";
-import DisplayOptions from "../../components/DisplayOptions.vue";
 import { ref } from "vue";
 import Vertex from "../../graph/Vertex";
-import { DFSGuidedSteps } from "../../types/DFS";
+import { DFSDIYSteps } from "../../types/DFS";
 import DIYDFSGraphDisplay from "../../components/DIYDFSGraphDisplay.vue";
 const graphSize = ref<number>(1);
 const currentVertexName = ref<string>("");
 const currentStack = ref<string[]>([]);
-const guidedStep = ref<DFSGuidedSteps | null>(null);
+const diyStep = ref<DFSDIYSteps | null>(null);
 const vertexNames = ref<string[]>([]);
 const started = ref<boolean>(false);
 const visited = ref<Vertex[]>([]);
-const hidePseudo = ref<boolean>(false);
-const hideHint = ref<boolean>(false);
-const hideHighlights = ref<boolean>(false);
 </script>
 
 <template>
     <div class="grid grid-cols-3">
         <div class="ml-2">
             <SearchPseudo
-                :class="hidePseudo ? 'blur-sm' : ''"
-                class="cursor-pointer"
                 :current-step="
-                    visited.length === 0 && guidedStep === 'add-to-stack'
+                    visited.length === 0 && diyStep === 'add-to-stack'
                         ? 'addFirstToStack'
-                        : guidedStep
+                        : diyStep
                 "
                 :no-highlighting="false"
                 bfs-or-dfs="dfs"
-                :hide-highlights="hideHighlights"
+                :is-diy="true"
             />
             <HintBox
-                class="mt-2 cursor-pointer"
-                :class="hideHint ? 'blur-sm' : ''"
-                :text="guidedStep"
+                class="mt-2"
+                :text="diyStep"
                 :current-vertex-name="currentVertexName"
                 :started="started"
                 :visited="visited"
                 :stack="currentStack"
-                guided-or-diy="diy"
                 bfs-or-dfs="dfs"
-            />
-            <DisplayOptions
-                class="mt-2"
-                @hide-hints="hideHint = !hideHint"
-                @hide-pseudo="hidePseudo = !hidePseudo"
-                @hide-highlights="hideHighlights = !hideHighlights"
             />
         </div>
         <div class="flex justify-center items-center">
@@ -57,7 +43,6 @@ const hideHighlights = ref<boolean>(false);
                 <DIYDFSGraphDisplay
                     :which-graph-data="1"
                     :scaling-factor="graphSize"
-                    :hide-highlights="hideHighlights"
                     @update:vertex-names="
                         (newValue) => {
                             vertexNames = newValue;
@@ -73,9 +58,9 @@ const hideHighlights = ref<boolean>(false);
                             currentStack = newValue;
                         }
                     "
-                    @update:guided-step="
+                    @update:diy-step="
                         (newValue) => {
-                            guidedStep = newValue;
+                            diyStep = newValue;
                         }
                     "
                     @update:started="

@@ -1,5 +1,6 @@
 <script setup lang="ts">
 const props = defineProps<{
+    wrongChoice: boolean;
     text: string;
     disabled: boolean;
     nodeId: string;
@@ -21,7 +22,10 @@ const stackOrQueue = props.bfsOrDfs === "bfs" ? "queue" : "stack";
         <div class="flex justify-center">
             <button
                 :disabled="disabled"
-                class="rounded-sm text-black p-1 hover:bg-gray-400 bg-white disabled:opacity-50 disabled:cursor-not-allowed"
+                :class="
+                    wrongChoice ? 'bg-red-500' : 'bg-white hover:bg-gray-400'
+                "
+                class="rounded-sm text-black p-1 disabled:opacity-50 disabled:cursor-not-allowed"
                 @click="
                     bfsOrDfs === 'bfs'
                         ? $emit('add-to-queue', nodeId)
@@ -34,7 +38,10 @@ const stackOrQueue = props.bfsOrDfs === "bfs" ? "queue" : "stack";
         <div class="flex justify-center">
             <button
                 :disabled="disabled"
-                class="rounded-sm text-black p-1 hover:bg-gray-400 bg-white disabled:opacity-50 disabled:cursor-not-allowed"
+                :class="
+                    wrongChoice ? 'bg-red-500' : 'bg-white hover:bg-gray-400'
+                "
+                class="rounded-sm text-black p-1 disabled:opacity-50 disabled:cursor-not-allowed"
                 @click="$emit('visit', nodeId)"
             >
                 Mark {{ nodeId }} as visited
@@ -43,7 +50,10 @@ const stackOrQueue = props.bfsOrDfs === "bfs" ? "queue" : "stack";
         <div class="flex justify-center">
             <button
                 :disabled="disabled"
-                class="rounded-sm text-black p-1 hover:bg-gray-400 bg-white disabled:opacity-50 disabled:cursor-not-allowed"
+                :class="
+                    wrongChoice ? 'bg-red-500' : 'bg-white hover:bg-gray-400'
+                "
+                class="rounded-sm text-black p-1 disabled:opacity-50 disabled:cursor-not-allowed"
                 @click="$emit('remove-and-set-to-current', nodeId)"
             >
                 Remove {{ nodeId }} from {{ stackOrQueue }} and set to current

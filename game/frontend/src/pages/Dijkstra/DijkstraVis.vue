@@ -6,6 +6,7 @@ import ShortestPaths from "../../components/dijkstra/ShortestPaths.vue";
 import { ref } from "vue";
 import { DijkstraStep } from "../../types/Dijkstra.ts";
 import { DijkstraVertex } from "../../graph/Vertex";
+
 const currentVertexName = ref<string>("");
 const verticesToCheck = ref<string[]>([]);
 const pseudoStep = ref<DijkstraStep | null>(null);
@@ -17,10 +18,7 @@ const sourceName = ref<string>("");
 <template>
     <div class="grid grid-cols-3 gap-1">
         <div class="ml-2">
-            <DijkstraPseudo
-                :current-step="pseudoStep"
-                :hide-highlights="false"
-            />
+            <DijkstraPseudo :current-step="pseudoStep" :is-diy="false" />
         </div>
         <div class="flex justify-center">
             <div>

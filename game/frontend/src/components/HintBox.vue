@@ -1,9 +1,12 @@
 <script setup lang="ts">
 import Vertex from "../graph/Vertex";
-import { DFSGuidedSteps } from "../types/DFS";
-import { BFSGuidedSteps } from "../types/BFS";
+import { DFSDIYSteps } from "../types/DFS";
+import { BFSDIYSteps } from "../types/BFS";
+import { ref } from "vue";
+import { EyeIcon, EyeSlashIcon } from "@heroicons/vue/20/solid";
+
 const props = defineProps<{
-    text: DFSGuidedSteps | BFSGuidedSteps | null;
+    text: DFSDIYSteps | BFSDIYSteps | null;
     currentVertexName: string;
     started: boolean;
     visited: Vertex[];
@@ -12,10 +15,17 @@ const props = defineProps<{
     bfsOrDfs: "bfs" | "dfs";
 }>();
 const stackOrQueue = props.bfsOrDfs === "bfs" ? "queue" : "stack";
+
+const isBlurred = ref<boolean>(false);
+const toggleBlur = () => {
+    isBlurred.value = !isBlurred.value;
+};
 </script>
 <template>
-    <div class="border border-white p-4 rounded-md shadow-md">
-        <div class="flex justify-between">
+    <div
+        class="border border-white p-4 rounded-md shadow-md flex justify-between"
+    >
+        <div :class="isBlurred ? 'blur-sm' : ''">
             <div v-if="!started">
                 <span>Click start!</span>
             </div>
@@ -47,6 +57,15 @@ const stackOrQueue = props.bfsOrDfs === "bfs" ? "queue" : "stack";
                 >
                 <span v-else-if="text === 'done'">Done!</span>
             </div>
+        </div>
+        <div>
+            <button
+                class="bg-white text-black rounded-sm p-1 mx-1 w-7 h-8"
+                @click="toggleBlur()"
+            >
+                <EyeSlashIcon v-if="isBlurred" class="w-5 h-5" />
+                <EyeIcon v-else class="w-5 h-5" />
+            </button>
         </div>
     </div>
 </template>
