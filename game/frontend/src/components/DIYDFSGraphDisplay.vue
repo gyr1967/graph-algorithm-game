@@ -174,6 +174,12 @@ const validateAddToStack = (nodeId: string) => {
     ) {
         return false;
     }
+    if (
+        graph.visited.size === 0 &&
+        nodeId !== graph.currentVertex.value?.getTextName()
+    ) {
+        return false;
+    }
     return true;
 };
 
