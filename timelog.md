@@ -238,4 +238,16 @@
 
 ### 23 Dec 2023 (Saturday)
 
+* *7 hours* | bug fixes and QoL improvements
+
+## Semester 2
+
+## Week 2
+
+### 15 Jan 2024
+
+* *3 Hours* | Refamiliarisation with project, supervisor meeting prep
+
+
+
 
