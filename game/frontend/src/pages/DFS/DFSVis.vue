@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import VisDFSGraphDisplay from "../../components/VisDFSGraphDisplay.vue";
 import SearchPseudo from "../../components/SearchPseudo.vue";
+import SearchLegend from "../../components/SearchLegend.vue";
 import SidePanel from "../../components/SidePanel.vue";
 import { ref } from "vue";
 import { DFSStep } from "../../types/DFS";
@@ -18,6 +19,7 @@ const pseudoStep = ref<DFSStep | null>(null);
                 bfs-or-dfs="dfs"
                 :is-diy="false"
             />
+            <SearchLegend class="mt-2" />
         </div>
         <div class="flex justify-center items-center">
             <div>

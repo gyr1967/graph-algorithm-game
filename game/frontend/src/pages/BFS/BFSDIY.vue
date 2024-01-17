@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import SearchPseudo from "../../components/SearchPseudo.vue";
 import SidePanel from "../../components/SidePanel.vue";
+import SearchLegend from "../../components/SearchLegend.vue";
 import HintBox from "../../components/HintBox.vue";
 import { ref } from "vue";
 import Vertex from "../../graph/Vertex";
@@ -37,6 +38,7 @@ const visited = ref<Vertex[]>([]);
                 :queue="currentQueue"
                 bfs-or-dfs="bfs"
             />
+            <SearchLegend class="mt-2" />
         </div>
         <div class="flex justify-center items-center">
             <div>
