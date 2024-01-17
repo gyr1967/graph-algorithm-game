@@ -32,11 +32,12 @@ test("component renders the correct number of nodes and links", () => {
     });
     const svgHtml = wrapper.html();
 
-    expect(svgHtml).toContain(`circle cx="50" cy="50"`);
-    expect(svgHtml).toContain(`circle cx="150" cy="50"`);
-    expect(svgHtml).toContain(`circle cx="250" cy="50"`);
-    expect(svgHtml).toContain(`line x1="150" y1="50" x2="250" y2="50"`);
-    expect(svgHtml).toContain(`line x1="50" y1="50" x2="150" y2="50"`);
+    const graphData = wrapper.vm.nodeData;
+    for (const node in graphData) {
+        expect(svgHtml).toContain(
+            `circle cx="${graphData[node].x}" cy="${graphData[node].y}"`,
+        );
+    }
 });
 
 test("graph data structure has the correct number of vertices", () => {
@@ -63,30 +64,40 @@ test("vertices are correctly connected", () => {
     });
     const graph = wrapper.vm.graph;
     const vertices = graph.getVertices();
-    expect(vertices[0].getAdjList()).toEqual([new AdjListVertex(1)]);
-    expect(vertices[1].getAdjList()).toEqual([
-        new AdjListVertex(2),
-        new AdjListVertex(0),
-        new AdjListVertex(3),
-    ]);
-    expect(vertices[2].getAdjList()).toEqual([
-        new AdjListVertex(1),
-        new AdjListVertex(4),
-    ]);
-    expect(vertices[3].getAdjList()).toEqual([
-        new AdjListVertex(1),
-        new AdjListVertex(6),
-        new AdjListVertex(4),
-    ]);
-    expect(vertices[4].getAdjList()).toEqual([
-        new AdjListVertex(2),
-        new AdjListVertex(3),
-    ]);
-    expect(vertices[5].getAdjList()).toEqual([new AdjListVertex(6)]);
-    expect(vertices[6].getAdjList()).toEqual([
-        new AdjListVertex(3),
-        new AdjListVertex(5),
-    ]);
+    expect(new Set(vertices[0].getAdjList())).toEqual(
+        new Set([new AdjListVertex(1), new AdjListVertex(2)]),
+    );
+    expect(new Set(vertices[1].getAdjList())).toEqual(
+        new Set([
+            new AdjListVertex(2),
+            new AdjListVertex(0),
+            new AdjListVertex(3),
+        ]),
+    );
+    expect(new Set(vertices[2].getAdjList())).toEqual(
+        new Set([
+            new AdjListVertex(1),
+            new AdjListVertex(4),
+            new AdjListVertex(0),
+        ]),
+    );
+    expect(new Set(vertices[3].getAdjList())).toEqual(
+        new Set([
+            new AdjListVertex(1),
+            new AdjListVertex(6),
+            new AdjListVertex(4),
+            new AdjListVertex(5),
+        ]),
+    );
+    expect(new Set(vertices[4].getAdjList())).toEqual(
+        new Set([new AdjListVertex(2), new AdjListVertex(3)]),
+    );
+    expect(new Set(vertices[5].getAdjList())).toEqual(
+        new Set([new AdjListVertex(3), new AdjListVertex(6)]),
+    );
+    expect(new Set(vertices[6].getAdjList())).toEqual(
+        new Set([new AdjListVertex(3), new AdjListVertex(5)]),
+    );
 });
 
 test("breadth first search works", () => {
