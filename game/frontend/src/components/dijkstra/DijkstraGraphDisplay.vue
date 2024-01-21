@@ -2,17 +2,15 @@
 import Node from "../Node.vue";
 import Link from "../Link.vue";
 import DijkstraOptionMenu from "./DijkstraOptionMenu.vue";
-import StartVertexChoice from "../StartVertexChoice.vue";
 import { DijkstraVertex } from "../../graph/Vertex.ts";
 import { DijkstraGraph } from "../../graph/Graph.ts";
 import { linkDatas, nodeDatas } from "../../utils/graph-data";
-import { letterToNum } from "../../utils/num-to-letter";
+import { letterToNum, numToLetter } from "../../utils/num-to-letter";
 import { ref } from "vue";
-import { EdgeData } from "../../types/GraphData";
+import { EdgeData, NodeData } from "../../types/GraphData";
 import { DijkstraStep } from "../../types/Dijkstra";
 import AdjListVertex from "../../graph/AdjListVertex";
-const props = defineProps<{
-    whichGraphData: number;
+defineProps<{
     scalingFactor: number;
 }>();
 const emit = defineEmits([
@@ -148,12 +146,13 @@ const setStep = (step: DijkstraStep) => {
     currentStep.value = step;
     emit("update:pseudoStep", step);
 };
+const sourceVertexName = ref<string | null>(null);
 const wrongChoice = ref<boolean>(false);
-const sourceVertexName = ref<string>("A");
 const adjToVisit = ref<DijkstraVertex[]>([]);
-const nodeData = nodeDatas[props.whichGraphData];
+const whichGraphData = ref<number>(2);
+const nodeData = ref<Record<string, NodeData>>(nodeDatas[whichGraphData.value]);
 const distances = ref<Record<string, number>>({});
-const linkData = ref<Record<string, EdgeData>>(linkDatas[props.whichGraphData]);
+const linkData = ref<Record<string, EdgeData>>(linkDatas[whichGraphData.value]);
 // currently unused
 // const randomiseLinkLengths = () => {
 //     Object.keys(linkData.value).forEach((key) => {
@@ -165,8 +164,8 @@ const nodeFill = "#3498db";
 const nodeMenuOpen = ref<string>("");
 const nodeColours = ref<Record<string, string>>({});
 const setColoursDefault = () => {
-    Object.keys(nodeData).forEach((key) => {
-        nodeColours.value[nodeData[key].id] = nodeFill;
+    Object.keys(nodeData.value).forEach((key) => {
+        nodeColours.value[nodeData.value[key].id] = nodeFill;
     });
 };
 setColoursDefault();
@@ -182,21 +181,19 @@ const setUpGraph = (n: number) => {
         v1.addToAdjList(v2id, edgeWeight);
         v2.addToAdjList(v1id, edgeWeight);
     });
-    Object.keys(nodeData).forEach((key) => {
-        distances.value[nodeData[key].id] = Infinity;
+    Object.keys(nodeData.value).forEach((key) => {
+        distances.value[nodeData.value[key].id] = Infinity;
     });
     return graph;
 };
-let graph = setUpGraph(Object.entries(nodeData).length);
+let graph = setUpGraph(Object.entries(nodeData.value).length);
 const started = ref<boolean>(false);
 const currentStep = ref<DijkstraStep | null>(null);
 
-const startTheAlgorithm = () => {
+const startTheAlgorithm = (startIndex: number) => {
     started.value = true;
     emit("update:started", true);
-    graph.currentVertex.value = graph.getVertex(
-        letterToNum[sourceVertexName.value] - 1,
-    );
+    graph.currentVertex.value = graph.getVertex(startIndex);
     emit("update:currentVertexName", graph.currentVertex.value?.getTextName());
     emit("update:vertices", graph.vertices);
     emit("update:distances", distances.value);
@@ -255,10 +252,16 @@ const validateStep = (
 const validateUpdateDistance = (nodeId: string, distance: number) => {
     const adj = findAdjacency(nodeId);
     const vertex = graph.getVertex(letterToNum[nodeId] - 1);
-    if (adj === null && vertex.getTextName() !== sourceVertexName.value) {
+    if (
+        adj === null &&
+        vertex.getTextName() !== numToLetter[whichGraphData.value + 1]
+    ) {
         return false;
     }
-    if (adj === null && vertex.getTextName() === sourceVertexName.value) {
+    if (
+        adj === null &&
+        vertex.getTextName() === numToLetter[whichGraphData.value + 1]
+    ) {
         if (distance === 0) {
             return true;
         }
@@ -312,6 +315,21 @@ const findAdjacency = (nodeId: string): AdjListVertex | null => {
     }
     return null;
 };
+const reset = () => {
+    nodeData.value = nodeDatas[whichGraphData.value];
+    linkData.value = linkDatas[whichGraphData.value];
+    started.value = false;
+    emit("update:currentVertexName", "");
+    emit("update:verticesToCheck", []);
+    emit("update:distances", {});
+    emit("update:vertices", []);
+    emit("update:adjacentVertexName", "");
+    emit("update:started", false);
+    currentStep.value = null;
+    emit("update:pseudoStep", null);
+    graph = setUpGraph(Object.entries(nodeData.value).length);
+    setColoursDefault();
+};
 </script>
 <template>
     <div class="border border-white p-2 rounded-md shadow-md">
@@ -356,30 +374,14 @@ const findAdjacency = (nodeId: string): AdjListVertex | null => {
         </div>
     </div>
     <div class="border border-white p-2 rounded-md shadow-md mt-2">
-        <div v-if="!started" class="flex justify-center">
-            <StartVertexChoice
-                :disabled="false"
-                :number-of-vertices="Object.keys(nodeData).length"
-                @update:source-choice="
-                    (newValue: Record<string, string>) => {
-                        sourceVertexName = newValue.id;
-                    }
-                "
-            />
-            <button
-                class="mx-1 rounded-sm text-black p-1 hover:bg-gray-400 bg-white"
-                @click="startTheAlgorithm"
-            >
-                Start
-            </button>
-        </div>
         <DijkstraOptionMenu
-            v-if="started"
             :wrong-choice="wrongChoice"
             :text="nodeMenuOpen !== '' ? nodeMenuOpen : 'Click a vertex'"
             :disabled="nodeMenuOpen === '' || !started"
             :node-id="nodeMenuOpen"
             :current-vertex-name="graph.currentVertex.value?.getTextName()"
+            :number-of-vertices="Object.keys(nodeData).length"
+            :started="started"
             @remove-and-set-to-current="
                 () => {
                     if (
@@ -421,6 +423,19 @@ const findAdjacency = (nodeId: string): AdjListVertex | null => {
                     } else {
                         console.log('failed validation');
                     }
+                }
+            "
+            @start-the-algorithm="
+                (startIndex: number) => {
+                    startTheAlgorithm(startIndex);
+                    sourceVertexName = numToLetter[startIndex + 1];
+                }
+            "
+            @reset="reset()"
+            @update:graph-choice="
+                (newValue: number) => {
+                    whichGraphData = newValue;
+                    reset();
                 }
             "
         />

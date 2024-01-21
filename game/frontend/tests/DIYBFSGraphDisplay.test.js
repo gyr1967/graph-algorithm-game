@@ -6,7 +6,6 @@ test("component renders with the correct width and height", () => {
     const scalingFactor = 2;
     const wrapper = mount(DIYBFSGraphDisplay, {
         props: {
-            whichGraphData: 1,
             scalingFactor,
         },
     });
@@ -23,7 +22,6 @@ test("component renders the correct number of nodes and links", () => {
     const scalingFactor = 1;
     const wrapper = mount(DIYBFSGraphDisplay, {
         props: {
-            whichGraphData: 1,
             scalingFactor,
         },
     });
@@ -40,7 +38,6 @@ test("graph data structure has the correct number of vertices", () => {
     const scalingFactor = 1;
     const wrapper = mount(DIYBFSGraphDisplay, {
         props: {
-            whichGraphData: 1,
             scalingFactor,
         },
     });
@@ -52,7 +49,6 @@ test("vertices are correctly connected", () => {
     const scalingFactor = 1;
     const wrapper = mount(DIYBFSGraphDisplay, {
         props: {
-            whichGraphData: 1,
             scalingFactor,
         },
     });
@@ -98,13 +94,11 @@ test("breadth first starts", () => {
     const scalingFactor = 1;
     const wrapper = mount(DIYBFSGraphDisplay, {
         props: {
-            whichGraphData: 1,
             scalingFactor,
         },
     });
     const graph = wrapper.vm.graph;
     const vertices = graph.getVertices();
-    wrapper.vm.sourceVertexName = "A";
-    wrapper.vm.startTheAlgorithm();
+    wrapper.vm.startTheAlgorithm(0);
     expect(graph.currentVertex.value).toEqual(vertices[0]);
 });

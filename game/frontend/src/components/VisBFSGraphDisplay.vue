@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import Node from "./Node.vue";
 import Link from "./Link.vue";
-import MediaControlsVue from "./MediaControls.vue";
+import MediaControls from "./MediaControls.vue";
 import AdjListVertex from "../graph/AdjListVertex.ts";
 import Vertex from "../graph/Vertex.ts";
 import Graph from "../graph/Graph.ts";
@@ -9,8 +9,8 @@ import { linkDatas, nodeDatas } from "../utils/graph-data";
 import { letterToNum, numToLetter } from "../utils/num-to-letter";
 import { ref } from "vue";
 import type { BFSYieldData } from "../types/BFS.ts";
-const props = defineProps<{
-    whichGraphData: number;
+import { EdgeData, NodeData } from "../types/GraphData";
+defineProps<{
     scalingFactor: number;
 }>();
 const emit = defineEmits([
@@ -18,6 +18,8 @@ const emit = defineEmits([
     "update:currentQueue",
     "update:pseudoStep",
 ]);
+
+const whichGraphData = ref<number>(1);
 
 class VisBFSGraph extends Graph {
     currentVertex = ref<Vertex | null>(null);
@@ -104,20 +106,20 @@ class VisBFSGraph extends Graph {
     }
 }
 
-const nodeData = nodeDatas[props.whichGraphData];
-const linkData = linkDatas[props.whichGraphData];
+const nodeData = ref<Record<string, NodeData>>(nodeDatas[whichGraphData.value]);
+const linkData = ref<Record<string, EdgeData>>(linkDatas[whichGraphData.value]);
 const nodeFill = "#3498db";
 const nodeColours = ref<Record<string, string>>({});
 const setColoursDefault = () => {
-    Object.keys(nodeData).forEach((key) => {
-        nodeColours.value[nodeData[key].id] = nodeFill;
+    Object.keys(nodeData.value).forEach((key) => {
+        nodeColours.value[nodeData.value[key].id] = nodeFill;
     });
 };
 setColoursDefault();
 const setUpGraph = (n: number) => {
     const graph = new VisBFSGraph(n);
-    Object.keys(linkData).forEach((key) => {
-        const link = linkData[key];
+    Object.keys(linkData.value).forEach((key) => {
+        const link = linkData.value[key];
         const v1id = letterToNum[link.v1] - 1;
         const v2id = letterToNum[link.v2] - 1;
         const v1 = graph.getVertex(v1id);
@@ -127,23 +129,26 @@ const setUpGraph = (n: number) => {
     });
     return graph;
 };
-let graph = setUpGraph(Object.entries(nodeData).length);
+let graph = setUpGraph(Object.entries(nodeData.value).length);
 const started = ref<boolean>(false);
 const bfsGenerator = ref<Generator<BFSYieldData, void, unknown> | null>(null);
 const startBFS = (startIndex: number) => {
     setColoursDefault();
-    graph = setUpGraph(Object.entries(nodeData).length);
+    graph = setUpGraph(Object.entries(nodeData.value).length);
     const generator = graph.bfsGenerator(graph.getVertex(startIndex));
     bfsGenerator.value = generator;
     started.value = true;
 };
 
 const reset = () => {
+    nodeData.value = nodeDatas[whichGraphData.value];
+    linkData.value = linkDatas[whichGraphData.value];
     bfsGenerator.value = null;
     started.value = false;
     emit("update:currentVertexName", "");
     emit("update:currentQueue", []);
     emit("update:pseudoStep", null);
+    setColoursDefault();
 };
 
 const performBFSStep = () => {
@@ -203,13 +208,19 @@ const performBFSStep = () => {
     </div>
     <div class="border boder-white p-2 rounded-md shadow-md mt-2">
         <div class="bottom-0 left-0 w-full flex justify-center">
-            <MediaControlsVue
+            <MediaControls
                 :started="started"
                 bfs-or-dfs="bfs"
                 :number-of-vertices="Object.entries(nodeData).length"
                 @start="(startIndex) => startBFS(startIndex)"
                 @next-step="performBFSStep()"
                 @reset="reset()"
+                @update:graph-choice="
+                    (newValue: number) => {
+                        whichGraphData = newValue;
+                        reset();
+                    }
+                "
             />
         </div>
     </div>

@@ -25,7 +25,6 @@ const sourceName = ref<string>("");
         <div class="flex justify-center">
             <div>
                 <VisDijkstraGraph
-                    :which-graph-data="2"
                     :scaling-factor="1.2"
                     @update:current-vertex-name="
                         (newValue) => {

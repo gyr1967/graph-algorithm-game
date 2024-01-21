@@ -30,7 +30,6 @@ const angle = calculateAngle(props.x1, props.y1, props.x2, props.y2);
 let textX = 0;
 let textY = 0;
 
-// Adjust text position based on line angle
 if (angle >= -90 && angle < 90) {
     textX = midpoint(props.x1, props.y1, props.x2, props.y2).x + 5;
     textY = midpoint(props.x1, props.y1, props.x2, props.y2).y;

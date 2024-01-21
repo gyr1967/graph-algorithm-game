@@ -4,14 +4,13 @@ import Link from "./Link.vue";
 import Vertex from "../graph/Vertex.ts";
 import Graph from "../graph/Graph.ts";
 import VertexOptionMenu from "./VertexOptionMenu.vue";
-import StartVertexChoice from "./StartVertexChoice.vue";
 import { linkDatas, nodeDatas } from "../utils/graph-data";
 import { letterToNum } from "../utils/num-to-letter";
 import { ref } from "vue";
 import type { BFSDIYSteps } from "../types/BFS";
 import AdjListVertex from "../graph/AdjListVertex";
-const props = defineProps<{
-    whichGraphData: number;
+import { NodeData, EdgeData } from "../types/GraphData";
+defineProps<{
     scalingFactor: number;
 }>();
 const emit = defineEmits([
@@ -89,27 +88,27 @@ class DIYBFSGraph extends Graph {
         setStep("visit");
     }
 }
+const whichGraphData = ref<number>(1);
 const wrongChoice = ref<boolean>(false);
 const started = ref<boolean>(false);
-const sourceVertexName = ref<string>("A");
 const currentStep = ref<BFSDIYSteps | null>(null);
 emit("update:diyStep", currentStep.value);
-const nodeData = nodeDatas[props.whichGraphData];
+const nodeData = ref<Record<string, NodeData>>(nodeDatas[whichGraphData.value]);
 emit("update:vertexNames", Object.keys(nodeData));
 const nodeMenuOpen = ref<string>("");
-const linkData = linkDatas[props.whichGraphData];
+const linkData = ref<Record<string, EdgeData>>(linkDatas[whichGraphData.value]);
 const nodeFill = "#3498db";
 const nodeColours = ref<Record<string, string>>({});
 const setColoursDefault = () => {
-    Object.keys(nodeData).forEach((key) => {
-        nodeColours.value[nodeData[key].id] = nodeFill;
+    Object.keys(nodeData.value).forEach((key) => {
+        nodeColours.value[nodeData.value[key].id] = nodeFill;
     });
 };
 setColoursDefault();
 const setUpGraph = (n: number) => {
     const graph = new DIYBFSGraph(n);
-    Object.keys(linkData).forEach((key) => {
-        const link = linkData[key];
+    Object.keys(linkData.value).forEach((key) => {
+        const link = linkData.value[key];
         const v1id = letterToNum[link.v1] - 1;
         const v2id = letterToNum[link.v2] - 1;
         const v1 = graph.getVertex(v1id);
@@ -119,7 +118,7 @@ const setUpGraph = (n: number) => {
     });
     return graph;
 };
-let graph = setUpGraph(Object.entries(nodeData).length);
+let graph = setUpGraph(Object.entries(nodeData.value).length);
 
 const handleVertexClicked = (nodeId: string) => {
     if (nodeMenuOpen.value === nodeId) {
@@ -213,15 +212,24 @@ const setStep = (step: BFSDIYSteps) => {
     emit("update:diyStep", step);
 };
 
-const startTheAlgorithm = () => {
+const startTheAlgorithm = (startIndex: number) => {
     started.value = true;
     emit("update:started", true);
     setStep("add-to-queue");
     emit("update:diyStep", "add-to-queue");
-    graph.currentVertex.value = graph.getVertex(
-        letterToNum[sourceVertexName.value] - 1,
-    );
+    graph.currentVertex.value = graph.getVertex(startIndex);
     emit("update:currentVertexName", graph.currentVertex.value?.getTextName());
+};
+const reset = () => {
+    nodeData.value = nodeDatas[whichGraphData.value];
+    linkData.value = linkDatas[whichGraphData.value];
+    started.value = false;
+    emit("update:currentVertexName", "");
+    emit("update:currentQueue", []);
+    emit("update:diyStep", null);
+    emit("update:visited", []);
+    graph = setUpGraph(Object.entries(nodeData.value).length);
+    setColoursDefault();
 };
 </script>
 
@@ -266,30 +274,15 @@ const startTheAlgorithm = () => {
         </div>
     </div>
     <div class="border boder-white p-2 rounded-md shadow-md mt-2">
-        <div v-if="!started" class="flex justify-center">
-            <StartVertexChoice
-                :disabled="false"
-                :number-of-vertices="Object.keys(nodeData).length"
-                @update:source-choice="
-                    (newValue: Record<string, string>) => {
-                        sourceVertexName = newValue.id;
-                    }
-                "
-            />
-            <button
-                class="rounded-sm text-black p-1 hover:bg-gray-400 bg-white mx-1"
-                @click="startTheAlgorithm"
-            >
-                Start
-            </button>
-        </div>
         <VertexOptionMenu
-            v-if="started"
             :wrong-choice="wrongChoice"
             :text="nodeMenuOpen !== '' ? nodeMenuOpen : 'Click a vertex'"
             :disabled="nodeMenuOpen === ''"
             :node-id="nodeMenuOpen"
             bfs-or-dfs="bfs"
+            :number-of-vertices="Object.keys(nodeData).length"
+            :started="started"
+            :is-dijkstras="false"
             @add-to-queue="
                 (nodeId: string) => {
                     if (validateStep('add-to-queue', nodeId)) {
@@ -304,7 +297,7 @@ const startTheAlgorithm = () => {
                     if (validateStep('visit', nodeId)) {
                         graph.visit(nodeId);
                     } else {
-                        ('failed validation');
+                        console.log('failed validation');
                     }
                 }
             "
@@ -315,6 +308,14 @@ const startTheAlgorithm = () => {
                     } else {
                         console.log('failed validation');
                     }
+                }
+            "
+            @start-the-algorithm="startTheAlgorithm"
+            @reset="reset()"
+            @update:graph-choice="
+                (newValue: number) => {
+                    whichGraphData = newValue;
+                    reset();
                 }
             "
         />

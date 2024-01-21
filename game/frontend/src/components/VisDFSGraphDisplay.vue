@@ -9,8 +9,8 @@ import { linkDatas, nodeDatas } from "../utils/graph-data";
 import { letterToNum, numToLetter } from "../utils/num-to-letter";
 import { ref } from "vue";
 import type { DFSYieldData } from "../types/DFS.ts";
-const props = defineProps<{
-    whichGraphData: number;
+import { EdgeData, NodeData } from "../types/GraphData";
+defineProps<{
     scalingFactor: number;
 }>();
 const emit = defineEmits([
@@ -18,6 +18,8 @@ const emit = defineEmits([
     "update:currentStack",
     "update:pseudoStep",
 ]);
+
+const whichGraphData = ref<number>(1);
 
 class VisDFSGraph extends Graph {
     currentVertex = ref<Vertex | null>(null);
@@ -104,20 +106,20 @@ class VisDFSGraph extends Graph {
     }
 }
 
-const nodeData = nodeDatas[props.whichGraphData];
-const linkData = linkDatas[props.whichGraphData];
+const nodeData = ref<Record<string, NodeData>>(nodeDatas[whichGraphData.value]);
+const linkData = ref<Record<string, EdgeData>>(linkDatas[whichGraphData.value]);
 const nodeFill = "#3498db";
 const nodeColours = ref<Record<string, string>>({});
 const setColoursDefault = () => {
-    Object.keys(nodeData).forEach((key) => {
-        nodeColours.value[nodeData[key].id] = nodeFill;
+    Object.keys(nodeData.value).forEach((key) => {
+        nodeColours.value[nodeData.value[key].id] = nodeFill;
     });
 };
 setColoursDefault();
 const setUpGraph = (n: number) => {
     const graph = new VisDFSGraph(n);
-    Object.keys(linkData).forEach((key) => {
-        const link = linkData[key];
+    Object.keys(linkData.value).forEach((key) => {
+        const link = linkData.value[key];
         const v1id = letterToNum[link.v1] - 1;
         const v2id = letterToNum[link.v2] - 1;
         const v1 = graph.getVertex(v1id);
@@ -127,23 +129,26 @@ const setUpGraph = (n: number) => {
     });
     return graph;
 };
-let graph = setUpGraph(Object.entries(nodeData).length);
+let graph = setUpGraph(Object.entries(nodeData.value).length);
 const started = ref<boolean>(false);
 const dfsGenerator = ref<Generator<DFSYieldData, void, unknown> | null>(null);
 const startDFS = (startIndex: number) => {
     setColoursDefault();
-    graph = setUpGraph(Object.entries(nodeData).length);
+    graph = setUpGraph(Object.entries(nodeData.value).length);
     const generator = graph.dfsGenerator(graph.getVertex(startIndex));
     dfsGenerator.value = generator;
     started.value = true;
 };
 
 const reset = () => {
+    nodeData.value = nodeDatas[whichGraphData.value];
+    linkData.value = linkDatas[whichGraphData.value];
     dfsGenerator.value = null;
     started.value = false;
     emit("update:currentVertexName", "");
     emit("update:currentStack", []);
     emit("update:pseudoStep", null);
+    setColoursDefault();
 };
 
 const performDFSStep = () => {
@@ -210,6 +215,12 @@ const performDFSStep = () => {
                 @start="(startIndex) => startDFS(startIndex)"
                 @next-step="performDFSStep()"
                 @reset="reset()"
+                @update:graph-choice="
+                    (newValue: number) => {
+                        whichGraphData = newValue;
+                        reset();
+                    }
+                "
             />
         </div>
     </div>
