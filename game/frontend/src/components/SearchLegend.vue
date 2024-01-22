@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import Node from "./Node.vue";
 const circles = [
     { id: 1, cx: 15, cy: 15, r: 10, fill: "#3498db", label: "Unvisited" },
     { id: 2, cx: 15, cy: 15, r: 10, fill: "#e74c3c", label: "Visited" },
@@ -42,13 +41,13 @@ const circles = [
                     xmlns="http://www.w3.org/2000/svg"
                 >
                     <g>
-                        <Node
+                        <circle
                             :cx="circle.cx"
                             :cy="circle.cy"
                             :r="circle.r"
                             :fill="circle.fill"
-                            :stroke="circle.stroke"
-                            :stroke-width="circle.strokeWidth"
+                            :stroke="circle.stroke ?? 'none'"
+                            :stroke-width="circle.strokeWidth ?? 0"
                         />
                     </g>
                 </svg>
