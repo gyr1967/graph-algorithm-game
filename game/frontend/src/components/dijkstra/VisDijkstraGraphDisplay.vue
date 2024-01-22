@@ -112,7 +112,7 @@ const randomiseLinkLengths = () => {
     Object.keys(linkData.value).forEach((key) => {
         linkData.value[key].weight = Math.floor(Math.random() * 14) + 1;
     });
-    graph = setUpGraph(Object.entries(nodeData).length);
+    graph = setUpGraph(Object.entries(nodeData.value).length);
 };
 const nodeFill = "#3498db";
 const nodeColours = ref<Record<string, string>>({});
