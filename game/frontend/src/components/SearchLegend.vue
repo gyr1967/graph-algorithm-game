@@ -10,17 +10,15 @@ const circles = [
         fill: "#3498db",
         stroke: "white",
         strokeWidth: 2,
-        label: "Current Vertex (Unvisited)",
+        label: "Current Vertex",
     },
     {
         id: 4,
         cx: 15,
         cy: 15,
         r: 10,
-        fill: "#e74c3c",
-        stroke: "white",
-        strokeWidth: 2,
-        label: "Current Vertex (Visited)",
+        fill: "#f1c40f",
+        label: "Neighbours to be added",
     },
 ];
 </script>

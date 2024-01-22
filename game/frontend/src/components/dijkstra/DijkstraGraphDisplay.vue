@@ -387,6 +387,7 @@ const reset = () => {
                     if (
                         validateStep('remove-and-set-to-current', nodeMenuOpen)
                     ) {
+                        graph.changeVertexColour(nodeMenuOpen, nodeFill);
                         graph.removeAndSetCurrentVertex();
                     } else {
                         console.log('failed validation');
@@ -410,6 +411,7 @@ const reset = () => {
                         );
                     }
                     if (validation) {
+                        graph.changeVertexColour(nodeId, '#2ecc71');
                         graph.updateDistance(nodeId, distance);
                     } else {
                         console.log('failed validation');
@@ -419,6 +421,7 @@ const reset = () => {
             @set-adj-prev-to-current="
                 () => {
                     if (validateStep('set-adj-prev-to-current', nodeMenuOpen)) {
+                        graph.changeVertexColour(nodeMenuOpen, nodeFill);
                         graph.setAdjPrevToCurrent(nodeMenuOpen);
                     } else {
                         console.log('failed validation');

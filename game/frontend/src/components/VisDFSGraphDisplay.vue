@@ -95,6 +95,10 @@ class VisDFSGraph extends Graph {
                 const i = vertex.getVertexIndex();
                 const nextVertex = this.vertices[i];
                 this.stack.push(nextVertex);
+                this.changeVertexColour(
+                    numToLetter[nextVertex.getIndex() + 1],
+                    "#f1c40f",
+                );
             }
             yield {
                 visited: this.visited,
@@ -102,6 +106,12 @@ class VisDFSGraph extends Graph {
                 step: "addVNeighboursToStack",
                 currentVertex,
             };
+            for (const vertex of this.stack) {
+                this.changeVertexColour(
+                    numToLetter[vertex.getIndex() + 1],
+                    "#3498db",
+                );
+            }
         }
     }
 }

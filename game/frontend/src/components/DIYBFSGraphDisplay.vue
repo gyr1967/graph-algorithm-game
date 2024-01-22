@@ -38,6 +38,7 @@ class DIYBFSGraph extends Graph {
             "update:currentQueue",
             this.queue.map((v) => v.getTextName()),
         );
+        this.changeVertexColour(nodeId, nodeFill);
         const adjVertices = this.currentVertex.value
             ?.getAdjList()
             .map((alv) => this.getVertex(alv.getVertexIndex()));
@@ -71,6 +72,14 @@ class DIYBFSGraph extends Graph {
         ) {
             setStep("remove-and-set-to-current");
             return;
+        }
+        const queueEligibleVertices = adjVertices?.filter(
+            (v) => !this.visited.has(v.getIndex()) && !this.queue.includes(v),
+        );
+        if (queueEligibleVertices) {
+            queueEligibleVertices.forEach((v) => {
+                this.changeVertexColour(v.getTextName(), "#f1c40f");
+            });
         }
         setStep("add-to-queue");
     }
@@ -277,7 +286,7 @@ const reset = () => {
         <VertexOptionMenu
             :wrong-choice="wrongChoice"
             :text="nodeMenuOpen !== '' ? nodeMenuOpen : 'Click a vertex'"
-            :disabled="nodeMenuOpen === ''"
+            :disabled="nodeMenuOpen === '' || !started"
             :node-id="nodeMenuOpen"
             bfs-or-dfs="bfs"
             :number-of-vertices="Object.keys(nodeData).length"

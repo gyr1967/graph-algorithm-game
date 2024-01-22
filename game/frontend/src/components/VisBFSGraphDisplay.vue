@@ -95,6 +95,10 @@ class VisBFSGraph extends Graph {
                 const i = vertex.getVertexIndex();
                 const nextVertex = this.vertices[i];
                 this.queue.push(nextVertex);
+                this.changeVertexColour(
+                    numToLetter[nextVertex.getIndex() + 1],
+                    "#f1c40f",
+                );
             }
             yield {
                 visited: this.visited,
@@ -102,6 +106,12 @@ class VisBFSGraph extends Graph {
                 step: "addVNeighboursToQueue",
                 currentVertex,
             };
+            for (const vertex of this.queue) {
+                this.changeVertexColour(
+                    numToLetter[vertex.getIndex() + 1],
+                    "#3498db",
+                );
+            }
         }
     }
 }

@@ -38,6 +38,7 @@ class DIYDFSGraph extends Graph {
             "update:currentStack",
             this.stack.map((v) => v.getTextName()),
         );
+        this.changeVertexColour(nodeId, nodeFill);
         const adjVertices = this.currentVertex.value
             ?.getAdjList()
             .map((alv) => this.getVertex(alv.getVertexIndex()));
@@ -71,6 +72,14 @@ class DIYDFSGraph extends Graph {
         ) {
             setStep("remove-and-set-to-current");
             return;
+        }
+        const stackEligibleVertices = adjVertices?.filter(
+            (v) => !this.visited.has(v.getIndex()) && !this.stack.includes(v),
+        );
+        if (stackEligibleVertices) {
+            stackEligibleVertices.forEach((v) => {
+                this.changeVertexColour(v.getTextName(), "#f1c40f");
+            });
         }
         setStep("add-to-stack");
     }
