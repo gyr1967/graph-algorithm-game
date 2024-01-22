@@ -246,7 +246,27 @@
 
 ### 15 Jan 2024
 
-* *3 Hours* | Refamiliarisation with project, supervisor meeting prep
+* *3 Hours* | Refamiliarisation with project, supervisor meeting prep, supervisor meeting
+
+### 17 Jan 2024
+
+* *7 Hours* | Add a legend, add another graph, start on allowing users to choose which graph
+
+### 20 Jan 2024
+
+* *7 Hours* | Allow users to choose which graph ongoing, general UI changes and bug fixes
+
+### 21 Jan 2024
+
+* *2 Hours* | More bug fixes, push changes
+
+## Week 3
+
+### 22 Jan 2024
+
+* *3 Hours* | Clean up legend, add colours to visualisation, new graph, prep for supervisor meeting
+
+
 
 
 
