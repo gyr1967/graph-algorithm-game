@@ -18,7 +18,7 @@ const circles = [
         cy: 15,
         r: 10,
         fill: "#f1c40f",
-        label: "Neighbours to be added",
+        label: "Neighbours added",
     },
 ];
 </script>
