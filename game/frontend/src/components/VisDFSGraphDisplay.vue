@@ -41,14 +41,14 @@ class VisDFSGraph extends Graph {
             visited: this.visited,
             stack: this.stack,
             step: "addFirstToStack",
-            currentVertex: startVertex,
+            currentVertex: null,
         };
         // while there is something in the stack do
         yield {
             visited: this.visited,
             stack: this.stack,
             step: "while",
-            currentVertex: startVertex,
+            currentVertex: null,
         };
         while (this.stack.length !== 0) {
             // remove the first vertex in the stack, and make it the current vertex
@@ -56,7 +56,7 @@ class VisDFSGraph extends Graph {
             if (temporary === undefined) {
                 throw new Error("currentVertex is undefined");
             }
-            const currentVertex: Vertex | undefined = temporary;
+            const currentVertex: Vertex = temporary;
             emit(
                 "update:currentVertexName",
                 numToLetter[currentVertex.getIndex() + 1],
