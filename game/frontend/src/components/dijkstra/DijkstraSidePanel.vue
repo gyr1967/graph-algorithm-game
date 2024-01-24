@@ -5,6 +5,7 @@ const props = defineProps<{
     currentVertexName: string;
     verticesToCheck: string[];
     distances: Record<string, number>;
+    sourceName: string;
 }>();
 
 const sortedVerticesToCheck = computed(() =>
@@ -21,6 +22,12 @@ const sortedVerticesToCheck = computed(() =>
             </div>
             <div>
                 <span class="ml-2 text-4xl">{{ currentVertexName }}</span>
+            </div>
+            <div class="mt-6">
+                <span class="font-bold">Source Vertex</span>
+            </div>
+            <div>
+                <span class="ml-2 text-4xl">{{ sourceName }}</span>
             </div>
         </div>
         <div>
