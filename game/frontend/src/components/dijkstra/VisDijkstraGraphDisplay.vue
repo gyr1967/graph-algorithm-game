@@ -89,11 +89,23 @@ class VisDijkstraGraph extends DijkstraGraph {
                         verticesToCheck: this.verticesToCheck,
                     };
                     v.setPreviousVertex(currentVertex);
+                    // change the colour of all the predecessors of v
+                    let prev = v.getPreviousVertex();
+                    while (prev) {
+                        this.changeVertexColour(prev.getTextName(), "#ff00ff");
+                        prev = prev.getPreviousVertex();
+                    }
                     yield {
                         step: "set-adj-prev-to-current",
                         currentVertex: currentVertex,
                         verticesToCheck: this.verticesToCheck,
                     };
+                    // change the predecessors back to normal
+                    prev = v.getPreviousVertex();
+                    while (prev) {
+                        this.changeVertexColour(prev.getTextName(), nodeFill);
+                        prev = prev.getPreviousVertex();
+                    }
                 }
                 this.changeVertexColour(v.getTextName(), nodeFill);
             }

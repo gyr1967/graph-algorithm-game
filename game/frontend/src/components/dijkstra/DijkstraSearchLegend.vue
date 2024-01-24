@@ -10,7 +10,7 @@ const circles = [
         text: "∞",
     },
     {
-        id: 3,
+        id: 2,
         cx: 15,
         cy: 15,
         r: 10,
@@ -21,12 +21,21 @@ const circles = [
         text: "3",
     },
     {
-        id: 4,
+        id: 3,
         cx: 15,
         cy: 15,
         r: 10,
         fill: "#2ecc71",
         label: "Current Adjacent Vertex",
+        text: "3",
+    },
+    {
+        id: 4,
+        cx: 15,
+        cy: 15,
+        r: 10,
+        fill: "#ff00ff",
+        label: "Path to Source",
         text: "3",
     },
 ];
