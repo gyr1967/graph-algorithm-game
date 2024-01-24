@@ -21,6 +21,7 @@ const emit = defineEmits([
     "update:vertices",
     "update:started",
     "update:adjacentVertexName",
+    "update:sourceName",
 ]);
 
 class VisDijkstraGraph extends DijkstraGraph {
@@ -193,8 +194,6 @@ const currentStep = ref<DijkstraStep | null>(null);
 const startTheAlgorithm = (startIndex: number) => {
     started.value = true;
     emit("update:started", true);
-    graph.currentVertex.value = graph.getVertex(startIndex);
-    emit("update:currentVertexName", graph.currentVertex.value?.getTextName());
     emit("update:vertices", graph.vertices);
     emit("update:distances", distances.value);
     emit(
@@ -203,6 +202,7 @@ const startTheAlgorithm = (startIndex: number) => {
     );
     currentStep.value = "set-source-to-zero";
     emit("update:pseudoStep", currentStep.value);
+    emit("update:sourceName", numToLetter[startIndex + 1]);
 };
 
 const handleVertexClicked = (nodeId: string) => {
