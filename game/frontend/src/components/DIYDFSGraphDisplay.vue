@@ -289,7 +289,7 @@ const reset = () => {
         <VertexOptionMenu
             :wrong-choice="wrongChoice"
             :text="nodeMenuOpen !== '' ? nodeMenuOpen : 'Click a vertex'"
-            :disabled="nodeMenuOpen === ''"
+            :disabled="nodeMenuOpen === '' || !started"
             :node-id="nodeMenuOpen"
             bfs-or-dfs="dfs"
             :number-of-vertices="Object.keys(nodeData).length"

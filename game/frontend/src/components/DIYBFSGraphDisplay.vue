@@ -5,7 +5,7 @@ import Vertex from "../graph/Vertex.ts";
 import Graph from "../graph/Graph.ts";
 import VertexOptionMenu from "./VertexOptionMenu.vue";
 import { linkDatas, nodeDatas } from "../utils/graph-data";
-import { letterToNum } from "../utils/num-to-letter";
+import { letterToNum, numToLetter } from "../utils/num-to-letter";
 import { ref } from "vue";
 import type { BFSDIYSteps } from "../types/BFS";
 import AdjListVertex from "../graph/AdjListVertex";
@@ -98,6 +98,7 @@ class DIYBFSGraph extends Graph {
     }
 }
 const whichGraphData = ref<number>(1);
+const startVertexId = ref<number | null>(null);
 const wrongChoice = ref<boolean>(false);
 const started = ref<boolean>(false);
 const currentStep = ref<BFSDIYSteps | null>(null);
@@ -170,6 +171,15 @@ const validateVisit = (nodeId: string) => {
 };
 
 const validateAddToQueue = (nodeId: string) => {
+    if (startVertexId.value === null) {
+        return false;
+    }
+    if (
+        graph.visited.size === 0 &&
+        nodeId !== numToLetter[startVertexId.value + 1]
+    ) {
+        return false;
+    }
     if (
         graph.queue.includes(graph.getVertex(letterToNum[nodeId] - 1)) ||
         graph.visited.has(letterToNum[nodeId] - 1)
@@ -179,12 +189,6 @@ const validateAddToQueue = (nodeId: string) => {
     if (
         !checkIndexInAdjList(nodeId, graph.currentVertex.value?.getAdjList()) &&
         graph.visited.size > 0
-    ) {
-        return false;
-    }
-    if (
-        graph.visited.size === 0 &&
-        nodeId !== graph.currentVertex.value?.getTextName()
     ) {
         return false;
     }
@@ -226,8 +230,7 @@ const startTheAlgorithm = (startIndex: number) => {
     emit("update:started", true);
     setStep("add-to-queue");
     emit("update:diyStep", "add-to-queue");
-    graph.currentVertex.value = graph.getVertex(startIndex);
-    emit("update:currentVertexName", graph.currentVertex.value?.getTextName());
+    startVertexId.value = startIndex;
 };
 const reset = () => {
     nodeData.value = nodeDatas[whichGraphData.value];

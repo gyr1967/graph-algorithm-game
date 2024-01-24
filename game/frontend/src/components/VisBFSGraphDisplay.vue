@@ -41,14 +41,14 @@ class VisBFSGraph extends Graph {
             visited: this.visited,
             queue: this.queue,
             step: "addFirstToQueue",
-            currentVertex: startVertex,
+            currentVertex: null,
         };
         // while there is something in the queue do
         yield {
             visited: this.visited,
             queue: this.queue,
             step: "while",
-            currentVertex: startVertex,
+            currentVertex: null,
         };
         while (this.queue.length !== 0) {
             // remove the first vertex in the queue, and make it the current vertex
