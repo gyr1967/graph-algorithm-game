@@ -53,7 +53,7 @@ class VisDijkstraGraph extends DijkstraGraph {
         distances.value[startVertex.getTextName()] = 0;
         yield {
             step: "set-source-to-zero",
-            currentVertex: startVertex,
+            currentVertex: null,
             verticesToCheck: this.verticesToCheck,
         };
 
@@ -169,6 +169,7 @@ const reset = () => {
     emit("update:currentVertexName", "");
     emit("update:pseudoStep", null);
     setColoursDefault();
+    graph = setUpGraph(Object.entries(nodeData.value).length);
 };
 
 const performDijkstraStep = () => {
