@@ -49,7 +49,7 @@ const submitDistance = () => {
                 />
             </div>
             <div class="mx-2 text-center">
-                <span>Start Vertex</span>
+                <span>Source Vertex</span>
                 <StartVertexChoice
                     :disabled="started"
                     :number-of-vertices="numberOfVertices"
