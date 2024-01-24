@@ -67,6 +67,7 @@ const sourceName = ref<string>("");
                     :vertices-to-check="verticesToCheck"
                     :distances="distances"
                     :vertices="vertices"
+                    :source-name="sourceName"
                 />
             </div>
             <div>
