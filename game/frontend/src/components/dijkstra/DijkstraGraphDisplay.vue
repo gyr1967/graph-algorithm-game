@@ -106,6 +106,18 @@ class VisDijkstraGraph extends DijkstraGraph {
             adjToVisit.value = adjToVisit.value.filter(
                 (v) => v.getIndex() !== vertex.getIndex(),
             );
+            let prev = this.currentVertex.value;
+            while (prev) {
+                this.changeVertexColour(prev.getTextName(), "#ff00ff");
+                prev = prev.getPreviousVertex();
+            }
+            setTimeout(() => {
+                prev = vertex.getPreviousVertex();
+                while (prev) {
+                    this.changeVertexColour(prev.getTextName(), nodeFill);
+                    prev = prev.getPreviousVertex();
+                }
+            }, 1000);
             if (adjToVisit.value.length === 0) {
                 setStep("remove-and-set-to-current");
             } else {
