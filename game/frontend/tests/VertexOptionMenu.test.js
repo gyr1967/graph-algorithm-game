@@ -5,10 +5,13 @@ import VertexOptionMenu from "../src/components/VertexOptionMenu.vue";
 test("Correct text is shown in VertexOptionsMenu for DFS", () => {
     const wrapper = mount(VertexOptionMenu, {
         props: {
+            wrongChoice: false,
             text: "A",
             nodeId: "A",
             disabled: false,
             bfsOrDfs: "dfs",
+            numberOfVertices: 6,
+            started: false,
         },
     });
 
@@ -26,10 +29,13 @@ test("Correct text is shown in VertexOptionsMenu for DFS", () => {
 test("Correct text is shown in VertexOptionsMenu for BFS", () => {
     const wrapper = mount(VertexOptionMenu, {
         props: {
+            wrongChoice: false,
             text: "A",
             nodeId: "A",
             disabled: false,
             bfsOrDfs: "bfs",
+            numberOfVertices: 6,
+            started: false,
         },
     });
 

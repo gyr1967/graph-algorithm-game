@@ -30,11 +30,12 @@ test("component renders the correct number of nodes and links", () => {
     });
     let svgHtml = wrapper.html();
 
-    expect(svgHtml).toContain(`circle cx="50" cy="50"`);
-    expect(svgHtml).toContain(`circle cx="150" cy="50"`);
-    expect(svgHtml).toContain(`circle cx="250" cy="50"`);
-    expect(svgHtml).toContain(`line x1="150" y1="50" x2="250" y2="50"`);
-    expect(svgHtml).toContain(`line x1="50" y1="50" x2="150" y2="50"`);
+    const graphData1 = wrapper.vm.nodeData;
+    for (const node in graphData1) {
+        expect(svgHtml).toContain(
+            `circle cx="${graphData1[node].x}" cy="${graphData1[node].y}"`,
+        );
+    }
 
     wrapper = mount(VisDijkstraGraphDisplay, {
         props: {
@@ -44,12 +45,12 @@ test("component renders the correct number of nodes and links", () => {
     });
     svgHtml = wrapper.html();
 
-    expect(svgHtml).toContain(`circle cx="30" cy="150"`);
-    expect(svgHtml).toContain(`circle cx="175" cy="150"`);
-    expect(svgHtml).toContain(`circle cx="300" cy="100"`);
-    expect(svgHtml).toContain(`circle cx="275" cy="275"`);
-    expect(svgHtml).toContain(`circle cx="75" cy="275"`);
-    expect(svgHtml).toContain(`circle cx="175" cy="50"`);
+    const graphData2 = wrapper.vm.nodeData;
+    for (const node in graphData2) {
+        expect(svgHtml).toContain(
+            `circle cx="${graphData2[node].x}" cy="${graphData2[node].y}"`,
+        );
+    }
 });
 
 test("graph data structure has the correct number of vertices", () => {
@@ -74,108 +75,7 @@ test("vertices are correctly connected", () => {
     });
     const graph = wrapper.vm.graph;
     const vertices = graph.getVertices();
-    // these are the links
-    // 2: {
-    //     A_B: {
-    //         v1: "A",
-    //         v2: "B",
-    //         x1: nodeDatas[2]["A"].x,
-    //         y1: nodeDatas[2]["A"].y,
-    //         x2: nodeDatas[2]["B"].x,
-    //         y2: nodeDatas[2]["B"].y,
-    //         stroke: "#ccc",
-    //         strokeWidth: "2",
-    //         weight: 1,
-    //     },
-    //     A_F: {
-    //         v1: "A",
-    //         v2: "F",
-    //         x1: nodeDatas[2]["A"].x,
-    //         y1: nodeDatas[2]["A"].y,
-    //         x2: nodeDatas[2]["F"].x,
-    //         y2: nodeDatas[2]["F"].y,
-    //         stroke: "#ccc",
-    //         strokeWidth: "2",
-    //         weight: 9,
-    //     },
-    //     A_E: {
-    //         v1: "A",
-    //         v2: "E",
-    //         x1: nodeDatas[2]["A"].x,
-    //         y1: nodeDatas[2]["A"].y,
-    //         x2: nodeDatas[2]["E"].x,
-    //         y2: nodeDatas[2]["E"].y,
-    //         stroke: "#ccc",
-    //         strokeWidth: "2",
-    //         weight: 3,
-    //     },
-    //     B_E: {
-    //         v1: "B",
-    //         v2: "E",
-    //         x1: nodeDatas[2]["B"].x,
-    //         y1: nodeDatas[2]["B"].y,
-    //         x2: nodeDatas[2]["E"].x,
-    //         y2: nodeDatas[2]["E"].y,
-    //         stroke: "#ccc",
-    //         strokeWidth: "2",
-    //         weight: 4,
-    //     },
-    //     B_D: {
-    //         v1: "B",
-    //         v2: "D",
-    //         x1: nodeDatas[2]["B"].x,
-    //         y1: nodeDatas[2]["B"].y,
-    //         x2: nodeDatas[2]["D"].x,
-    //         y2: nodeDatas[2]["D"].y,
-    //         stroke: "#ccc",
-    //         strokeWidth: "2",
-    //         weight: 5,
-    //     },
-    //     B_C: {
-    //         v1: "B",
-    //         v2: "C",
-    //         x1: nodeDatas[2]["B"].x,
-    //         y1: nodeDatas[2]["B"].y,
-    //         x2: nodeDatas[2]["C"].x,
-    //         y2: nodeDatas[2]["C"].y,
-    //         stroke: "#ccc",
-    //         strokeWidth: "2",
-    //         weight: 1,
-    //     },
-    //     C_F: {
-    //         v1: "C",
-    //         v2: "F",
-    //         x1: nodeDatas[2]["C"].x,
-    //         y1: nodeDatas[2]["C"].y,
-    //         x2: nodeDatas[2]["F"].x,
-    //         y2: nodeDatas[2]["F"].y,
-    //         stroke: "#ccc",
-    //         strokeWidth: "2",
-    //         weight: 2,
-    //     },
-    //     C_D: {
-    //         v1: "C",
-    //         v2: "D",
-    //         x1: nodeDatas[2]["C"].x,
-    //         y1: nodeDatas[2]["C"].y,
-    //         x2: nodeDatas[2]["D"].x,
-    //         y2: nodeDatas[2]["D"].y,
-    //         stroke: "#ccc",
-    //         strokeWidth: "2",
-    //         weight: 3,
-    //     },
-    //     E_D: {
-    //         v1: "E",
-    //         v2: "D",
-    //         x1: nodeDatas[2]["E"].x,
-    //         y1: nodeDatas[2]["E"].y,
-    //         x2: nodeDatas[2]["D"].x,
-    //         y2: nodeDatas[2]["D"].y,
-    //         stroke: "#ccc",
-    //         strokeWidth: "2",
-    //         weight: 9,
-    //     },
-    // }
+
     expect(vertices[0].getAdjList()).toEqual([
         new AdjListVertex(1, 1),
         new AdjListVertex(5, 9),

@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import VisBFSGraphDisplay from "../../components/VisBFSGraphDisplay.vue";
 import SearchPseudo from "../../components/SearchPseudo.vue";
+import SearchLegend from "../../components/SearchLegend.vue";
 import SidePanel from "../../components/SidePanel.vue";
 import { ref } from "vue";
 import { BFSStep } from "../../types/BFS";
@@ -18,11 +19,11 @@ const pseudoStep = ref<BFSStep | null>(null);
                 bfs-or-dfs="bfs"
                 :is-diy="false"
             />
+            <SearchLegend class="mt-2" />
         </div>
         <div class="flex justify-center items-center">
             <div>
                 <VisBFSGraphDisplay
-                    :which-graph-data="1"
                     :scaling-factor="graphSize"
                     @update:current-vertex-name="
                         (newValue) => {

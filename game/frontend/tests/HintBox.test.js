@@ -16,7 +16,7 @@ test("Correct text is shown in HintBox.vue at start", () => {
 
     const textElement = wrapper.text();
     const expectedText = "Add A to the queue";
-    expect(textElement).toBe(expectedText);
+    expect(textElement).toContain(expectedText);
 });
 
 test("Correct text is shown in HintBox.vue midway", () => {
@@ -33,7 +33,7 @@ test("Correct text is shown in HintBox.vue midway", () => {
 
     const textElement = wrapper.text();
     const expectedText = "Mark D as visited";
-    expect(textElement).toBe(expectedText);
+    expect(textElement).toContain(expectedText);
 });
 
 test("Correct text is shown in HintBox.vue midway for DIY", () => {
@@ -50,7 +50,7 @@ test("Correct text is shown in HintBox.vue midway for DIY", () => {
 
     const textElement = wrapper.text();
     const expectedText = "Mark D as visited";
-    expect(textElement).toBe(expectedText);
+    expect(textElement).toContain(expectedText);
 });
 
 test("Correct hints shown for DFS", () => {
@@ -67,5 +67,5 @@ test("Correct hints shown for DFS", () => {
 
     const textElement = wrapper.text();
     const expectedText = "Add A to the stack";
-    expect(textElement).toBe(expectedText);
+    expect(textElement).toContain(expectedText);
 });

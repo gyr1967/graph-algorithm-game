@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import DijkstraGraphDisplay from "../../components/dijkstra/DijkstraGraphDisplay.vue";
 import DijkstraPseudo from "../../components/dijkstra/DijkstraPseudo.vue";
+import DijkstraSearchLegend from "../../components/dijkstra/DijkstraSearchLegend.vue";
 import DijkstraSidePanel from "../../components/dijkstra/DijkstraSidePanel.vue";
 import ShortestPaths from "../../components/dijkstra/ShortestPaths.vue";
 import DijkstraHintBox from "../../components/dijkstra/DijkstraHintBox.vue";
@@ -30,11 +31,11 @@ const sourceName = ref<string>("");
                 :adjacent-vertex-name="adjacentVertexName"
                 :distances="distances"
             />
+            <DijkstraSearchLegend class="mt-2" />
         </div>
         <div class="flex justify-center">
             <div>
                 <DijkstraGraphDisplay
-                    :which-graph-data="2"
                     :scaling-factor="1.2"
                     @update:current-vertex-name="
                         (newValue) => {
@@ -87,6 +88,7 @@ const sourceName = ref<string>("");
                     :vertices-to-check="verticesToCheck"
                     :distances="distances"
                     :vertices="vertices"
+                    :source-name="sourceName"
                 />
             </div>
             <div>
