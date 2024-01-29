@@ -267,6 +267,16 @@
 * *3 Hours* | Clean up legend, add colours to visualisation, new graph, prep for supervisor meeting
 
 
+### 24 Jan 2024
+
+* *5 Hours* | Initial user study with a classmate - lots of good points. Add paths, bug fixes, fix legend. Was sent to hospital so wasn't as productive as I'd have liked!
+
+### 27 Jan 2024
+
+* *2 hours* | Fully implement paths
+
+## Week 4
+
 
 
 
