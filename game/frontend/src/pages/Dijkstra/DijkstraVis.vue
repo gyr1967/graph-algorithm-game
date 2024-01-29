@@ -25,7 +25,6 @@ const sourceName = ref<string>("");
         <div class="flex justify-center">
             <div>
                 <VisDijkstraGraph
-                    :which-graph-data="2"
                     :scaling-factor="1.2"
                     @update:current-vertex-name="
                         (newValue) => {
@@ -68,6 +67,7 @@ const sourceName = ref<string>("");
                     :vertices-to-check="verticesToCheck"
                     :distances="distances"
                     :vertices="vertices"
+                    :source-name="sourceName"
                 />
             </div>
             <div>

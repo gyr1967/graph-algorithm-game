@@ -1,18 +1,26 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { letterToNum } from "../utils/num-to-letter";
+import { nodeDatas } from "../utils/graph-data";
 import StartVertexChoice from "./StartVertexChoice.vue";
-
-defineProps<{
+import GraphChoice from "./GraphChoice.vue";
+const props = defineProps<{
     started: boolean;
     isDijkstras?: boolean;
     numberOfVertices: number;
 }>();
-defineEmits(["start", "nextStep", "reset", "randomiseLinkLengths"]);
+defineEmits([
+    "start",
+    "nextStep",
+    "reset",
+    "randomiseLinkLengths",
+    "update:graphChoice",
+]);
+const numberOfVerticesRef = ref<number>(props.numberOfVertices);
 const choice = ref<Record<string, string>>({ id: "A" });
 </script>
 <template>
-    <div class="flex-row">
+    <div>
         <div v-if="isDijkstras === true" class="flex justify-center mb-2">
             <button
                 :disabled="started"
@@ -22,17 +30,38 @@ const choice = ref<Record<string, string>>({ id: "A" });
                 Randomise Edge Weights
             </button>
         </div>
-        <div class="flex">
-            <div class="flex">
+        <div class="my-2 flex justify-center items-center">
+            <div class="mx-2 text-center">
+                <span>Graph</span>
+                <GraphChoice
+                    :disabled="started"
+                    :number-of-graphs="3"
+                    :starting-graph="isDijkstras ? 2 : 1"
+                    @update:graph-choice="
+                        (newValue: number) => {
+                            $emit('update:graphChoice', newValue);
+                            numberOfVerticesRef = Object.entries(
+                                nodeDatas[newValue],
+                            ).length;
+                        }
+                    "
+                />
+            </div>
+            <div class="mx-2 text-center">
+                <span>Start Vertex</span>
                 <StartVertexChoice
                     :disabled="started"
-                    :number-of-vertices="numberOfVertices"
+                    :number-of-vertices="numberOfVerticesRef"
                     @update:source-choice="
                         (newValue: Record<string, string>) => {
                             choice = newValue;
                         }
                     "
                 />
+            </div>
+        </div>
+        <div class="flex-row">
+            <div class="flex justify-center">
                 <button
                     :disabled="started"
                     class="bg-white text-black rounded-sm p-1 mx-1 hover:bg-gray-400 disabled:bg-gray-600 disabled:cursor-not-allowed"
@@ -40,21 +69,21 @@ const choice = ref<Record<string, string>>({ id: "A" });
                 >
                     Start
                 </button>
+                <button
+                    :disabled="!started"
+                    class="bg-white text-black rounded-sm p-1 ml-1 mr-1 hover:bg-gray-400 disabled:bg-gray-600 disabled:cursor-not-allowed"
+                    @click="$emit('reset')"
+                >
+                    Reset
+                </button>
+                <button
+                    :disabled="!started"
+                    class="bg-white text-black rounded-sm p-1 ml-1 hover:bg-gray-400 disabled:bg-gray-600 disabled:cursor-not-allowed"
+                    @click="$emit('nextStep')"
+                >
+                    Next
+                </button>
             </div>
-            <button
-                :disabled="!started"
-                class="bg-white text-black rounded-sm p-1 ml-1 mr-1 hover:bg-gray-400 disabled:bg-gray-600 disabled:cursor-not-allowed"
-                @click="$emit('reset')"
-            >
-                Reset
-            </button>
-            <button
-                :disabled="!started"
-                class="bg-white text-black rounded-sm p-1 ml-1 hover:bg-gray-400 disabled:bg-gray-600 disabled:cursor-not-allowed"
-                @click="$emit('nextStep')"
-            >
-                Next
-            </button>
         </div>
     </div>
 </template>

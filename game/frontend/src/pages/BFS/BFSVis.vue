@@ -24,7 +24,6 @@ const pseudoStep = ref<BFSStep | null>(null);
         <div class="flex justify-center items-center">
             <div>
                 <VisBFSGraphDisplay
-                    :which-graph-data="1"
                     :scaling-factor="graphSize"
                     @update:current-vertex-name="
                         (newValue) => {

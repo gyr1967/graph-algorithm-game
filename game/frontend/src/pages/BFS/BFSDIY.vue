@@ -40,10 +40,9 @@ const visited = ref<Vertex[]>([]);
             />
             <SearchLegend class="mt-2" />
         </div>
-        <div class="flex justify-center items-center">
+        <div class="flex justify-center">
             <div>
                 <DIYBFSGraphDisplay
-                    :which-graph-data="1"
                     :scaling-factor="graphSize"
                     @update:vertex-names="
                         (newValue) => {

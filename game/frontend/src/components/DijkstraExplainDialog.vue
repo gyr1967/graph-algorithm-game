@@ -53,14 +53,13 @@ defineEmits(["closeModal"]);
                                     Depth-First search is an algorithm that
                                     finds the shortest distance from a source
                                     vertex to all other vertices in a graph.
-                                    "But what distances?" I hear you ask. Unlike
-                                    the other two algorithms, Dijkstra's
+                                    Unlike the other two algorithms, Dijkstra's
                                     algorithm only works on graphs that are
                                     weighted. If a graph has is weighted, that
                                     means that each edge has a certain cost tied
                                     to it. Imagine a map of a country, where
                                     each city is a vertex and each road is an
-                                    edge. The cost of each edge would be the
+                                    edge. The weight of each edge would be the
                                     distance between the two cities. It is a
                                     common problem in computing science to find
                                     the shortest path between two vertices in a

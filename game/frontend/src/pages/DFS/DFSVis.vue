@@ -24,7 +24,6 @@ const pseudoStep = ref<DFSStep | null>(null);
         <div class="flex justify-center items-center">
             <div>
                 <VisDFSGraphDisplay
-                    :which-graph-data="1"
                     :scaling-factor="graphSize"
                     @update:current-vertex-name="
                         (newValue) => {

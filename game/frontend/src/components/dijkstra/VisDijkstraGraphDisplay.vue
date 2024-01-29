@@ -8,9 +8,8 @@ import { DijkstraGraph } from "../../graph/Graph.ts";
 import { linkDatas, nodeDatas } from "../../utils/graph-data";
 import { letterToNum, numToLetter } from "../../utils/num-to-letter";
 import { ref } from "vue";
-import { EdgeData } from "../../types/GraphData";
-const props = defineProps<{
-    whichGraphData: number;
+import { EdgeData, NodeData } from "../../types/GraphData";
+defineProps<{
     scalingFactor: number;
 }>();
 const emit = defineEmits([
@@ -21,6 +20,8 @@ const emit = defineEmits([
     "update:vertices",
     "update:sourceName",
 ]);
+
+const whichGraphData = ref<number>(2);
 
 class VisDijkstraGraph extends DijkstraGraph {
     currentVertex = ref<DijkstraVertex | null>(null);
@@ -52,7 +53,7 @@ class VisDijkstraGraph extends DijkstraGraph {
         distances.value[startVertex.getTextName()] = 0;
         yield {
             step: "set-source-to-zero",
-            currentVertex: startVertex,
+            currentVertex: null,
             verticesToCheck: this.verticesToCheck,
         };
 
@@ -88,11 +89,23 @@ class VisDijkstraGraph extends DijkstraGraph {
                         verticesToCheck: this.verticesToCheck,
                     };
                     v.setPreviousVertex(currentVertex);
+                    // change the colour of all the predecessors of v
+                    let prev = v.getPreviousVertex();
+                    while (prev) {
+                        this.changeVertexColour(prev.getTextName(), "#ff00ff");
+                        prev = prev.getPreviousVertex();
+                    }
                     yield {
                         step: "set-adj-prev-to-current",
                         currentVertex: currentVertex,
                         verticesToCheck: this.verticesToCheck,
                     };
+                    // change the predecessors back to normal
+                    prev = v.getPreviousVertex();
+                    while (prev) {
+                        this.changeVertexColour(prev.getTextName(), nodeFill);
+                        prev = prev.getPreviousVertex();
+                    }
                 }
                 this.changeVertexColour(v.getTextName(), nodeFill);
             }
@@ -104,20 +117,20 @@ class VisDijkstraGraph extends DijkstraGraph {
         };
     }
 }
-const nodeData = nodeDatas[props.whichGraphData];
+const nodeData = ref<Record<string, NodeData>>(nodeDatas[whichGraphData.value]);
 const distances = ref<Record<string, number>>({});
-const linkData = ref<Record<string, EdgeData>>(linkDatas[props.whichGraphData]);
+const linkData = ref<Record<string, EdgeData>>(linkDatas[whichGraphData.value]);
 const randomiseLinkLengths = () => {
     Object.keys(linkData.value).forEach((key) => {
         linkData.value[key].weight = Math.floor(Math.random() * 14) + 1;
     });
-    graph = setUpGraph(Object.entries(nodeData).length);
+    graph = setUpGraph(Object.entries(nodeData.value).length);
 };
 const nodeFill = "#3498db";
 const nodeColours = ref<Record<string, string>>({});
 const setColoursDefault = () => {
-    Object.keys(nodeData).forEach((key) => {
-        nodeColours.value[nodeData[key].id] = nodeFill;
+    Object.keys(nodeData.value).forEach((key) => {
+        nodeColours.value[nodeData.value[key].id] = nodeFill;
     });
 };
 setColoursDefault();
@@ -133,12 +146,12 @@ const setUpGraph = (n: number) => {
         v1.addToAdjList(v2id, edgeWeight);
         v2.addToAdjList(v1id, edgeWeight);
     });
-    Object.keys(nodeData).forEach((key) => {
-        distances.value[nodeData[key].id] = Infinity;
+    Object.keys(nodeData.value).forEach((key) => {
+        distances.value[nodeData.value[key].id] = Infinity;
     });
     return graph;
 };
-let graph = setUpGraph(Object.entries(nodeData).length);
+let graph = setUpGraph(Object.entries(nodeData.value).length);
 const started = ref<boolean>(false);
 const dijkstraGenerator = ref<Generator<
     DijkstraYieldData,
@@ -148,7 +161,7 @@ const dijkstraGenerator = ref<Generator<
 const startDijkstras = (startIndex: number) => {
     emit("update:sourceName", numToLetter[startIndex + 1]);
     setColoursDefault();
-    graph = setUpGraph(Object.entries(nodeData).length);
+    graph = setUpGraph(Object.entries(nodeData.value).length);
     emit("update:vertices", graph.vertices);
     const generator = graph.dijkstraGenerator(graph.getVertex(startIndex));
     dijkstraGenerator.value = generator;
@@ -161,10 +174,14 @@ const startDijkstras = (startIndex: number) => {
 };
 
 const reset = () => {
+    nodeData.value = nodeDatas[whichGraphData.value];
+    linkData.value = linkDatas[whichGraphData.value];
     dijkstraGenerator.value = null;
     started.value = false;
     emit("update:currentVertexName", "");
     emit("update:pseudoStep", null);
+    setColoursDefault();
+    graph = setUpGraph(Object.entries(nodeData.value).length);
 };
 
 const performDijkstraStep = () => {
@@ -239,6 +256,12 @@ const performDijkstraStep = () => {
                 @next-step="performDijkstraStep"
                 @reset="reset()"
                 @randomise-link-lengths="randomiseLinkLengths"
+                @update:graph-choice="
+                    (newValue: number) => {
+                        whichGraphData = newValue;
+                        reset();
+                    }
+                "
             />
         </div>
     </div>
