@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, watch } from "vue";
+import { computed, ref, watch } from "vue";
 import { numToLetter } from "../utils/num-to-letter";
 import {
     Listbox,
@@ -13,13 +13,14 @@ const props = defineProps<{
     numberOfVertices: number;
 }>();
 const emit = defineEmits(["update:sourceChoice"]);
+// const numberOfVerticesRef = ref<number>(props.numberOfVertices);
+const vertexChoices = computed(() => {
+    return Array.from({ length: props.numberOfVertices }, (_, i) => ({
+        id: numToLetter[i + 1],
+    }));
+});
 
-const vertexChoices = Array.from(
-    { length: props.numberOfVertices },
-    (_, i) => ({ id: numToLetter[i + 1] }),
-);
-
-const selectedVertexId = ref<Record<string, string>>(vertexChoices[0]);
+const selectedVertexId = ref<Record<string, string>>(vertexChoices.value[0]);
 
 watch(
     () => selectedVertexId.value,

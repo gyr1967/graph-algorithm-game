@@ -1,9 +1,10 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { letterToNum } from "../utils/num-to-letter";
+import { nodeDatas } from "../utils/graph-data";
 import StartVertexChoice from "./StartVertexChoice.vue";
 import GraphChoice from "./GraphChoice.vue";
-defineProps<{
+const props = defineProps<{
     started: boolean;
     isDijkstras?: boolean;
     numberOfVertices: number;
@@ -15,6 +16,7 @@ defineEmits([
     "randomiseLinkLengths",
     "update:graphChoice",
 ]);
+const numberOfVerticesRef = ref<number>(props.numberOfVertices);
 const choice = ref<Record<string, string>>({ id: "A" });
 </script>
 <template>
@@ -38,6 +40,9 @@ const choice = ref<Record<string, string>>({ id: "A" });
                     @update:graph-choice="
                         (newValue: number) => {
                             $emit('update:graphChoice', newValue);
+                            numberOfVerticesRef = Object.entries(
+                                nodeDatas[newValue],
+                            ).length;
                         }
                     "
                 />
@@ -46,7 +51,7 @@ const choice = ref<Record<string, string>>({ id: "A" });
                 <span>Start Vertex</span>
                 <StartVertexChoice
                     :disabled="started"
-                    :number-of-vertices="numberOfVertices"
+                    :number-of-vertices="numberOfVerticesRef"
                     @update:source-choice="
                         (newValue: Record<string, string>) => {
                             choice = newValue;

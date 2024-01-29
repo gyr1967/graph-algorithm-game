@@ -1,10 +1,8 @@
 <script setup lang="ts"></script>
 
 <template>
-    <div class="border-t bg-gray-800 flex justify-between items-center">
-        <div class="mx-2">
-            <span>This was made by George Yarr!</span>
-        </div>
+    <footer class="border-t bg-gray-800 flex justify-between items-center mt-4">
+        <div class="mx-2"></div>
         <div class="relative p-2 flex">
             <div class="mx-2">
                 <a
@@ -43,5 +41,5 @@
                 </a>
             </div>
         </div>
-    </div>
+    </footer>
 </template>
