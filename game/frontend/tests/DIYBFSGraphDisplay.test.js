@@ -97,8 +97,9 @@ test("breadth first starts", () => {
             scalingFactor,
         },
     });
-    const graph = wrapper.vm.graph;
-    const vertices = graph.getVertices();
     wrapper.vm.startTheAlgorithm(0);
-    expect(graph.currentVertex.value).toEqual(vertices[0]);
+    const started = wrapper.vm.started;
+    const step = wrapper.vm.currentStep;
+    expect(started).toEqual(true);
+    expect(step).toEqual("add-to-queue");
 });
