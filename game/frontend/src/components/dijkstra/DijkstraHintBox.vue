@@ -53,7 +53,7 @@ const toggleBlur = () => {
                         queue and set it as the current vertex
                     </span>
                     <span v-else-if="text === 'set-adj-prev-to-current'">
-                        >Set {{ adjacentVertexName }}'s previous vertex to
+                        Set {{ adjacentVertexName }}'s previous vertex to
                         {{ currentVertexName }}</span
                     >
                     <span v-else-if="text === 'done'">Done!</span>
