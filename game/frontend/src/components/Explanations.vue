@@ -10,7 +10,7 @@ const dijkstraOpen = ref<boolean>(false);
 </script>
 <template>
     <div>
-        <h1 class="flex justify-center">Explanations</h1>
+        <h1 class="flex justify-center">What Algorithms?</h1>
         <div>
             <button
                 class="bg-white text-black rounded-sm p-1 mx-1 hover:bg-gray-400 disabled:bg-gray-600 disabled:cursor-not-allowed"

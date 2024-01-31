@@ -27,7 +27,6 @@ const circles = [
         r: 10,
         fill: "#2ecc71",
         label: "Current Adjacent Vertex",
-        text: "3",
     },
     {
         id: 4,
@@ -36,15 +35,12 @@ const circles = [
         r: 10,
         fill: "#ff00ff",
         label: "Path to Source",
-        text: "3",
     },
 ];
 </script>
 
 <template>
-    <div
-        class="border border-white p-4 rounded-md shadow-md flex justify-between"
-    >
+    <div class="border border-white p-4 rounded-md shadow-md">
         <div
             v-for="circle in circles"
             :key="circle.id"
