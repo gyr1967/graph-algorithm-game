@@ -49,28 +49,41 @@ defineEmits(["closeModal"]);
                                 Dijkstra's Shortest Path
                             </DialogTitle>
                             <div class="mt-2">
-                                <p class="text-sm text-gray-500">
-                                    Depth-First search is an algorithm that
-                                    finds the shortest distance from a source
-                                    vertex to all other vertices in a graph.
-                                    Unlike the other two algorithms, Dijkstra's
-                                    algorithm only works on graphs that are
-                                    weighted. If a graph has is weighted, that
-                                    means that each edge has a certain cost tied
-                                    to it. Imagine a map of a country, where
-                                    each city is a vertex and each road is an
-                                    edge. The weight of each edge would be the
-                                    distance between the two cities. It is a
-                                    common problem in computing science to find
-                                    the shortest path between two vertices in a
-                                    graph. An example of where this kind of
-                                    algorithm is used is Google Maps on your
-                                    phone. When you ask for directions from one
-                                    place to another, Google Maps uses an
-                                    algorithm similar to Dijkstra's to find the
-                                    shortest path from the source (where you
-                                    are) to the destination.
-                                </p>
+                                <div class="text-sm text-gray-500">
+                                    <p>
+                                        Dijkstra's Shortest Path Algorithm is an
+                                        algorithm that finds the shortest
+                                        distance from a source vertex to all
+                                        other vertices in a graph.
+                                    </p>
+                                    <p>
+                                        Unlike the other two algorithms,
+                                        Dijkstra's algorithm only works on
+                                        graphs that are weighted. If a graph has
+                                        is weighted, that means that each edge
+                                        has a certain cost tied to it.
+                                    </p>
+                                    <p>
+                                        Imagine a map of a country, where each
+                                        city is a vertex and each road is an
+                                        edge. The weight of each edge would be
+                                        the distance between the two cities.
+                                    </p>
+                                    <p>
+                                        It is common in computing science to
+                                        need to find the shortest path between
+                                        two vertices in a graph.
+                                    </p>
+                                    <p>
+                                        An example of where this kind of
+                                        algorithm is used is Google Maps. When
+                                        you ask for directions from one place to
+                                        another, Google Maps uses an algorithm
+                                        similar to Dijkstra's to find the
+                                        shortest path from the source (where you
+                                        are) to the destination.
+                                    </p>
+                                </div>
                             </div>
                         </DialogPanel>
                     </TransitionChild>

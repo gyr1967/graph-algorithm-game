@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import VisDijkstraGraph from "../../components/dijkstra/VisDijkstraGraphDisplay.vue";
 import DijkstraPseudo from "../../components/dijkstra/DijkstraPseudo.vue";
-import DijkstraSearchLegend from "../../components/dijkstra/DijkstraSearchLegend.vue";
+import DijkstraLegend from "../../components/dijkstra/DijkstraLegend.vue";
 import DijkstraSidePanel from "../../components/dijkstra/DijkstraSidePanel.vue";
 import ShortestPaths from "../../components/dijkstra/ShortestPaths.vue";
 import { ref } from "vue";
@@ -20,7 +20,7 @@ const sourceName = ref<string>("");
     <div class="grid grid-cols-3 gap-1">
         <div class="ml-2">
             <DijkstraPseudo :current-step="pseudoStep" :is-diy="false" />
-            <DijkstraSearchLegend class="mt-2" />
+            <DijkstraLegend class="mt-2" />
         </div>
         <div class="flex justify-center">
             <div>
