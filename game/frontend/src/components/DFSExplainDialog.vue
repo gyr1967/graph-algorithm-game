@@ -49,10 +49,38 @@ defineEmits(["closeModal"]);
                                 Depth-First Search
                             </DialogTitle>
                             <div class="mt-2">
-                                <p class="text-sm text-gray-500">
-                                    Depth-First search is an algorithm that
-                                    traverses a graph
-                                </p>
+                                <div class="text-sm text-gray-500">
+                                    <p>
+                                        Depth-First Search (DFS) is a graph
+                                        traversal algorithm. This means that it
+                                        aims to find or 'visit' all the vertices
+                                        in an unexplored graph.
+                                    </p>
+                                    <p>
+                                        It does this by making use of a 'stack'.
+                                        A stack is a data structure that works
+                                        exactly the same as a stack of dinner
+                                        plates; The first plate on is the last
+                                        plate off.
+                                    </p>
+                                    <p>
+                                        DFS adds vertices to the stack, then
+                                        removes the first in the stack, 'visits'
+                                        it, then adds all of that vertex's
+                                        unvisited neighbours to the stack, until
+                                        there are no more vertices to visit.
+                                    </p>
+                                    <p>
+                                        The reason it's called Depth-First is
+                                        because the algorithm tunnels deep down
+                                        one avenue before exploring wider. You
+                                        may notice the algorithm is nearly
+                                        identical to Breadth-First Search, with
+                                        the only difference being the use of a
+                                        stack vs a queue, which affects the
+                                        order vertices are visited.
+                                    </p>
+                                </div>
                             </div>
                         </DialogPanel>
                     </TransitionChild>
