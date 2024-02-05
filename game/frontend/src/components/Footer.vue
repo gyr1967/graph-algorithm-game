@@ -1,10 +1,8 @@
 <script setup lang="ts"></script>
 
 <template>
-    <footer
-        class="border-t bg-gray-800 flex justify-between items-center mt-20"
-    >
-        <div class="mx-2"></div>
+    <footer class="border-t bg-gray-800 flex justify-between items-center mt-4">
+        <div></div>
         <div class="relative p-2 flex">
             <div class="mx-2">
                 <a

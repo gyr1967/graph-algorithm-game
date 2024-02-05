@@ -4,7 +4,7 @@ import { ChevronUpIcon } from "@heroicons/vue/20/solid";
 import PseudoExplain from "./PseudoExplain.vue";
 </script>
 <template>
-    <div class="w-full px-4 pt-16">
+    <div class="w-full px-4 pt-4">
         <div class="mx-auto w-full max-w-xl rounded-2xl bg-gray-600 p-2">
             <Disclosure v-slot="{ open }">
                 <DisclosureButton
