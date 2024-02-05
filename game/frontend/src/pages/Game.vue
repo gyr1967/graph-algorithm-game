@@ -6,6 +6,7 @@ import DFSVis from "./DFS/DFSVis.vue";
 import DFSDIY from "./DFS/DFSDIY.vue";
 import DijkstraVis from "./Dijkstra/DijkstraVis.vue";
 import DijkstraDIY from "./Dijkstra/DijkstraDIY.vue";
+import Footer from "../components/Footer.vue";
 import type { Pages } from "../utils/pages";
 
 const page = ref<Pages | null>(null);
@@ -84,5 +85,8 @@ const pagesList: { key: Pages; label: string }[] = [
         <template v-else-if="page === 'Dijkstra_DIY'">
             <DijkstraDIY />
         </template>
+    </div>
+    <div class="w-full">
+        <Footer />
     </div>
 </template>

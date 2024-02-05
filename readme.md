@@ -1,5 +1,8 @@
 # George's Graph Algorithm Game :D
 
+## A Web-based visualisation and DIY runthrough of some simple graph algorithms
+### Kindly supervised by [Dr Sofiat Olaosebikan](https://www.dcs.gla.ac.uk/~sofiat/)
+
 Here's an overview of the structure as it stands:
 
 * `timelog.md` The time log for your project.

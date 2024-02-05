@@ -49,10 +49,34 @@ defineEmits(["closeModal"]);
                                 Breadth-First Search
                             </DialogTitle>
                             <div class="mt-2">
-                                <p class="text-sm text-gray-500">
-                                    Breadth-First search is an algorithm that
-                                    traverses a graph
-                                </p>
+                                <div class="text-sm text-gray-500">
+                                    <p>
+                                        Breadth-First Search (BFS) is a graph
+                                        traversal algorithm. This means that it
+                                        aims to find or 'visit' all the vertices
+                                        in an unexplored graph.
+                                    </p>
+                                    <p>
+                                        It does this by making use of a 'queue'.
+                                        A queue is a data structure that works
+                                        exactly the same as the queues we humans
+                                        make when waiting in line; The first
+                                        person in is the first person out.
+                                    </p>
+                                    <p>
+                                        BFS adds vertices to the queue, then
+                                        removes the first in the queue, 'visits'
+                                        it, then adds all of that vertex's
+                                        unvisited neighbours to the queue, until
+                                        there are no more vertices to visit.
+                                    </p>
+                                    <p>
+                                        The reason it's called Breadth-First is
+                                        because the algorithm explores wide
+                                        instead of tunneling deep down one
+                                        avenue like Depth-First Search does.
+                                    </p>
+                                </div>
                             </div>
                         </DialogPanel>
                     </TransitionChild>

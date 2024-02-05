@@ -24,9 +24,7 @@ const circles = [
 </script>
 
 <template>
-    <div
-        class="border border-white p-4 rounded-md shadow-md flex justify-between"
-    >
+    <div class="border border-white p-4 rounded-md shadow-md">
         <div
             v-for="circle in circles"
             :key="circle.id"
