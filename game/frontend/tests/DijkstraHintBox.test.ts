@@ -1,6 +1,6 @@
 import { mount } from "@vue/test-utils";
 import { expect, test } from "vitest";
-import DijkstraHintBox from "../src/components/Dijkstra/DijkstraHintBox.vue";
+import DijkstraHintBox from "../src/components/dijkstra/DijkstraHintBox.vue";
 
 test("Correct text is shown in DijkstraHintBox.vue at start", () => {
     const wrapper = mount(DijkstraHintBox, {
