@@ -309,6 +309,10 @@
 
 * *3 hours* | Supervisor meeting prep, supervisor meeting
 
+### 14 Feb 2024
+
+* *7 hours* | Make changes based on evals so far, more supervised evaluation, write up
+
 
 
 
