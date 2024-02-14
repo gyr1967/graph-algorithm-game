@@ -1,16 +1,20 @@
 <script setup lang="ts">
 import Node from "../Node.vue";
 import Link from "../Link.vue";
-import MediaControls from "../MediaControls.vue";
 import type { DijkstraYieldData } from "../../types/Dijkstra.ts";
 import { DijkstraVertex } from "../../graph/Vertex.ts";
 import { DijkstraGraph } from "../../graph/Graph.ts";
 import { linkDatas, nodeDatas } from "../../utils/graph-data";
-import { letterToNum, numToLetter } from "../../utils/num-to-letter";
-import { ref } from "vue";
+import { letterToNum } from "../../utils/num-to-letter";
+import { ref, watch } from "vue";
 import { EdgeData, NodeData } from "../../types/GraphData";
-defineProps<{
+const props = defineProps<{
     scalingFactor: number;
+    graphChoice: number;
+    sourceChoice: Record<string, string>;
+    started: boolean;
+    resetCounter: number;
+    nextStepCounter: number;
 }>();
 const emit = defineEmits([
     "update:currentVertexName",
@@ -19,6 +23,7 @@ const emit = defineEmits([
     "update:distances",
     "update:vertices",
     "update:sourceName",
+    "update:started",
 ]);
 
 const whichGraphData = ref<number>(2);
@@ -117,15 +122,11 @@ class VisDijkstraGraph extends DijkstraGraph {
         };
     }
 }
+
+const startVertexId = ref<number>(letterToNum[props.sourceChoice.id] - 1);
 const nodeData = ref<Record<string, NodeData>>(nodeDatas[whichGraphData.value]);
 const distances = ref<Record<string, number>>({});
 const linkData = ref<Record<string, EdgeData>>(linkDatas[whichGraphData.value]);
-const randomiseLinkLengths = () => {
-    Object.keys(linkData.value).forEach((key) => {
-        linkData.value[key].weight = Math.floor(Math.random() * 14) + 1;
-    });
-    graph = setUpGraph(Object.entries(nodeData.value).length);
-};
 const nodeFill = "#3498db";
 const nodeColours = ref<Record<string, string>>({});
 const setColoursDefault = () => {
@@ -152,20 +153,19 @@ const setUpGraph = (n: number) => {
     return graph;
 };
 let graph = setUpGraph(Object.entries(nodeData.value).length);
-const started = ref<boolean>(false);
 const dijkstraGenerator = ref<Generator<
     DijkstraYieldData,
     void,
     unknown
 > | null>(null);
-const startDijkstras = (startIndex: number) => {
-    emit("update:sourceName", numToLetter[startIndex + 1]);
+const start = () => {
     setColoursDefault();
     graph = setUpGraph(Object.entries(nodeData.value).length);
     emit("update:vertices", graph.vertices);
-    const generator = graph.dijkstraGenerator(graph.getVertex(startIndex));
+    const generator = graph.dijkstraGenerator(
+        graph.getVertex(startVertexId.value),
+    );
     dijkstraGenerator.value = generator;
-    started.value = true;
     emit("update:distances", distances.value);
     emit(
         "update:verticesToCheck",
@@ -177,14 +177,14 @@ const reset = () => {
     nodeData.value = nodeDatas[whichGraphData.value];
     linkData.value = linkDatas[whichGraphData.value];
     dijkstraGenerator.value = null;
-    started.value = false;
+    emit("update:started", false);
     emit("update:currentVertexName", "");
     emit("update:pseudoStep", null);
     setColoursDefault();
     graph = setUpGraph(Object.entries(nodeData.value).length);
 };
 
-const performDijkstraStep = () => {
+const performStep = () => {
     if (dijkstraGenerator.value) {
         const result = dijkstraGenerator.value.next();
         if (result.done) {
@@ -206,6 +206,40 @@ const performDijkstraStep = () => {
         }
     }
 };
+
+watch(
+    () => props.graphChoice,
+    () => {
+        whichGraphData.value = props.graphChoice;
+        reset();
+    },
+);
+watch(
+    () => props.sourceChoice,
+    () => {
+        startVertexId.value = letterToNum[props.sourceChoice.id] - 1;
+    },
+);
+watch(
+    () => props.started,
+    () => {
+        if (props.started) {
+            start();
+        }
+    },
+);
+watch(
+    () => props.resetCounter,
+    () => {
+        reset();
+    },
+);
+watch(
+    () => props.nextStepCounter,
+    () => {
+        performStep();
+    },
+);
 </script>
 <template>
     <div class="border border-white p-2 rounded-md shadow-md">
@@ -244,25 +278,6 @@ const performDijkstraStep = () => {
                     />
                 </g>
             </svg>
-        </div>
-    </div>
-    <div class="border border-white p-2 rounded-md shadow-md mt-2">
-        <div class="bottom-0 left-0 w-full flex justify-center">
-            <MediaControls
-                :started="started"
-                :number-of-vertices="Object.entries(nodeData).length"
-                :is-dijkstras="true"
-                @start="(startIndex) => startDijkstras(startIndex)"
-                @next-step="performDijkstraStep"
-                @reset="reset()"
-                @randomise-link-lengths="randomiseLinkLengths"
-                @update:graph-choice="
-                    (newValue: number) => {
-                        whichGraphData = newValue;
-                        reset();
-                    }
-                "
-            />
         </div>
     </div>
 </template>

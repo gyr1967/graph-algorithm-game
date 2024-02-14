@@ -4,6 +4,9 @@ import DijkstraPseudo from "../../components/dijkstra/DijkstraPseudo.vue";
 import DijkstraLegend from "../../components/dijkstra/DijkstraLegend.vue";
 import DijkstraSidePanel from "../../components/dijkstra/DijkstraSidePanel.vue";
 import ShortestPaths from "../../components/dijkstra/ShortestPaths.vue";
+import { NodeData } from "../../types/GraphData";
+import MediaControls from "../../components/MediaControls.vue";
+import { nodeDatas } from "../../utils/graph-data";
 import { ref } from "vue";
 import { DijkstraStep } from "../../types/Dijkstra.ts";
 import { DijkstraVertex } from "../../graph/Vertex";
@@ -13,19 +16,62 @@ const verticesToCheck = ref<string[]>([]);
 const pseudoStep = ref<DijkstraStep | null>(null);
 const distances = ref<Record<string, number>>({});
 const vertices = ref<DijkstraVertex[]>([]);
-const sourceName = ref<string>("");
+const started = ref<boolean>(false);
+const graphChoice = ref<number>(1);
+const sourceChoice = ref<Record<string, string>>({ id: "A", value: "A" });
+const nodeData = ref<Record<string, NodeData>>(nodeDatas[graphChoice.value]);
+const resetCounter = ref<number>(0);
+const nextStepCounter = ref<number>(0);
 </script>
 
 <template>
     <div class="grid grid-cols-3 gap-1">
         <div class="ml-2">
             <DijkstraPseudo :current-step="pseudoStep" :is-diy="false" />
+            <MediaControls
+                :started="started"
+                :starting-graph="1"
+                :number-of-graphs="3"
+                :number-of-vertices="Object.keys(nodeData).length"
+                @next-step="
+                    () => {
+                        nextStepCounter++;
+                    }
+                "
+                @update:graph-choice="
+                    (newValue) => {
+                        graphChoice = newValue;
+                        nodeData = nodeDatas[graphChoice];
+                    }
+                "
+                @update:source-choice="
+                    (newValue) => {
+                        sourceChoice = newValue;
+                    }
+                "
+                @start="
+                    () => {
+                        started = true;
+                    }
+                "
+                @reset="
+                    () => {
+                        started = false;
+                        resetCounter++;
+                    }
+                "
+            />
             <DijkstraLegend class="mt-2" />
         </div>
         <div class="flex justify-center">
             <div>
                 <VisDijkstraGraph
                     :scaling-factor="1.2"
+                    :graph-choice="graphChoice"
+                    :source-choice="sourceChoice"
+                    :started="started"
+                    :reset-counter="resetCounter"
+                    :next-step-counter="nextStepCounter"
                     @update:current-vertex-name="
                         (newValue) => {
                             currentVertexName = newValue;
@@ -51,9 +97,9 @@ const sourceName = ref<string>("");
                             vertices = newValue;
                         }
                     "
-                    @update:source-name="
+                    @update:started="
                         (newValue) => {
-                            sourceName = newValue;
+                            started = newValue;
                         }
                     "
                 />
@@ -67,7 +113,7 @@ const sourceName = ref<string>("");
                     :vertices-to-check="verticesToCheck"
                     :distances="distances"
                     :vertices="vertices"
-                    :source-name="sourceName"
+                    :source-name="sourceChoice.id"
                 />
             </div>
             <div>
@@ -75,7 +121,7 @@ const sourceName = ref<string>("");
                     :current-vertex-name="currentVertexName"
                     :vertices="vertices"
                     :distances="distances"
-                    :source-name="sourceName"
+                    :source-name="sourceChoice.id"
                 />
             </div>
         </div>

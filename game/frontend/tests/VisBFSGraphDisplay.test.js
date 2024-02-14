@@ -7,9 +7,12 @@ test("component renders with the correct width and height", () => {
     const scalingFactor = 2;
     const wrapper = mount(VisBFSGraphDisplay, {
         props: {
-            whichGraphData: 1,
             scalingFactor,
-            stage: "vis",
+            graphChoice: "2",
+            sourceChoice: { id: "A" },
+            started: false,
+            resetCounter: 0,
+            nextStepCounter: 0,
         },
     });
 
@@ -25,9 +28,12 @@ test("component renders the correct number of nodes and links", () => {
     const scalingFactor = 1;
     const wrapper = mount(VisBFSGraphDisplay, {
         props: {
-            whichGraphData: 1,
             scalingFactor,
-            stage: "vis",
+            graphChoice: "2",
+            sourceChoice: { id: "A" },
+            started: false,
+            resetCounter: 0,
+            nextStepCounter: 0,
         },
     });
     const svgHtml = wrapper.html();
@@ -44,9 +50,12 @@ test("graph data structure has the correct number of vertices", () => {
     const scalingFactor = 1;
     const wrapper = mount(VisBFSGraphDisplay, {
         props: {
-            whichGraphData: 1,
             scalingFactor,
-            stage: "vis",
+            graphChoice: "2",
+            sourceChoice: { id: "A" },
+            started: false,
+            resetCounter: 0,
+            nextStepCounter: 0,
         },
     });
     const graph = wrapper.vm.graph;
@@ -57,9 +66,12 @@ test("vertices are correctly connected", () => {
     const scalingFactor = 1;
     const wrapper = mount(VisBFSGraphDisplay, {
         props: {
-            whichGraphData: 1,
             scalingFactor,
-            stage: "vis",
+            graphChoice: "2",
+            sourceChoice: { id: "A" },
+            started: false,
+            resetCounter: 0,
+            nextStepCounter: 0,
         },
     });
     const graph = wrapper.vm.graph;
@@ -104,9 +116,12 @@ test("breadth first search works", () => {
     const scalingFactor = 1;
     const wrapper = mount(VisBFSGraphDisplay, {
         props: {
-            whichGraphData: 1,
             scalingFactor,
-            stage: "vis",
+            graphChoice: "2",
+            sourceChoice: { id: "A" },
+            started: false,
+            resetCounter: 0,
+            nextStepCounter: 0,
         },
     });
     const graph = wrapper.vm.graph;
