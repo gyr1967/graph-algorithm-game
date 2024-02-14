@@ -70,13 +70,13 @@ const toggleBlur = () => {
                         queue, and make it the current vertex
                     </li>
                     <li>
-                        For each vertex adjacent to the current vertex that is
-                        in the priority queue:
+                        For each neighbour of the current vertex that is in the
+                        priority queue:
                     </li>
                     <ul class="ml-8 list-disc">
                         <li>
                             If distance to current vertex + edge weight to
-                            adjacent is less than adjacent's distance:
+                            neighbour is less than neighbour's distance:
                         </li>
                         <ul class="ml-8 list-disc">
                             <li
@@ -88,8 +88,8 @@ const toggleBlur = () => {
                                         : ''
                                 "
                             >
-                                Set the adjacent vertex's distance to distance
-                                to current vertex + adjacent's edge weight
+                                Set the neighbour's distance to: distance to
+                                current vertex + neighbour's edge weight
                             </li>
                             <li
                                 :class="
@@ -100,7 +100,7 @@ const toggleBlur = () => {
                                         : ''
                                 "
                             >
-                                Set the adjacent vertex's previous vertex to the
+                                Set the neighbour's previous vertex to the
                                 current vertex
                             </li>
                         </ul>
