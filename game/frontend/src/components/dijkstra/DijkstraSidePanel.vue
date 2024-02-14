@@ -31,7 +31,7 @@ const sortedVerticesToCheck = computed(() =>
             </div>
         </div>
         <div>
-            <span class="font-bold mr-2">Priority Queue</span>
+            <span class="font-bold mr-2">Distance Queue</span>
             <div>
                 <div
                     v-for="(item, index) in [
