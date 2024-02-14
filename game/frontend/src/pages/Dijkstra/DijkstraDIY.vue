@@ -5,9 +5,13 @@ import DijkstraLegend from "../../components/dijkstra/DijkstraLegend.vue";
 import DijkstraSidePanel from "../../components/dijkstra/DijkstraSidePanel.vue";
 import ShortestPaths from "../../components/dijkstra/ShortestPaths.vue";
 import DijkstraHintBox from "../../components/dijkstra/DijkstraHintBox.vue";
+import GraphConfigurator from "../../components/GraphConfigurator.vue";
 import { ref } from "vue";
 import { DijkstraStep } from "../../types/Dijkstra.ts";
 import { DijkstraVertex } from "../../graph/Vertex";
+import { NodeData } from "../../types/GraphData";
+import { nodeDatas } from "../../utils/graph-data";
+
 const currentVertexName = ref<string>("");
 const verticesToCheck = ref<string[]>([]);
 const pseudoStep = ref<DijkstraStep | null>(null);
@@ -15,13 +19,44 @@ const distances = ref<Record<string, number>>({});
 const vertices = ref<DijkstraVertex[]>([]);
 const started = ref<boolean>(false);
 const adjacentVertexName = ref<string>("");
-const sourceName = ref<string>("");
+const graphChoice = ref<number>(2);
+const sourceChoice = ref<Record<string, string>>({ id: "A", value: "A" });
+const nodeData = ref<Record<string, NodeData>>(nodeDatas[graphChoice.value]);
+const resetCounter = ref<number>(0);
 </script>
 
 <template>
     <div class="grid grid-cols-3 gap-1">
         <div class="ml-2">
             <DijkstraPseudo :current-step="pseudoStep" :is-diy="true" />
+            <GraphConfigurator
+                :started="started"
+                :number-of-vertices="Object.keys(nodeData).length"
+                :starting-graph="2"
+                :number-of-graphs="3"
+                @update:graph-choice="
+                    (newValue) => {
+                        graphChoice = newValue;
+                        nodeData = nodeDatas[graphChoice];
+                    }
+                "
+                @update:source-choice="
+                    (newValue) => {
+                        sourceChoice = newValue;
+                    }
+                "
+                @start-the-algorithm="
+                    () => {
+                        started = true;
+                    }
+                "
+                @reset="
+                    () => {
+                        started = false;
+                        resetCounter++;
+                    }
+                "
+            />
             <DijkstraHintBox
                 class="mt-2 cursor-pointer"
                 :text="pseudoStep"
@@ -37,6 +72,10 @@ const sourceName = ref<string>("");
             <div>
                 <DijkstraGraphDisplay
                     :scaling-factor="1.2"
+                    :started="started"
+                    :reset-counter="resetCounter"
+                    :graph-choice="graphChoice"
+                    :source-choice="sourceChoice"
                     @update:current-vertex-name="
                         (newValue) => {
                             currentVertexName = newValue;
@@ -72,11 +111,6 @@ const sourceName = ref<string>("");
                             adjacentVertexName = newValue;
                         }
                     "
-                    @update:source-name="
-                        (newValue: string) => {
-                            sourceName = newValue;
-                        }
-                    "
                 />
             </div>
         </div>
@@ -88,7 +122,7 @@ const sourceName = ref<string>("");
                     :vertices-to-check="verticesToCheck"
                     :distances="distances"
                     :vertices="vertices"
-                    :source-name="sourceName"
+                    :source-name="sourceChoice.id"
                 />
             </div>
             <div>
@@ -96,7 +130,7 @@ const sourceName = ref<string>("");
                     :current-vertex-name="currentVertexName"
                     :vertices="vertices"
                     :distances="distances"
-                    :source-name="sourceName"
+                    :source-name="sourceChoice.id"
                 />
             </div>
         </div>

@@ -6,20 +6,24 @@ import Graph from "../graph/Graph.ts";
 import VertexOptionMenu from "./VertexOptionMenu.vue";
 import { linkDatas, nodeDatas } from "../utils/graph-data";
 import { letterToNum, numToLetter } from "../utils/num-to-letter";
-import { ref } from "vue";
+import { ref, watch } from "vue";
 import type { BFSDIYSteps } from "../types/BFS";
 import AdjListVertex from "../graph/AdjListVertex";
 import { NodeData, EdgeData } from "../types/GraphData";
-defineProps<{
+const props = defineProps<{
     scalingFactor: number;
+    graphChoice: number;
+    sourceChoice: Record<string, string>;
+    started: boolean;
+    resetCounter: number;
 }>();
 const emit = defineEmits([
     "update:vertexNames",
     "update:currentQueue",
     "update:diyStep",
     "update:currentVertexName",
-    "update:started",
     "update:visited",
+    "update:started",
 ]);
 
 class DIYBFSGraph extends Graph {
@@ -97,10 +101,11 @@ class DIYBFSGraph extends Graph {
         setStep("visit");
     }
 }
-const whichGraphData = ref<number>(1);
-const startVertexId = ref<number | null>(null);
+const whichGraphData = ref<number>(props.graphChoice);
+const startVertexId = ref<number | null>(
+    letterToNum[props.sourceChoice.id] - 1,
+);
 const wrongChoice = ref<boolean>(false);
-const started = ref<boolean>(false);
 const currentStep = ref<BFSDIYSteps | null>(null);
 emit("update:diyStep", currentStep.value);
 const nodeData = ref<Record<string, NodeData>>(nodeDatas[whichGraphData.value]);
@@ -225,17 +230,14 @@ const setStep = (step: BFSDIYSteps) => {
     emit("update:diyStep", step);
 };
 
-const startTheAlgorithm = (startIndex: number) => {
-    started.value = true;
-    emit("update:started", true);
+const startTheAlgorithm = () => {
     setStep("add-to-queue");
     emit("update:diyStep", "add-to-queue");
-    startVertexId.value = startIndex;
 };
 const reset = () => {
     nodeData.value = nodeDatas[whichGraphData.value];
     linkData.value = linkDatas[whichGraphData.value];
-    started.value = false;
+    emit("update:started", false);
     emit("update:currentVertexName", "");
     emit("update:currentQueue", []);
     emit("update:diyStep", null);
@@ -243,6 +245,34 @@ const reset = () => {
     graph = setUpGraph(Object.entries(nodeData.value).length);
     setColoursDefault();
 };
+
+watch(
+    () => props.graphChoice,
+    () => {
+        whichGraphData.value = props.graphChoice;
+        reset();
+    },
+);
+watch(
+    () => props.sourceChoice,
+    () => {
+        startVertexId.value = letterToNum[props.sourceChoice.id] - 1;
+    },
+);
+watch(
+    () => props.started,
+    () => {
+        if (props.started) {
+            startTheAlgorithm();
+        }
+    },
+);
+watch(
+    () => props.resetCounter,
+    () => {
+        reset();
+    },
+);
 </script>
 
 <template>

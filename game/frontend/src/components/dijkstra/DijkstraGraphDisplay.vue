@@ -6,12 +6,16 @@ import { DijkstraVertex } from "../../graph/Vertex.ts";
 import { DijkstraGraph } from "../../graph/Graph.ts";
 import { linkDatas, nodeDatas } from "../../utils/graph-data";
 import { letterToNum, numToLetter } from "../../utils/num-to-letter";
-import { ref } from "vue";
+import { ref, watch } from "vue";
 import { EdgeData, NodeData } from "../../types/GraphData";
 import { DijkstraStep } from "../../types/Dijkstra";
 import AdjListVertex from "../../graph/AdjListVertex";
-defineProps<{
+const props = defineProps<{
     scalingFactor: number;
+    graphChoice: number;
+    sourceChoice: Record<string, string>;
+    started: boolean;
+    resetCounter: number;
 }>();
 const emit = defineEmits([
     "update:currentVertexName",
@@ -19,9 +23,8 @@ const emit = defineEmits([
     "update:verticesToCheck",
     "update:distances",
     "update:vertices",
-    "update:started",
     "update:adjacentVertexName",
-    "update:sourceName",
+    "update:started",
 ]);
 
 class VisDijkstraGraph extends DijkstraGraph {
@@ -90,7 +93,7 @@ class VisDijkstraGraph extends DijkstraGraph {
             distances.value[nodeId] = distance;
             emit("update:distances", distances.value);
             emit("update:vertices", this.vertices);
-            if (vertex.getTextName() === sourceVertexName.value) {
+            if (vertex.getTextName() === props.sourceChoice.id) {
                 setStep("remove-and-set-to-current");
             } else {
                 emit("update:adjacentVertexName", vertex.getTextName());
@@ -159,20 +162,13 @@ const setStep = (step: DijkstraStep) => {
     currentStep.value = step;
     emit("update:pseudoStep", step);
 };
-const sourceVertexName = ref<string | null>(null);
+const sourceVertexName = ref<string | null>(numToLetter[props.graphChoice + 1]);
 const wrongChoice = ref<boolean>(false);
 const adjToVisit = ref<DijkstraVertex[]>([]);
-const whichGraphData = ref<number>(2);
+const whichGraphData = ref<number>(props.graphChoice);
 const nodeData = ref<Record<string, NodeData>>(nodeDatas[whichGraphData.value]);
 const distances = ref<Record<string, number>>({});
 const linkData = ref<Record<string, EdgeData>>(linkDatas[whichGraphData.value]);
-// currently unused
-// const randomiseLinkLengths = () => {
-//     Object.keys(linkData.value).forEach((key) => {
-//         linkData.value[key].weight = Math.floor(Math.random() * 14) + 1;
-//     });
-//     graph = setUpGraph(Object.entries(nodeData).length);
-// };
 const nodeFill = "#3498db";
 const nodeMenuOpen = ref<string>("");
 const nodeColours = ref<Record<string, string>>({});
@@ -200,12 +196,9 @@ const setUpGraph = (n: number) => {
     return graph;
 };
 let graph = setUpGraph(Object.entries(nodeData.value).length);
-const started = ref<boolean>(false);
 const currentStep = ref<DijkstraStep | null>(null);
 
-const startTheAlgorithm = (startIndex: number) => {
-    started.value = true;
-    emit("update:started", true);
+const startTheAlgorithm = () => {
     emit("update:vertices", graph.vertices);
     emit("update:distances", distances.value);
     emit(
@@ -214,7 +207,6 @@ const startTheAlgorithm = (startIndex: number) => {
     );
     currentStep.value = "set-source-to-zero";
     emit("update:pseudoStep", currentStep.value);
-    emit("update:sourceName", numToLetter[startIndex + 1]);
 };
 
 const handleVertexClicked = (nodeId: string) => {
@@ -330,7 +322,6 @@ const findAdjacency = (nodeId: string): AdjListVertex | null => {
 const reset = () => {
     nodeData.value = nodeDatas[whichGraphData.value];
     linkData.value = linkDatas[whichGraphData.value];
-    started.value = false;
     emit("update:currentVertexName", "");
     emit("update:verticesToCheck", []);
     emit("update:distances", {});
@@ -342,6 +333,35 @@ const reset = () => {
     graph = setUpGraph(Object.entries(nodeData.value).length);
     setColoursDefault();
 };
+
+watch(
+    () => props.graphChoice,
+    () => {
+        whichGraphData.value = props.graphChoice;
+        reset();
+    },
+);
+watch(
+    () => props.sourceChoice,
+    () => {
+        sourceVertexName.value = props.sourceChoice.id;
+        reset();
+    },
+);
+watch(
+    () => props.started,
+    () => {
+        if (props.started) {
+            startTheAlgorithm();
+        }
+    },
+);
+watch(
+    () => props.resetCounter,
+    () => {
+        reset();
+    },
+);
 </script>
 <template>
     <div class="border border-white p-2 rounded-md shadow-md">
@@ -438,19 +458,6 @@ const reset = () => {
                     } else {
                         console.log('failed validation');
                     }
-                }
-            "
-            @start-the-algorithm="
-                (startIndex: number) => {
-                    startTheAlgorithm(startIndex);
-                    sourceVertexName = numToLetter[startIndex + 1];
-                }
-            "
-            @reset="reset()"
-            @update:graph-choice="
-                (newValue: number) => {
-                    whichGraphData = newValue;
-                    reset();
                 }
             "
         />
