@@ -277,6 +277,40 @@
 
 ## Week 4
 
+### 29 Jan 2024
+
+* *3 hours* | Supervisor meeting prep, supervisor meeting
+
+### 31 Jan 2024
+
+* *4 hours* | Add tests, add home page text, fix legend
+
+### 04 Feb 2024
+
+* *3 hours* | Create survey for user study
+
+## Week 5
+
+### 05 Feb 2024
+
+* *5 hours* | Fix footer, deploy site, Prep for supervisor meeting, supervisor meeting, write up notes
+
+### 07 Feb 2024
+
+* *7 hours* | Send out survey, run first supervised evaluations, write them up, dissertation start
+
+### 10 Feb 2024
+
+* *3 hours* | More supervised evaluation
+
+## Week 6
+
+### 12 Feb 2024
+
+* *3 hours* | Supervisor meeting prep, supervisor meeting
+
+
+
 
 
 
