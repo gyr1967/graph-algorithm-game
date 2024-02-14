@@ -30,7 +30,7 @@ const nextStepCounter = ref<number>(0);
             <DijkstraPseudo :current-step="pseudoStep" :is-diy="false" />
             <MediaControls
                 :started="started"
-                :starting-graph="1"
+                :starting-graph="2"
                 :number-of-graphs="3"
                 :number-of-vertices="Object.keys(nodeData).length"
                 @next-step="
