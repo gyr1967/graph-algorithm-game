@@ -10,13 +10,12 @@ const dijkstraOpen = ref<boolean>(false);
 </script>
 <template>
     <div>
-        <h1 class="flex justify-center">What Algorithms?</h1>
         <div>
             <button
                 class="bg-white text-black rounded-sm p-1 mx-1 hover:bg-gray-400 disabled:bg-gray-600 disabled:cursor-not-allowed"
                 @click="bfsOpen = !bfsOpen"
             >
-                BFS
+                What is BFS?
             </button>
             <BFSExplainDialog
                 :is-open="bfsOpen"
@@ -26,7 +25,7 @@ const dijkstraOpen = ref<boolean>(false);
                 class="bg-white text-black rounded-sm p-1 mx-1 hover:bg-gray-400 disabled:bg-gray-600 disabled:cursor-not-allowed"
                 @click="dfsOpen = !dfsOpen"
             >
-                DFS
+                What is DFS?
             </button>
             <DFSExplainDialog
                 :is-open="dfsOpen"
@@ -36,7 +35,7 @@ const dijkstraOpen = ref<boolean>(false);
                 class="bg-white text-black rounded-sm p-1 mx-1 hover:bg-gray-400 disabled:bg-gray-600 disabled:cursor-not-allowed"
                 @click="dijkstraOpen = !dijkstraOpen"
             >
-                Dijkstra
+                What is Dijkstra's?
             </button>
             <DijkstraExplainDialog
                 :is-open="dijkstraOpen"

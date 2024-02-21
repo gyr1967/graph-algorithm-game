@@ -9,6 +9,14 @@ import Footer from "../components/Footer.vue";
         <h1>Welcome!</h1>
         <FAQ />
         <Explanations class="my-4" />
+        <div class="mt-4">
+            <router-link
+                to="/graph-algorithm-game/game"
+                class="bg-white text-black text-xl rounded-sm p-4 mx-1 hover:bg-gray-400 disabled:bg-gray-600 disabled:cursor-not-allowed"
+            >
+                The Game Section!
+            </router-link>
+        </div>
         <Footer class="mt-auto w-full" />
     </div>
 </template>
