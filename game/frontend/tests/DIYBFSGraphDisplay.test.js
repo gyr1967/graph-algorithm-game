@@ -7,6 +7,10 @@ test("component renders with the correct width and height", () => {
     const wrapper = mount(DIYBFSGraphDisplay, {
         props: {
             scalingFactor,
+            graphChoice: 1,
+            sourceChoice: { id: "A", name: "A" },
+            started: false,
+            resetCounter: 0,
         },
     });
 
@@ -23,6 +27,10 @@ test("component renders the correct number of nodes and links", () => {
     const wrapper = mount(DIYBFSGraphDisplay, {
         props: {
             scalingFactor,
+            graphChoice: 1,
+            sourceChoice: { id: "A", name: "A" },
+            started: false,
+            resetCounter: 0,
         },
     });
     const svgHtml = wrapper.html();
@@ -39,6 +47,10 @@ test("graph data structure has the correct number of vertices", () => {
     const wrapper = mount(DIYBFSGraphDisplay, {
         props: {
             scalingFactor,
+            graphChoice: 1,
+            sourceChoice: { id: "A", name: "A" },
+            started: false,
+            resetCounter: 0,
         },
     });
     const graph = wrapper.vm.graph;
@@ -50,6 +62,10 @@ test("vertices are correctly connected", () => {
     const wrapper = mount(DIYBFSGraphDisplay, {
         props: {
             scalingFactor,
+            graphChoice: 1,
+            sourceChoice: { id: "A", name: "A" },
+            started: false,
+            resetCounter: 0,
         },
     });
     const graph = wrapper.vm.graph;
@@ -95,9 +111,13 @@ test("breadth first starts", () => {
     const wrapper = mount(DIYBFSGraphDisplay, {
         props: {
             scalingFactor,
+            graphChoice: 1,
+            sourceChoice: { id: "A", name: "A" },
+            started: true,
+            resetCounter: 0,
         },
     });
-    wrapper.vm.startTheAlgorithm(0);
+    wrapper.vm.startTheAlgorithm();
     const started = wrapper.vm.started;
     const step = wrapper.vm.currentStep;
     expect(started).toEqual(true);

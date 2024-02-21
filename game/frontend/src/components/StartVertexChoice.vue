@@ -13,7 +13,6 @@ const props = defineProps<{
     numberOfVertices: number;
 }>();
 const emit = defineEmits(["update:sourceChoice"]);
-// const numberOfVerticesRef = ref<number>(props.numberOfVertices);
 const vertexChoices = computed(() => {
     return Array.from({ length: props.numberOfVertices }, (_, i) => ({
         id: numToLetter[i + 1],

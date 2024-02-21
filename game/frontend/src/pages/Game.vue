@@ -86,7 +86,7 @@ const pagesList: { key: Pages; label: string }[] = [
             <DijkstraDIY />
         </template>
     </div>
-    <div class="w-full">
+    <div class="w-full mt-64">
         <Footer />
     </div>
 </template>

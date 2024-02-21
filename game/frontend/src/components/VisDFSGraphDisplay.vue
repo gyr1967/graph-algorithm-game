@@ -1,22 +1,27 @@
 <script setup lang="ts">
 import Node from "./Node.vue";
 import Link from "./Link.vue";
-import MediaControls from "./MediaControls.vue";
 import AdjListVertex from "../graph/AdjListVertex.ts";
 import Vertex from "../graph/Vertex.ts";
 import Graph from "../graph/Graph.ts";
 import { linkDatas, nodeDatas } from "../utils/graph-data";
 import { letterToNum, numToLetter } from "../utils/num-to-letter";
-import { ref } from "vue";
+import { ref, watch } from "vue";
 import type { DFSYieldData } from "../types/DFS.ts";
 import { EdgeData, NodeData } from "../types/GraphData";
-defineProps<{
+const props = defineProps<{
     scalingFactor: number;
+    graphChoice: number;
+    sourceChoice: Record<string, string>;
+    started: boolean;
+    resetCounter: number;
+    nextStepCounter: number;
 }>();
 const emit = defineEmits([
     "update:currentVertexName",
     "update:currentStack",
     "update:pseudoStep",
+    "update:started",
 ]);
 
 const whichGraphData = ref<number>(1);
@@ -116,6 +121,7 @@ class VisDFSGraph extends Graph {
     }
 }
 
+const startVertexId = ref<number>(letterToNum[props.sourceChoice.id] - 1);
 const nodeData = ref<Record<string, NodeData>>(nodeDatas[whichGraphData.value]);
 const linkData = ref<Record<string, EdgeData>>(linkDatas[whichGraphData.value]);
 const nodeFill = "#3498db";
@@ -140,21 +146,19 @@ const setUpGraph = (n: number) => {
     return graph;
 };
 let graph = setUpGraph(Object.entries(nodeData.value).length);
-const started = ref<boolean>(false);
 const dfsGenerator = ref<Generator<DFSYieldData, void, unknown> | null>(null);
-const startDFS = (startIndex: number) => {
+const startDFS = () => {
     setColoursDefault();
     graph = setUpGraph(Object.entries(nodeData.value).length);
-    const generator = graph.dfsGenerator(graph.getVertex(startIndex));
+    const generator = graph.dfsGenerator(graph.getVertex(startVertexId.value));
     dfsGenerator.value = generator;
-    started.value = true;
 };
 
 const reset = () => {
     nodeData.value = nodeDatas[whichGraphData.value];
     linkData.value = linkDatas[whichGraphData.value];
     dfsGenerator.value = null;
-    started.value = false;
+    emit("update:started", false);
     emit("update:currentVertexName", "");
     emit("update:currentStack", []);
     emit("update:pseudoStep", null);
@@ -178,6 +182,48 @@ const performDFSStep = () => {
         }
     }
 };
+
+watch(
+    () => props.graphChoice,
+    () => {
+        whichGraphData.value = props.graphChoice;
+        reset();
+    },
+);
+watch(
+    () => props.sourceChoice,
+    () => {
+        startVertexId.value = letterToNum[props.sourceChoice.id] - 1;
+    },
+);
+watch(
+    () => props.started,
+    () => {
+        if (props.started) {
+            startDFS();
+        }
+    },
+);
+watch(
+    () => props.resetCounter,
+    () => {
+        reset();
+    },
+);
+watch(
+    () => props.started,
+    () => {
+        if (props.started) {
+            performDFSStep();
+        }
+    },
+);
+watch(
+    () => props.nextStepCounter,
+    () => {
+        performDFSStep();
+    },
+);
 </script>
 <template>
     <div class="border border-white p-2 rounded-md shadow-md">
@@ -214,24 +260,6 @@ const performDFSStep = () => {
                     />
                 </g>
             </svg>
-        </div>
-    </div>
-    <div class="border boder-white p-2 rounded-md shadow-md mt-2">
-        <div class="bottom-0 left-0 w-full flex justify-center">
-            <MediaControls
-                :started="started"
-                bfs-or-dfs="dfs"
-                :number-of-vertices="Object.entries(nodeData).length"
-                @start="(startIndex) => startDFS(startIndex)"
-                @next-step="performDFSStep()"
-                @reset="reset()"
-                @update:graph-choice="
-                    (newValue: number) => {
-                        whichGraphData = newValue;
-                        reset();
-                    }
-                "
-            />
         </div>
     </div>
 </template>
