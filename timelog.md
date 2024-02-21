@@ -313,6 +313,13 @@
 
 * *7 hours* | Make changes based on evals so far, more supervised evaluation, write up
 
+## Week 7
+
+### 19 Feb 2024
+
+* *2 hours* | Supervisor meeting prep (updating wiki), supervisor meeting, writeup notes
+* *2 hours* | Run an evaluation, write it up, some dissertation writing
+
 
 
 
