@@ -162,7 +162,7 @@ const setStep = (step: DijkstraStep) => {
     currentStep.value = step;
     emit("update:pseudoStep", step);
 };
-const sourceVertexName = ref<string | null>(numToLetter[props.graphChoice + 1]);
+const sourceVertexName = ref<string | null>(props.sourceChoice.id);
 const wrongChoice = ref<boolean>(false);
 const adjToVisit = ref<DijkstraVertex[]>([]);
 const whichGraphData = ref<number>(props.graphChoice);
