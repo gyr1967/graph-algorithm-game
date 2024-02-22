@@ -320,6 +320,9 @@
 * *2 hours* | Supervisor meeting prep (updating wiki), supervisor meeting, writeup notes
 * *2 hours* | Run an evaluation, write it up, some dissertation writing
 
+### 21 Feb 2024
+
+* *6 hours* | fix bug, rejig homepage, dissertation writing!
 
 
 
