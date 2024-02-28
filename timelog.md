@@ -324,8 +324,12 @@
 
 * *6 hours* | fix bug, rejig homepage, dissertation writing!
 
+## Week 8
 
+### 27 Feb 2024
 
+* *1 hour* | Evaluation, evaluation writeup, fix bugs found in evaluation
 
+### 28 Feb 2024
 
-
+* *6 hours* | Dissertation writing
