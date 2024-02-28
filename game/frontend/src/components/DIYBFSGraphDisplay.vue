@@ -136,10 +136,6 @@ const setUpGraph = (n: number) => {
 let graph = setUpGraph(Object.entries(nodeData.value).length);
 
 const handleVertexClicked = (nodeId: string) => {
-    if (nodeMenuOpen.value === nodeId) {
-        nodeMenuOpen.value = "";
-        return;
-    }
     nodeMenuOpen.value = nodeId;
 };
 

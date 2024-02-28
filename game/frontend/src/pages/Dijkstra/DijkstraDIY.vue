@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import DijkstraGraphDisplay from "../../components/dijkstra/DijkstraGraphDisplay.vue";
+import DIYDijkstraGraphDisplay from "../../components/dijkstra/DIYDijkstraGraphDisplay.vue";
 import DijkstraPseudo from "../../components/dijkstra/DijkstraPseudo.vue";
 import DijkstraLegend from "../../components/dijkstra/DijkstraLegend.vue";
 import DijkstraSidePanel from "../../components/dijkstra/DijkstraSidePanel.vue";
@@ -70,7 +70,7 @@ const resetCounter = ref<number>(0);
         </div>
         <div class="flex justify-center">
             <div>
-                <DijkstraGraphDisplay
+                <DIYDijkstraGraphDisplay
                     :scaling-factor="1.2"
                     :started="started"
                     :reset-counter="resetCounter"
