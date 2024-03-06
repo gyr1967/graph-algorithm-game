@@ -210,10 +210,6 @@ const startTheAlgorithm = () => {
 };
 
 const handleVertexClicked = (nodeId: string) => {
-    if (nodeMenuOpen.value === nodeId) {
-        nodeMenuOpen.value = "";
-        return;
-    }
     nodeMenuOpen.value = nodeId;
 };
 const validateStep = (
@@ -256,6 +252,9 @@ const validateStep = (
 const validateUpdateDistance = (nodeId: string, distance: number) => {
     const adj = findAdjacency(nodeId);
     const vertex = graph.getVertex(letterToNum[nodeId] - 1);
+    if (vertex.getDistance() < distance) {
+        return false;
+    }
     if (
         adj === null &&
         vertex.getTextName() !== numToLetter[whichGraphData.value + 1]

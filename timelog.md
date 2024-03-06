@@ -313,9 +313,37 @@
 
 * *7 hours* | Make changes based on evals so far, more supervised evaluation, write up
 
+## Week 7
 
+### 19 Feb 2024
 
+* *2 hours* | Supervisor meeting prep (updating wiki), supervisor meeting, writeup notes
+* *2 hours* | Run an evaluation, write it up, some dissertation writing
 
+### 21 Feb 2024
 
+* *6 hours* | fix bug, rejig homepage, dissertation writing!
+
+## Week 8
+
+### 27 Feb 2024
+
+* *1 hour* | Evaluation, evaluation writeup, fix bugs found in evaluation
+
+### 28 Feb 2024
+
+* *6 hours* | Dissertation writing -260 hours (incl) to this point
+
+### 2 March 2024
+
+* *1 hour* | Evaluation, writeup, bugfixing
+
+## Week 9
+
+### 04 March 2024
+
+* *5 hours* | Dissertation writing
+
+### 06 March 2024
 
 
