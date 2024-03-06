@@ -332,4 +332,18 @@
 
 ### 28 Feb 2024
 
-* *6 hours* | Dissertation writing
+* *6 hours* | Dissertation writing -260 hours (incl) to this point
+
+### 2 March 2024
+
+* *1 hour* | Evaluation, writeup, bugfixing
+
+## Week 9
+
+### 04 March 2024
+
+* *5 hours* | Dissertation writing
+
+### 06 March 2024
+
+
