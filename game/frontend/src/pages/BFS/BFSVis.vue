@@ -61,7 +61,7 @@ const nextStepCounter = ref<number>(0);
                     }
                 "
             />
-            <SearchLegend class="mt-2" />
+            <SearchLegend class="mt-2" stack-or-queue="queue" />
         </div>
         <div class="flex justify-center">
             <div>

@@ -1,4 +1,7 @@
 <script setup lang="ts">
+defineProps<{
+    stackOrQueue: string;
+}>();
 const circles = [
     { id: 1, cx: 15, cy: 15, r: 10, fill: "#3498db", label: "Unvisited" },
     { id: 2, cx: 15, cy: 15, r: 10, fill: "#e74c3c", label: "Visited" },
@@ -49,7 +52,10 @@ const circles = [
                 </svg>
             </div>
             <div>
-                <span>{{ circle.label }}</span>
+                <span>{{
+                    circle.label +
+                    (circle.id === 4 ? " to " + stackOrQueue : "")
+                }}</span>
             </div>
         </div>
     </div>
