@@ -66,7 +66,7 @@ const toggleBlur = () => {
                                 : ''
                         "
                     >
-                        Remove the closest vertex to the source in the priority
+                        Remove the closest vertex to the source in the distance
                         queue, and make it the current vertex
                     </li>
                     <li>
