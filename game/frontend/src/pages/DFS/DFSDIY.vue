@@ -73,7 +73,7 @@ const resetCounter = ref<number>(0);
                 :stack="currentStack"
                 bfs-or-dfs="dfs"
             />
-            <SearchLegend class="mt-2" />
+            <SearchLegend class="mt-2" stack-or-queue="stack" />
         </div>
         <div class="flex justify-center">
             <div>
