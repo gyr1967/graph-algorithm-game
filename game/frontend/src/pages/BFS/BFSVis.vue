@@ -30,7 +30,7 @@ const nextStepCounter = ref<number>(0);
             />
             <MediaControls
                 :started="started"
-                :starting-graph="1"
+                :is-dijkstras="false"
                 :number-of-graphs="3"
                 :number-of-vertices="Object.keys(nodeData).length"
                 @next-step="
