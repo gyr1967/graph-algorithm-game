@@ -5,7 +5,7 @@ import StartVertexChoice from "./StartVertexChoice.vue";
 import GraphChoice from "./GraphChoice.vue";
 const props = defineProps<{
     started: boolean;
-    isDijkstras?: boolean;
+    isDijkstras: boolean;
     numberOfVertices: number;
     numberOfGraphs: number;
 }>();
@@ -13,7 +13,6 @@ defineEmits([
     "start",
     "nextStep",
     "reset",
-    "randomiseLinkLengths",
     "update:graphChoice",
     "update:source-choice",
 ]);
@@ -47,16 +46,7 @@ const numberOfVerticesRef = ref<number>(props.numberOfVertices);
             </button>
         </div>
         <div>
-            <div v-if="isDijkstras === true" class="flex justify-center">
-                <button
-                    :disabled="started"
-                    class="bg-white text-black rounded-sm p-1 mx-1 hover:bg-gray-400 disabled:bg-gray-600 disabled:cursor-not-allowed"
-                    @click="$emit('randomiseLinkLengths')"
-                >
-                    Randomise Edge Weights
-                </button>
-            </div>
-            <div class="flex justify-center items-center">
+            <div class="flex justify-center items-end">
                 <div class="mx-2 text-center">
                     <span>Graph</span>
                     <GraphChoice

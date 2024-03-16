@@ -17,7 +17,7 @@ const pseudoStep = ref<DijkstraStep | null>(null);
 const distances = ref<Record<string, number>>({});
 const vertices = ref<DijkstraVertex[]>([]);
 const started = ref<boolean>(false);
-const graphChoice = ref<number>(1);
+const graphChoice = ref<number>(2);
 const sourceChoice = ref<Record<string, string>>({ id: "A", value: "A" });
 const nodeData = ref<Record<string, NodeData>>(nodeDatas[graphChoice.value]);
 const resetCounter = ref<number>(0);
@@ -30,7 +30,7 @@ const nextStepCounter = ref<number>(0);
             <DijkstraPseudo :current-step="pseudoStep" :is-diy="false" />
             <MediaControls
                 :started="started"
-                :starting-graph="2"
+                :is-dijkstras="true"
                 :number-of-graphs="3"
                 :number-of-vertices="Object.keys(nodeData).length"
                 @next-step="
