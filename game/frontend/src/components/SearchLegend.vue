@@ -1,6 +1,6 @@
 <script setup lang="ts">
 defineProps<{
-    stackOrQueue: string;
+    stackOrQueue: "stack" | "queue";
 }>();
 const circles = [
     { id: 1, cx: 15, cy: 15, r: 10, fill: "#3498db", label: "Unvisited" },

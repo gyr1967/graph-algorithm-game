@@ -55,7 +55,7 @@ const toggleBlur = () => {
                 >
                     Set source vertex distance to zero
                 </li>
-                <li>While the priority queue is not empty:</li>
+                <li>While the distance queue is not empty:</li>
                 <ul class="ml-8 list-disc">
                     <li
                         :class="
@@ -71,7 +71,7 @@ const toggleBlur = () => {
                     </li>
                     <li>
                         For each neighbour of the current vertex that is in the
-                        priority queue:
+                        distance queue:
                     </li>
                     <ul class="ml-8 list-disc">
                         <li>
