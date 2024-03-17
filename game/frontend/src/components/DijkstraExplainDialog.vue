@@ -83,6 +83,11 @@ defineEmits(["closeModal"]);
                                         shortest path from the source (where you
                                         are) to the destination.
                                     </p>
+                                    <p>
+                                        In this version however, we will be
+                                        going from a source vertex to all other
+                                        vertices.
+                                    </p>
                                 </div>
                             </div>
                         </DialogPanel>
