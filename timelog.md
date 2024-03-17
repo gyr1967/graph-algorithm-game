@@ -373,3 +373,7 @@
 ### 16 March 2024
 
 * *6 hours* | Dissertation writing
+
+### 17 March 2024
+
+* *9 hours* | Dissertation writing
