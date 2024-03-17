@@ -107,7 +107,7 @@ const stackOrQueue = props.bfsOrDfs === "bfs" ? "Queue" : "Stack";
                             : ''
                     "
                 >
-                    Add all of the current vertex's neighbors (that aren't
+                    Add all of the current vertex's neighbours (that aren't
                     already visited, or in the {{ stackOrQueue }}) to the
                     {{ stackOrQueue }}
                 </li>
