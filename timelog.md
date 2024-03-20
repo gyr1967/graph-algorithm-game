@@ -377,3 +377,15 @@
 ### 17 March 2024
 
 * *9 hours* | Dissertation writing
+
+## Week 11
+
+### 18 March 2024
+
+* *8 hours* | Dissertation writing
+
+### 19 March 2024
+
+* *9 hours* | Dissertation writing
+
+### 20 March 2024
