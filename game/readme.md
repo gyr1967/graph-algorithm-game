@@ -1,41 +1,29 @@
 # Readme
 
-Put a brief description of your code here. This should at least describe the file structure.
+* VueJS TypeScript frontend only single-page application. File structure shown in appendices of dissertation.
 
 ## Build instructions
 
-**You must** include the instructions necessary to build and deploy this project successfully. If appropriate, also include 
-instructions to run automated tests. 
+* To run, navigate to frontend, and run %```npm i```
+* Then run %```npm run dev``` to start the development server
+* Visit ```http://localhost:3331/graph-algorithm-game/```
+
+* To test, run ```npm run test```
+* To build, navigate to the frontend directory and run %npm run build
 
 ### Requirements
 
-List the all of the pre-requisites software required to set up your project (e.g. compilers, packages, libraries, OS, hardware)
-
-For example:
-
-* Python 3.7
-* Packages: listed in `requirements.txt` 
-* Tested on Windows 10
-
-or another example:
-
-* Requires Raspberry Pi 3 
-* a Linux host machine with the `arm-none-eabi` toolchain (at least version `x.xx`) installed
-* a working LuaJIT installation > 2.1.0
+* TypeScript 5.2.2
+* NPM 9.8.1
+* Packages: listed in the `package.json` files
+* Tested on MacOS Ventura 13.0
 
 ### Build steps
 
-List the steps required to build software. 
-
-Hopefully something simple like `pip install -e .` or `make` or `cd build; cmake ..`. In
-some cases you may have much more involved setup required.
+* ```npm run build``` in the frontend directory to build.
+* ```npm run dev``` to run locally.
 
 ### Test steps
 
-List steps needed to show your software works. This might be running a test suite, or just starting the program; but something that could be used to verify your code is working correctly.
-
-Examples:
-
-* Run automated tests by running `pytest`
-* Start the software by running `bin/editor.exe` and opening the file `examples/example_01.bin`
+* ```npm run test``` in the frontend directory
 
