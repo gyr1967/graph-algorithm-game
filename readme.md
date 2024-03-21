@@ -26,3 +26,5 @@ Here's an overview of the structure as it stands:
 
 #### Build (not necessary to run locally)
 * `% npm run build`
+
+#### Template readme.md is in the game directory
