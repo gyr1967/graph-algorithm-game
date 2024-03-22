@@ -1,16 +1,9 @@
 # Timelog
 
-* PROJECT NAME
-* YOUR NAME
-* STUDENT_ID
-* SUPERVISOR NAME
-
-## Guidance
-
-* This file contains the time log for your project. It will be submitted along with your final dissertation.
-* **YOU MUST KEEP THIS UP TO DATE AND UNDER VERSION CONTROL.**
-* This timelog should be filled out honestly, regularly (daily) and accurately. It is for *your* benefit.
-* Follow the structure provided, grouping time by weeks.  Quantise time to the half hour.
+* Web-based Graph Algorithm Game
+* George Yarr
+* 2553638y
+* Sofiat Olaosebikan
 
 ## Week 1
 
@@ -398,4 +391,4 @@
 
 ### 22 March 2024
 
-
+* *5 hours* | Polish dissertation, submission preparation
