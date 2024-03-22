@@ -24,3 +24,7 @@ Keep your data (e.g. from evaluations here)
 * You may need to remove the `data/` folder from version control if the data size is too large or you are bound by confidentiality.
 * If you do so **make sure you have good backups**
 
+## What's in this directory?
+* In the raw directory is the raw survey data.
+* In the ethics directory is the signed ethics checklist.
+
