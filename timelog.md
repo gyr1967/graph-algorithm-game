@@ -392,3 +392,5 @@
 ### 22 March 2024
 
 * *5 hours* | Polish dissertation, submission preparation
+
+## TOTAL: 364 hours
