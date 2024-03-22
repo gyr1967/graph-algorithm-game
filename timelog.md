@@ -389,3 +389,13 @@
 * *9 hours* | Dissertation writing
 
 ### 20 March 2024
+
+* *13 hours* | Dissertation writing
+
+### 21 March 2024
+
+* *13 hours* | Dissertation writing (refining drafts), film presentation video.
+
+### 22 March 2024
+
+

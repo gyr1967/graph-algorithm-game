@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc && vite build",
-    "test": "vitest",
+    "test": "vitest --reporter verbose",
     "preview": "vite preview"
   },
   "lint-staged": {

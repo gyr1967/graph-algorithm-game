@@ -24,6 +24,9 @@ Here's an overview of the structure as it stands:
 * `% npm install`  -- installs the dependencies 
 * `% npm run dev` -- start the development server
 
+#### Test
+* `% npm run test` -- runs the npm script for `% vitest --reporter verbose`
+
 #### Build (not necessary to run locally)
 * `% npm run build`
 
